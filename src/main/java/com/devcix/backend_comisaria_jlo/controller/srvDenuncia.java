@@ -94,7 +94,7 @@ public class srvDenuncia extends HttpServlet {
                 response.setContentType("application/pdf");
                 response.setContentLength(reporte.length);
                 response.addHeader("Content-disposition", "inline; filename=RDenuncia.pdf");
-                OutputStream out = response.getOutputStream();
+                ServletOutputStream out = response.getOutputStream();
                 out.write(reporte, 0, reporte.length);
                 out.flush();
                 out.close();
