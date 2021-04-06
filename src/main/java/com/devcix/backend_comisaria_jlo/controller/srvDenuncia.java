@@ -8,6 +8,7 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.reflect.TypeToken;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -24,6 +25,7 @@ import net.sf.jasperreports.data.empty.EmptyDataAdapterImpl;
 import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperRunManager;
+import net.sf.jasperreports.engine.data.JsonDataSource;
 
 @WebServlet(name = "srvDenuncia", urlPatterns = {"/denuncia"})
 public class srvDenuncia extends HttpServlet {
@@ -90,19 +92,19 @@ public class srvDenuncia extends HttpServlet {
 
     private void reporteJasperPDF(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            File f = new File(getServletConfig().getServletContext().getRealPath("reportes/Denuncias.jasper"));
-            if (f.exists()) {
-                byte[] reporte = JasperRunManager.runReportToPdf(f.getPath(), new HashMap<>(),new JREmptyDataSource());
+            InputStream reporte = this.getServletConfig().getServletContext().getResourceAsStream("/reportes/Denuncias.jasper");
+            InputStream datasource=this.getServletConfig().getServletContext().getResourceAsStream("/reportes/Adapter_Reportes_Denuncia.xml");
+            ServletOutputStream out = response.getOutputStream();
+            if (reporte != null) {
+                
+                JasperRunManager.runReportToPdfStream(reporte, out, new HashMap<String, Object>(),new JREmptyDataSource());
                 response.setContentType("application/pdf;charset=UTF-8");
-                response.setContentLength(reporte.length);
                 response.addHeader("Content-disposition", "inline; filename=RDenuncia.pdf");
-                ServletOutputStream out = response.getOutputStream();
-                out.write(reporte, 0, reporte.length);
                 out.flush();
                 out.close();
-            }else{
-            response.setContentType("text/plain");
-            response.getOutputStream().print("archivo de reporte no encontrado");
+            } else {
+                response.setContentType("text/plain");
+                response.getOutputStream().print("archivo de reporte no encontrado");
             }
 
         } catch (Exception e) {
