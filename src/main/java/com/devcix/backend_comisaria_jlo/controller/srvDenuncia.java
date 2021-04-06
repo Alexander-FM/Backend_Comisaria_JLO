@@ -22,9 +22,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.sf.jasperreports.data.empty.EmptyDataAdapterImpl;
+import net.sf.jasperreports.data.xml.XmlDataAdapter;
+import net.sf.jasperreports.data.xml.XmlDataAdapterImpl;
+import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JREmptyDataSource;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRField;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperRunManager;
+import net.sf.jasperreports.engine.data.JRXmlDataSource;
 import net.sf.jasperreports.engine.data.JsonDataSource;
 
 @WebServlet(name = "srvDenuncia", urlPatterns = {"/denuncia"})
@@ -93,11 +99,11 @@ public class srvDenuncia extends HttpServlet {
     private void reporteJasperPDF(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             InputStream reporte = this.getServletConfig().getServletContext().getResourceAsStream("/reportes/Denuncias.jasper");
-            InputStream datasource=this.getServletConfig().getServletContext().getResourceAsStream("/reportes/Adapter_Reportes_Denuncia.xml");
+            InputStream datasource = this.getServletConfig().getServletContext().getResourceAsStream("/reportes/Adapter_Reportes_Denuncia.xml");
             ServletOutputStream out = response.getOutputStream();
-            if (reporte != null) {
-                
-                JasperRunManager.runReportToPdfStream(reporte, out, new HashMap<String, Object>(),new JREmptyDataSource());
+            if (reporte != null && datasource != null) {
+
+                JasperRunManager.runReportToPdfStream(reporte, out, new HashMap<>(),new JREmptyDataSource());
                 response.setContentType("application/pdf;charset=UTF-8");
                 response.addHeader("Content-disposition", "inline; filename=RDenuncia.pdf");
                 out.flush();
