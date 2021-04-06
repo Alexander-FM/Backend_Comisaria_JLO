@@ -21,6 +21,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.sf.jasperreports.data.empty.EmptyDataAdapterImpl;
+import net.sf.jasperreports.engine.JREmptyDataSource;
+import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperRunManager;
 
 @WebServlet(name = "srvDenuncia", urlPatterns = {"/denuncia"})
@@ -90,8 +92,8 @@ public class srvDenuncia extends HttpServlet {
         try {
             File f = new File(getServletConfig().getServletContext().getRealPath("reportes/Denuncias.jasper"));
             if (f.exists()) {
-                byte[] reporte = JasperRunManager.runReportToPdf(f.getPath(), new HashMap<>());
-                response.setContentType("application/pdf");
+                byte[] reporte = JasperRunManager.runReportToPdf(f.getPath(), new HashMap<>(),new JREmptyDataSource());
+                response.setContentType("application/pdf;charset=UTF-8");
                 response.setContentLength(reporte.length);
                 response.addHeader("Content-disposition", "inline; filename=RDenuncia.pdf");
                 ServletOutputStream out = response.getOutputStream();
