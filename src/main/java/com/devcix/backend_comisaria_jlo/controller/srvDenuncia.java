@@ -6,32 +6,22 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.reflect.TypeToken;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import net.sf.jasperreports.data.empty.EmptyDataAdapterImpl;
-import net.sf.jasperreports.data.xml.XmlDataAdapter;
-import net.sf.jasperreports.data.xml.XmlDataAdapterImpl;
-import net.sf.jasperreports.engine.JRDataSource;
-import net.sf.jasperreports.engine.JREmptyDataSource;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JRField;
-import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperRunManager;
-import net.sf.jasperreports.engine.data.JRXmlDataSource;
-import net.sf.jasperreports.engine.data.JsonDataSource;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 @WebServlet(name = "srvDenuncia", urlPatterns = {"/denuncia"})
 public class srvDenuncia extends HttpServlet {
@@ -53,7 +43,7 @@ public class srvDenuncia extends HttpServlet {
                     break;
             }
         } else {
-            response.sendRedirect("../index.jsp");
+            response.sendRedirect("index.jsp");
         }
     }
 
@@ -74,7 +64,7 @@ public class srvDenuncia extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private void exportarPDF(HttpServletRequest request, HttpServletResponse response) {
+    private void exportarPDF(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String strLista = request.getParameter("lista");
         Gson g = new GsonBuilder()
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
@@ -99,11 +89,20 @@ public class srvDenuncia extends HttpServlet {
     private void reporteJasperPDF(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             InputStream reporte = this.getServletConfig().getServletContext().getResourceAsStream("/reportes/Denuncias.jasper");
-            InputStream datasource = this.getServletConfig().getServletContext().getResourceAsStream("/reportes/Adapter_Reportes_Denuncia.xml");
-            ServletOutputStream out = response.getOutputStream();
-            if (reporte != null && datasource != null) {
+            String strLista = request.getParameter("lista");
+            //InputStream datasource = this.getServletConfig().getServletContext().getResourceAsStream("/reportes/Adapter_Reportes_Denuncia.xml");
 
-                JasperRunManager.runReportToPdfStream(reporte, out, new HashMap<>(),new JREmptyDataSource());
+            ServletOutputStream out = response.getOutputStream();
+            if (reporte != null && strLista != null) {
+                Gson g = new GsonBuilder()
+                        .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+                        .registerTypeAdapter(Date.class, (JsonDeserializer<Date>) (json, typeOfT, context) -> new Date(json.getAsJsonPrimitive().getAsLong()))
+                        .create();
+                List<Denuncias> denuncias = g.fromJson(strLista, new TypeToken<List<Denuncias>>() {
+                }.getType());
+                Map parameters = new HashMap();
+                parameters.put("data", new JRBeanCollectionDataSource(denuncias));
+                JasperRunManager.runReportToPdfStream(reporte, out, parameters);
                 response.setContentType("application/pdf;charset=UTF-8");
                 response.addHeader("Content-disposition", "inline; filename=RDenuncia.pdf");
                 out.flush();

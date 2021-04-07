@@ -93,7 +93,7 @@ function concatenarCero(numeros) {
     return numeros;
 }
 ;
-function reporte() {
+function reporte(accion) {
     let select = $('#cboFiltro').val();
     let fechaInicial = $('#fechaRangoInicial').val();
     let fechaFinal = $('#fechaRangoFinal').val();
@@ -105,6 +105,7 @@ function reporte() {
     };
     $.get('http://localhost:9090/api/denuncia/reportefiltro', peticion, function (r) {
         if (r.rpta === 1) {
+            $('#accion').val(accion);
             $('#lista').val(JSON.stringify(r.body));
             $('#frmReporte').submit();
         } else {
