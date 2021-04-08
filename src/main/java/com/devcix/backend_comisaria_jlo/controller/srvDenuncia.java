@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -20,16 +21,21 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import net.sf.jasperreports.engine.JasperRunManager;
-import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanArrayDataSource;
+import net.sf.jasperreports.engine.util.JRLoader;
+import org.apache.commons.io.IOUtils;
 
 @WebServlet(name = "srvDenuncia", urlPatterns = {"/denuncia"})
 public class srvDenuncia extends HttpServlet {
-
+    
     static {
         System.setProperty("java.awt.headless", "true");
     }
-
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String accion = request.getParameter("accion");
@@ -46,19 +52,19 @@ public class srvDenuncia extends HttpServlet {
             response.sendRedirect("index.jsp");
         }
     }
-
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
-
+    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
-
+    
     @Override
     public String getServletInfo() {
         return "Short description";
@@ -85,36 +91,42 @@ public class srvDenuncia extends HttpServlet {
             System.out.println("error" + e.getMessage());
         }
     }
-
+    
     private void reporteJasperPDF(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        ServletOutputStream out = response.getOutputStream();
         try {
-            InputStream reporte = this.getServletConfig().getServletContext().getResourceAsStream("/reportes/Denuncias.jasper");
+            InputStream reporte = this.getServletConfig().getServletContext().getResourceAsStream("/reportes/PlantillaDenuncias.jasper");
             String strLista = request.getParameter("lista");
-            //InputStream datasource = this.getServletConfig().getServletContext().getResourceAsStream("/reportes/Adapter_Reportes_Denuncia.xml");
-
-            ServletOutputStream out = response.getOutputStream();
             if (reporte != null && strLista != null) {
                 Gson g = new GsonBuilder()
                         .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
                         .registerTypeAdapter(Date.class, (JsonDeserializer<Date>) (json, typeOfT, context) -> new Date(json.getAsJsonPrimitive().getAsLong()))
                         .create();
-                List<Denuncias> denuncias = g.fromJson(strLista, new TypeToken<List<Denuncias>>() {
-                }.getType());
-                Map parameters = new HashMap();
-                parameters.put("data", new JRBeanCollectionDataSource(denuncias));
-                JasperRunManager.runReportToPdfStream(reporte, out, parameters);
+                List<Denuncias> denuncias = new ArrayList();
+                denuncias.add(new Denuncias());
+                denuncias.addAll(g.fromJson(strLista, new TypeToken<List<Denuncias>>() {
+                }.getType()));
+                JasperReport report = (JasperReport) JRLoader.loadObject(reporte);
+                JRBeanArrayDataSource ds = new JRBeanArrayDataSource(denuncias.toArray());
+                Map<String,Object> parameters = new HashMap();
+                parameters.put("ds", ds);
+                JasperPrint jasperPrint = JasperFillManager.fillReport(report, parameters, ds);
+                JasperExportManager.exportReportToPdfStream(jasperPrint, out);
                 response.setContentType("application/pdf;charset=UTF-8");
                 response.addHeader("Content-disposition", "inline; filename=RDenuncia.pdf");
                 out.flush();
                 out.close();
             } else {
                 response.setContentType("text/plain");
-                response.getOutputStream().print("archivo de reporte no encontrado");
+                out.println("no se pudo generar el reporte");
+                out.println("esto puede debrse a que la lista de datos no fue recibida o el archivo plantilla del reporte no se ha encontrado");
+                out.println("contacte a soporte");
             }
-
+            
         } catch (Exception e) {
-            System.out.println("No se pudo Mostrar el reporte:" + e.getMessage());
+            response.setContentType("text/plain");
+            out.print("ocurrió un error al intentar generar el reporte:" + e.getMessage());
         }
     }
-
+    
 }
