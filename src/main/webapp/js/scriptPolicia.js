@@ -10,7 +10,7 @@ function cargarTabla() {
             r.body.forEach(p => {
                 tabla += '<tr>';
                 tabla += '<td>' + p.id + "</td>";
-                tabla += '<td>' + (p.nombres + ' ' + p.apellidos) + "</td>";
+                tabla += '<td>' + (p.nombres + ' ' + p.apellidoPaterno +' '+p.apellidoMaterno) + "</td>";
                 tabla += '<td>' + p.distrito.distrito + "</td>";
                 tabla += '<td>' + p.gradoPNP.nombreGrado + "</td>";
                 tabla += '<td style=\"text-align: center\">' + (p.estado ? '<h5><span class =\"badge badge-success\">Activo</span></h5>' : '<h5><span class =\"badge badge-danger\">Inactivo</span></h5>') + '</td>';
