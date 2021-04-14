@@ -37,8 +37,8 @@
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h4 class="modal-title">Formulario De Registro</h4>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <h4 class="modal-title" id="modal-title">Formulario De Registro</h4>
+                                <button onclick="reset()" type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
@@ -72,11 +72,11 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Direccion</label>
-                                            <input id="direcciopolicia" type="text" placeholder="Ingrese Dirección" class="form-control">
+                                            <input id="direccion" type="text" placeholder="Ingrese Dirección" class="form-control">
                                         </div>
                                         <div class="form-group">
                                             <label>Seleccionar Estado Civil</label>
-                                            <select id="combo_estado_civil" style="width: 100%" class="select2 form-control" data-placeholder="Seleccionar">                                               
+                                            <select id="combo_ec" style="width: 100%" class="select2 form-control" data-placeholder="Seleccionar">                                               
                                                 <!-- Cargar desde la base de datos -->
                                                 <option>Cargando . . .</option>
                                             </select>  
@@ -107,7 +107,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Fecha Nacimiento</label>
-                                            <input id="telefonoPolicia" type="date" placeholder="Ingrese Fecha Nacimiento" class="form-control">
+                                            <input id="fechaNac" type="date" placeholder="Ingrese Fecha Nacimiento" class="form-control">
                                         </div>
                                         <label>Estado del Policía</label>
                                         <div class="form-group">                           
@@ -117,7 +117,8 @@
                                 </div>
                             </div>
                             <div class="modal-footer justify-content-between">
-                                <button id="btn-save" onclick="registrar()" type="button" class="btn btn-primary"><i class="fas fa-save"></i> Registrar Policia</button>
+                                <button id="btn-save" onclick="registrar()" type="button" class="btn btn-primary">
+                                    <i class="fas fa-save"></i> Registrar Policia</button>
                             </div>
                         </div>
                         <!-- /.modal-content -->
