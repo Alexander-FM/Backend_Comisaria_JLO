@@ -107,7 +107,8 @@ function registrar() {
         let url = 'http://localhost:9090/api/policia' + (id !== 0 ? ('/' + id) : '');
         let data = {
             nombres: $('#nombres').val(),
-            apellidos: $('#apellidos').val(),
+            apellidoPaterno: $('#apellidoPaterno').val(),
+            apellidoMaterno:$('#apellidoMaterno').val(),
             sexo: $('#combo_genero_policia').val(),
             telefono: $('#telefonoPolicia').val(),
             estado: ($('#estadoPol').is(':checked')),

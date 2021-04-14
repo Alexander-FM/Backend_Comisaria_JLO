@@ -1,6 +1,5 @@
 package com.devcix.backend_comisaria_jlo.model;
-
-public final class VinculoParteDenunciada {
+public final class InformacionAdicional {
     private int id;
     private String nombre;
 
@@ -11,7 +10,6 @@ public final class VinculoParteDenunciada {
     public void setId(int id) {
         this.id = id;
     }
-
 
     public String getNombre() {
         return nombre;

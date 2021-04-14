@@ -1,9 +1,8 @@
 package com.devcix.backend_comisaria_jlo.model;
 
-
-public final class TipoDenuncia {
+public final class EstadoCivil {
     private int id;
-    private String tipoDenuncia;
+    private String estadoCivil;
     private boolean estado;
 
     public int getId() {
@@ -14,12 +13,12 @@ public final class TipoDenuncia {
         this.id = id;
     }
 
-    public String getTipoDenuncia() {
-        return tipoDenuncia;
+    public String getEstadoCivil() {
+        return estadoCivil;
     }
 
-    public void setTipoDenuncia(String tipoDenuncia) {
-        this.tipoDenuncia = tipoDenuncia;
+    public void setEstadoCivil(String estadoCivil) {
+        this.estadoCivil = estadoCivil;
     }
 
     public boolean isEstado() {

@@ -53,11 +53,11 @@ function cargarTabla() {
             tabla += '<tr>';
             tabla += '<td>' + d.id + '</td>';
             tabla += '<td>' + d.tipoDenuncia.tipoDenuncia + '</td>';
+            tabla += '<td>' + d.cod_denuncia + '</td>';
+            tabla += '<td>' + d.distrito.distrito + '</td>';
+            tabla += '<td>' + d.vinculoParteDenunciada.nombre + '</td>';
             tabla += '<td>' + formaterFecha(d.fechaDenuncia) + '</td>';
-            tabla += '<td>' + d.policia.nombres + '</td>';
-            tabla += "<td>? ? ?</td>";
-            tabla += "<td>? ? ?</td>";
-            tabla += "<td>? ? ?</td>";
+            tabla += '<td>' + d.policia.nombres + ' ' + d.policia.apellidoPaterno + ' ' + d.policia.apellidoMaterno + '</td>';
             tabla += '<td style=\"text-align: center\">' + (d.estadoDenuncia === true ? '<h5><span class =\"badge badge-success\">Diligenciada</span></h5>' : '<h5><span class =\"badge badge-danger\">Pendiente</span></h5>') + '</td>';
             tabla += '</tr>';
         });

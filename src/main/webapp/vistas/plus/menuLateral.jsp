@@ -14,7 +14,7 @@
                             <img src="../dist/img/policiapng.png" class="img-circle elevation-2" alt="User Image">
                         </div>
                         <div class="info">
-                            <a href="#" class="d-block" style="color: white;">${usuario.nombres} ${usuario.apellidos}</a>
+                            <a href="#" class="d-block" style="color: white;">${usuario.nombres} ${usuario.apellidoPaterno} ${usuario.apellidoMaterno}</a>
                             <small style="color: white">Usted es, ${usuario.gradoPNP.nombreGrado}</small>
                         </div>
                     </div>

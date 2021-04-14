@@ -1,8 +1,18 @@
 package com.devcix.backend_comisaria_jlo.controller;
-
 import com.devcix.backend_comisaria_jlo.model.Policia;
+import com.devcix.backend_comisaria_jlo.utils.DateDeserializer;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
 import java.io.IOException;
+import java.lang.reflect.Type;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -31,11 +41,13 @@ public class srvLogin extends HttpServlet {
         }
 
     }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -50,10 +62,14 @@ public class srvLogin extends HttpServlet {
     private void asignarSession(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             String data = request.getParameter("data");
-            Policia p = new Gson().fromJson(data, Policia.class);
+            Gson g = new GsonBuilder()
+                    .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+                    .registerTypeAdapter(Date.class, new DateDeserializer())
+                    .create();
+            final Policia p = g.fromJson(data, Policia.class);
             request.getSession().setAttribute("usuario", p);
         } catch (Exception e) {
-            System.out.println("Error al asignar la sesión:" + e.getMessage());
+            e.printStackTrace();
         }
 
     }
@@ -65,4 +81,5 @@ public class srvLogin extends HttpServlet {
         response.sendRedirect("index.jsp");
     }
 
+   
 }

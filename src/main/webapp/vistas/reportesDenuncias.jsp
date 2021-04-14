@@ -87,7 +87,7 @@
                                     <div class="card-body">
                                         <div class="form-group">
 
-                                            <form action="../denuncia" id="frmReporte" method="post">
+                                            <form target="_blank" action="../denuncia" id="frmReporte" method="post">
                                                 <input type="hidden" name="accion" id="accion">
                                                 <button type="button" class="btn btn-sm btn-outline-primary" onclick="reporte('ExportarPDF')"><i class="fas fa-file-pdf"></i> Exportar PDF</button>
                                                 <button onclick="reporte('ReporteJasperPDF')" type="button"class="btn btn-sm btn-outline-info"><i class="fas fa-file-pdf"></i> Exportar con JasperReports</button>
@@ -100,25 +100,25 @@
                                                 <tr>
                                                     <th class="text-center">Id</th>
                                                     <th class="text-center">TipoDenuncia</th>
-                                                    <th class="text-center">FechaDenuncia</th>
+                                                    <th class="text-center">Cod Denuncia</th>
+                                                    <th class="text-center">Distrito</th>
+                                                    <th class="text-center">VPD</th>
+                                                    <th class="text-center">Fecha Denuncia</th>
                                                     <th class="text-center">Policia</th>
-                                                    <th class="text-center">Denunciante</th>
-                                                    <th class="text-center">Agraviado</th>
-                                                    <th class="text-center">Denunciado</th>
                                                     <th class="text-center">Estado</th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
+                                            <tbody style="text-align: center">
                                             </tbody>
                                             <tfoot>
                                                 <tr>
                                                     <th class="text-center">Id</th>
-                                                    <th class="text-center">TipoDenuncia</th>
-                                                    <th class="text-center">FechaDenuncia</th>
+                                                    <th class="text-center">Tipo Denuncia</th>
+                                                     <th class="text-center">Cod Denuncia</th>
+                                                    <th class="text-center">Distrito</th>
+                                                    <th class="text-center">VPD</th>
+                                                    <th class="text-center">Fecha Denuncia</th>                 
                                                     <th class="text-center">Policia</th>
-                                                    <th class="text-center">Denunciante</th>
-                                                    <th class="text-center">Agraviado</th>
-                                                    <th class="text-center">Denunciado</th>
                                                     <th class="text-center">Estado</th>
                                                 </tr>
                                             </tfoot>

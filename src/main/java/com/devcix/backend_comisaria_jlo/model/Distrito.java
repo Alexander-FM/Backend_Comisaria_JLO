@@ -1,26 +1,17 @@
 package com.devcix.backend_comisaria_jlo.model;
-
-public class Distrito {
-    private int idDistrito;
-    private String codigoPostal;
+public final class Distrito {
+    private int id;
     private String distrito;
+    private String codigoPostal;
     private boolean estado;
     private Provincia provincia;
 
-    public int getIdDistrito() {
-        return idDistrito;
+    public int getId() {
+        return id;
     }
 
-    public void setIdDistrito(int idDistrito) {
-        this.idDistrito = idDistrito;
-    }
-
-    public String getCodigoPostal() {
-        return codigoPostal;
-    }
-
-    public void setCodigoPostal(String codigoPostal) {
-        this.codigoPostal = codigoPostal;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getDistrito() {
@@ -29,6 +20,14 @@ public class Distrito {
 
     public void setDistrito(String distrito) {
         this.distrito = distrito;
+    }
+
+    public String getCodigoPostal() {
+        return codigoPostal;
+    }
+
+    public void setCodigoPostal(String codigoPostal) {
+        this.codigoPostal = codigoPostal;
     }
 
     public boolean isEstado() {
@@ -46,6 +45,6 @@ public class Distrito {
     public void setProvincia(Provincia provincia) {
         this.provincia = provincia;
     }
-    
-    
+
+
 }

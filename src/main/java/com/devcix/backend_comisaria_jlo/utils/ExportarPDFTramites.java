@@ -11,7 +11,6 @@ import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 import java.awt.Color;
-import java.awt.print.PageFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -58,12 +57,12 @@ public class ExportarPDFTramites {
 
     public void writeTableData(PdfPTable pdfPTable) {
         for (Tramite tramites : getTramites) {
-            pdfPTable.addCell(String.valueOf(tramites.getId_tramite()));
-            pdfPTable.addCell(String.valueOf(tramites.getCod_tramite()));
+            pdfPTable.addCell(String.valueOf(tramites.getId()));
+            pdfPTable.addCell(String.valueOf(tramites.getCodTramite()));
             pdfPTable.addCell(String.valueOf(tramites.getTipoTramite()));
             pdfPTable.addCell(this.formatearFecha(tramites.getFechaDenuncia()));
-            pdfPTable.addCell(String.valueOf(tramites.getPoliciaId().getNombresCompletos()));
-            pdfPTable.addCell(String.valueOf(tramites.getUsuarioDenun().getNombresCompletos()));
+            pdfPTable.addCell(String.valueOf(tramites.getPolicia().getNombreCompleto()));
+            pdfPTable.addCell(String.valueOf(tramites.getUsuario().getNombreCompleto()));
 
         }
     }

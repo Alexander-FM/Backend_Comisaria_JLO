@@ -1,5 +1,6 @@
 package com.devcix.backend_comisaria_jlo.model;
-public class TipoIdentificacion {
+
+public final class TipoIdentificacion {
     private int id;
     private String tipoIdentificacion;
     private boolean estado;
@@ -27,4 +28,6 @@ public class TipoIdentificacion {
     public void setEstado(boolean estado) {
         this.estado = estado;
     }
+
+
 }

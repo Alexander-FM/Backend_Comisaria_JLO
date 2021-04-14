@@ -50,6 +50,10 @@
                                             <input id="nombres" type="text" placeholder="Ingrese sus Nombres" class="form-control">
                                         </div>
                                         <div class="form-group">
+                                            <label>Apellido Materno</label>
+                                            <input id="apellidoMaterno" type="text" placeholder="Ingrese su Apellido Materno" class="form-control">
+                                        </div>
+                                        <div class="form-group">
                                             <label>Seleccionar Género</label>
                                             <select id="combo_genero_policia" style="width: 100%" class="form-control" data-placeholder="Seleccionar">                                               
                                                 <!-- Cargar desde la base de datos -->
@@ -66,15 +70,16 @@
                                             <label>Número Telefónico</label>
                                             <input maxlength="9" id="telefonoPolicia" type="text" placeholder="Ingrese N.º Telefónico" class="form-control">
                                         </div>
-                                        <div class="form-group">
-                                            <label>Número Identificación</label>
-                                            <input maxlength="8" id="numIdentificacion" type="text" placeholder="Ingrese N.º Identificación" class="form-control">
+                                        <label>Estado del Policía</label>
+                                        <div class="form-group">                           
+                                            <input id="estadoPol" style="margin-top: 10px" type="checkbox" checked="" class="checkbox"> Vigente
                                         </div>
+
                                     </div>
                                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                                         <div class="form-group">
-                                            <label>Apellidos Completos</label>
-                                            <input id="apellidos" type="text" placeholder="Ingrese sus Apellidos" class="form-control">
+                                            <label>Apellido Paterno</label>
+                                            <input id="apellidoPaterno" type="text" placeholder="Ingrese su Apellido Paterno" class="form-control">
                                         </div>
                                         <div class="form-group">
                                             <label>Seleccionar Distrito</label>
@@ -90,9 +95,9 @@
                                                 <option>Cargando...</option>
                                             </select>  
                                         </div>
-                                        <label>Estado del Policía</label>
-                                        <div class="form-group">                           
-                                            <input id="estadoPol" style="margin-top: 10px" type="checkbox" checked="" class="checkbox"> Vigente
+                                        <div class="form-group">
+                                            <label>Número Identificación</label>
+                                            <input maxlength="8" id="numIdentificacion" type="text" placeholder="Ingrese N.º Identificación" class="form-control">
                                         </div>
                                     </div>
                                 </div>

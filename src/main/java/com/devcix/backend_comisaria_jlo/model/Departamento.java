@@ -1,18 +1,17 @@
-
 package com.devcix.backend_comisaria_jlo.model;
 
-public class Departamento {
-   private int idDepartamento;
-   private String departamento;
-   private String capital;
-   private String estado;
+public final class Departamento {
+    private int id;
+    private String departamento;
+    private String capital;
+    private boolean estado;
 
-    public int getIdDepartamento() {
-        return idDepartamento;
+    public int getId() {
+        return id;
     }
 
-    public void setIdDepartamento(int idDepartamento) {
-        this.idDepartamento = idDepartamento;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getDepartamento() {
@@ -31,13 +30,13 @@ public class Departamento {
         this.capital = capital;
     }
 
-    public String getEstado() {
+    public boolean isEstado() {
         return estado;
     }
 
-    public void setEstado(String estado) {
+    public void setEstado(boolean estado) {
         this.estado = estado;
     }
-   
-   
+
+
 }

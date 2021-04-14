@@ -91,22 +91,57 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <table id="TablaDetalleDenuncia" class="table table-responsive table-bordered table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>Fecha Hechos</th>                                       
-                                        <th>Vínculo Con Denunciada(o)</th>
-                                        <th>Denunciante</th>
-                                        <th>Teléf. Denunciante</th>
-                                        <th>Denunciado</th>
-                                        <th>Agraviado(a)</th>
-                                        <th>Inf. Adic Agraviado</th>                                                                        
-                                    </tr>
-                                </thead>
-                                <tbody>
+                            <div class="row">
+                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                                    <div class="card-gray card-outline">
+                                        <div class="card-header">
+                                            <h3 class="card-title">Agraviados</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <table id="tabla_agraviados" class="table table-bordered table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Nombre Completo</th>
+                                                        <th>Teléfono</th>
+                                                        <th>Información Adicional</th>
+                                                        <th>Relato de la Denuncia</th>
+                                                        <th>¿tiene protección?</th>
+                                                        <th>Juzgado</th>
+                                                        <th>Fecha de emisión</th>
+                                                        <th>Detalle de la Protección</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody style="text-align: center">
 
-                                </tbody>
-                            </table>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                                    <div class="card-primary card-outline">
+                                        <div class="card-header">
+                                            <h3 class="card-title">Denunciados</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <table id="tabla_denunciados" class="table table-bordered table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Nombre Completo</th>
+                                                        <th>Teléfono</th>
+                                                        <th>Documento</th>
+                                                        <th>Tipo de identificación</th>
+                                                        <th>Información Adicional</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
@@ -156,6 +191,7 @@
                                                     <th>TipoDenuncia</th>
                                                     <th>Cód-Denuncia</th>
                                                     <th>FechaDenuncia</th>
+                                                    <th>Fecha Hechos</th>    
                                                     <th>Policia</th>
                                                     <th>Distrito</th>
                                                     <th>Dirección</th>
@@ -172,6 +208,7 @@
                                                     <th>TipoDenuncia</th>
                                                     <th>Cód-Denuncia</th>
                                                     <th>FechaDenuncia</th>
+                                                    <th>Fecha Hechos</th>  
                                                     <th>Policia</th>
                                                     <th>Distrito</th>
                                                     <th>Dirección</th>

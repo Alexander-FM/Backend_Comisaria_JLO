@@ -1,6 +1,6 @@
 package com.devcix.backend_comisaria_jlo.utils;
 
-import com.devcix.backend_comisaria_jlo.model.Denuncias;
+import com.devcix.backend_comisaria_jlo.model.Denuncia;
 import com.lowagie.text.Document;
 import com.lowagie.text.Font;
 import com.lowagie.text.FontFactory;
@@ -11,24 +11,21 @@ import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 import java.awt.Color;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Locale;
 import javax.servlet.http.HttpServletResponse;
 
 public class ExportarPDF {
 
-    private List<Denuncias> getDenuncias;
+    private List<Denuncia> getDenuncias;
 
     public ExportarPDF() {
 
     }
 
-    public ExportarPDF(List<Denuncias> getDenuncias) {
+    public ExportarPDF(List<Denuncia> getDenuncias) {
         this.getDenuncias = getDenuncias;
     }
 
@@ -65,11 +62,11 @@ public class ExportarPDF {
  
 
     public void writeTableData(PdfPTable pdfPTable) {
-        for (Denuncias denuncia : getDenuncias) {
+        for (Denuncia denuncia : getDenuncias) {
             pdfPTable.addCell(String.valueOf(denuncia.getId()));
             pdfPTable.addCell(String.valueOf(denuncia.getTipoDenuncia().getTipoDenuncia()));
             pdfPTable.addCell(this.formatearFecha(denuncia.getFechaDenuncia()));
-            pdfPTable.addCell(String.valueOf(denuncia.getPolicia().getNombresCompletos()));
+            pdfPTable.addCell(String.valueOf(denuncia.getPolicia().getNombreCompleto()));
             pdfPTable.addCell(String.valueOf(denuncia.getDistrito().getDistrito()));
             pdfPTable.addCell(String.valueOf(denuncia.getDireccion()));
             pdfPTable.addCell(String.valueOf(denuncia.getReferenciaDireccion()));

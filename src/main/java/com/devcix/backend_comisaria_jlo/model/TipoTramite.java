@@ -1,7 +1,7 @@
-
 package com.devcix.backend_comisaria_jlo.model;
 
-public class TipoTramite {
+
+public final class TipoTramite {
     private int id;
     private String tipoTramite;
     private boolean estado;
@@ -29,6 +29,4 @@ public class TipoTramite {
     public void setEstado(boolean estado) {
         this.estado = estado;
     }
-    
-    
 }

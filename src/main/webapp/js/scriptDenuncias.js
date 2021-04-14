@@ -1,5 +1,6 @@
 var tabla = $("table#TablaDenuncias"),
-        tablaDetalle = $("table#TablaDetalleDenuncia"),
+        tablaAgraviados = $("table#tabla_agraviados"),
+        tablaDenunciados = $("table#tabla_denunciados"),
         mdlDd = $("#modal-dd"),
         mdlAd = $("#modal-ac"),
         btnSave = $("#btn-save");
@@ -29,23 +30,34 @@ function leerDenuncia(id) {
         data: {}, //idD es la variable del servicio
         success: function (data) {
             console.log(data.body);
-            var tdd = '';
-            for (var i = 0; i < data.body.length; i++) {
-                tdd += '<tr>';
-                tdd += '<td nowrap>' + formaterFecha(data.body[i].denuncia.fechaHechos) + '</td>';
-                tdd += '<td>' + data.body[i].denuncia.vinculoParteDenunciada.nombre + '</td>';
-                tdd += '<td>' + data.body[i].usuario.nombres + ', ' + data.body[i].usuario.apellidoPaterno + ' ' + data.body[i].usuario.apellidoPaterno + '</td>';
-                tdd += '<td>' + data.body[i].usuario.telefono + '</td>';
-                tdd += '<td>' + data.body[i].denunciado.nombres + ', ' + data.body[i].denunciado.apellidos + '</td>';
-                tdd += '<td>' + data.body[i].agraviado.nombreAgraviado + ', ' + data.body[i].agraviado.apellidosAgraviado + '</td>';
-                tdd += '<td>' + data.body[i].agraviado.informacionAdicional.nombre + '</td>';
-//                tdd += '<td style=\"text-align: center\">'
-//                        + '<button class="btn btn-success"><i class="fas fa-plus"></i> </button></td>';
-                tdd += '</tr>';
+            var tablaA = '', tablaD = '';
+            data.body.agraviados.forEach(ag => {
+                tablaA += '<tr>';
+                tablaA += '<td>' + ag.agraviado.nombres + ' ' + ag.agraviado.apellidoPaterno + ' ' + ag.agraviado.apellidoMaterno + '</td>';
+                tablaA += '<td>' + ag.agraviado.telefono;
+                tablaA += '<td>' + ag.agraviado.informacionAdicional.nombre + '</td>';
+                tablaA += '<td>' + ag.agraviado.rhd + '</td>';
+                tablaA += '<td>' + (ag.agraviado.medidaProteccion ? 'si' : 'no') + '</td>';
+                tablaA += '<td>' + (ag.agraviado.medidaProteccion ? ag.agraviado.juzgado : 'no data ') + '</td>';
+                tablaA += '<td>' + (ag.agraviado.medidaProteccion ? formaterFecha(ag.agraviado.fechaEmision) : 'no data ') + '</td>';
+                tablaA += '<td>' + (ag.agraviado.medidaProteccion ? ag.agraviado.detalleProteccion : 'no data ') + '</td>';
+                tablaA += '</tr>';
                 debugger;
-                tablaDetalle.find("tbody").html(tdd);
-                tablaDetalle.DataTable();
-            }
+                tablaAgraviados.find("tbody").html(tablaA);
+                tablaAgraviados.DataTable();
+            });
+            data.body.denunciados.forEach(den => {
+                tablaD += '<tr>';
+                tablaD += '<td>' + den.denunciado.nombres + ' ' + den.denunciado.apellidoPaterno + ' ' + den.denunciado.apellidoMaterno + '</td>';
+                tablaD += '<td>' + den.denunciado.telefono + '</td>';
+                tablaD += '<td>' + den.denunciado.numeroIdentificacion + '</td>';
+                tablaD += '<td>' + den.denunciado.tipoIdentificacion.tipoIdentificacion + '</td>';
+                tablaD += '<td>' + den.denunciado.informacionAdicional.nombre + '</td>';
+                tablaD += '</tr>';
+                tablaDenunciados.find("tbody").html(tablaD);
+                tablaDenunciados.DataTable();
+            });
+
         }, error: function (x, y) {
             console.log(x.responseText);
         }
@@ -190,22 +202,23 @@ function listarDenuncias() {
         success: function (data) {
             console.log(data.body);
             var tpl = '';
-            for (var i = 0; i < data.body.length; i++) {
+            data.body.forEach(d => {
                 tpl += '<tr>';
-                tpl += '<td>' + data.body[i].id + '</td>';
-                tpl += '<td>' + data.body[i].tipoDenuncia.tipoDenuncia + '</td>';
-                tpl += '<td nowrap>' + data.body[i].cod_denuncia + '</td>';
-                tpl += '<td nowrap>' + formaterFecha(data.body[i].fechaDenuncia) + '</td>';
-                tpl += '<td>' + data.body[i].policia.nombres + ' ' + data.body[i].policia.apellidos + '</td>';
-                tpl += '<td>' + data.body[i].distrito.distrito + '</td>';
-                tpl += '<td>' + data.body[i].direccion + '</td>';
-                tpl += '<td>' + data.body[i].referenciaDireccion + '</td>';
-                tpl += '<td style=\"text-align: center\">' + (data.body[i].estadoDenuncia === true ? '<h5><span class =\"badge badge-success\">Diligenciada</span></h5>' : '<h5><span class =\"badge badge-danger\">Pendiente</span></h5>') + '</td>';
+                tpl += '<td>' + d.id + '</td>';
+                tpl += '<td>' + d.tipoDenuncia.tipoDenuncia + '</td>';
+                tpl += '<td nowrap>' + d.cod_denuncia + '</td>';
+                tpl += '<td nowrap>' + formaterFecha(d.fechaDenuncia) + '</td>';
+                tpl += '<td nowrap>' + formaterFecha(d.fechaHechos) + '</td>';
+                tpl += '<td>' + d.policia.nombres + ' ' + d.policia.apellidoPaterno + ' ' + d.policia.apellidoMaterno + '</td>';
+                tpl += '<td>' + d.distrito.distrito + '</td>';
+                tpl += '<td>' + d.direccion + '</td>';
+                tpl += '<td>' + d.referenciaDireccion + '</td>';
+                tpl += '<td style=\"text-align: center\">' + (d.estadoDenuncia === true ? '<h5><span class =\"badge badge-success\">Diligenciada</span></h5>' : '<h5><span class =\"badge badge-danger\">Pendiente</span></h5>') + '</td>';
                 tpl += '<td nowrap style=\"text-align: center\">'
                         + '<button class="btn btn-info"><i class="fas fa-plus"></i></button> '
                         + '<button class="btn btn-warning"><i class="fas fa-edit"></i></button></td>';
                 tpl += '</tr>';
-            }
+            });
             tabla.find("tbody").html(tpl);
             tabla.DataTable();
             //$('#CuerpoTablaDenuncias').html(tpl);
@@ -232,7 +245,7 @@ function cargarPolicias() {
     var combo = '';
     $.get('http://localhost:9090/api/policia', {}, function (r) {
         r.body.forEach(p => {
-            combo += '<option value="' + p.id + '">' + p.nombres + ' ' + p.apellidos + '</option>';
+            combo += '<option value="' + p.id + '">' + p.nombres + ' ' + p.apellidoPaterno + ' ' + p.apellidoMaterno + '</option>';
             $('#combo_policias').html(combo);
         });
     });

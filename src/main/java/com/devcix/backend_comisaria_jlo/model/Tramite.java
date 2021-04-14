@@ -2,37 +2,32 @@ package com.devcix.backend_comisaria_jlo.model;
 
 import java.util.Date;
 
-public class Tramite {
-    private int id_tramite;
-    private String cod_tramite;
-    private boolean estadoTramite;
-    private Date fechaDenuncia;
-    private TipoTramite tipoTramite;
-    private Policia policiaId;
-    private UsuarioDenunciante usuarioDenun;
 
-    public int getId_tramite() {
-        return id_tramite;
+public final class Tramite {
+    private int id;
+    private String codTramite;/*Una vez ingresado el trámite la mayor dará el cod-trámite por correo del usuario*/
+    private Date fechaDenuncia;/*Se rellenará automaticamente*/
+    private TipoTramite tipoTramite;/*El usuario selecciona el tipo de trámite.*/
+    private boolean estadoTramite;/*por defecto se mandará en 0 como pendiente y 1 si es diligenciada, mejor dicho que ya
+    está siendo atendido su trámite.*/
+    private Usuario usuario;/*Representa en este caso el denunciante. Con la sesion del usuario podemos capturar todos
+    sus datos personales.*/
+    private Policia policia; /*Muchos Trámites puede atender un solo policía*/
+
+    public int getId() {
+        return id;
     }
 
-    public void setId_tramite(int id_tramite) {
-        this.id_tramite = id_tramite;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public String getCod_tramite() {
-        return cod_tramite;
+    public String getCodTramite() {
+        return codTramite;
     }
 
-    public void setCod_tramite(String cod_tramite) {
-        this.cod_tramite = cod_tramite;
-    }
-
-    public boolean isEstadoTramite() {
-        return estadoTramite;
-    }
-
-    public void setEstadoTramite(boolean estadoTramite) {
-        this.estadoTramite = estadoTramite;
+    public void setCodTramite(String codTramite) {
+        this.codTramite = codTramite;
     }
 
     public Date getFechaDenuncia() {
@@ -51,21 +46,27 @@ public class Tramite {
         this.tipoTramite = tipoTramite;
     }
 
-    public Policia getPoliciaId() {
-        return policiaId;
+    public boolean isEstadoTramite() {
+        return estadoTramite;
     }
 
-    public void setPoliciaId(Policia policiaId) {
-        this.policiaId = policiaId;
+    public void setEstadoTramite(boolean estadoTramite) {
+        this.estadoTramite = estadoTramite;
     }
 
-    public UsuarioDenunciante getUsuarioDenun() {
-        return usuarioDenun;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setUsuarioDenun(UsuarioDenunciante usuarioDenun) {
-        this.usuarioDenun = usuarioDenun;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
-    
-    
+
+    public Policia getPolicia() {
+        return policia;
+    }
+
+    public void setPolicia(Policia policia) {
+        this.policia = policia;
+    }
 }

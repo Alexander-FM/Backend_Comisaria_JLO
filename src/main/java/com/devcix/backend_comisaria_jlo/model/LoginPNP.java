@@ -1,9 +1,11 @@
 package com.devcix.backend_comisaria_jlo.model;
-public class LoginPNP {
+
+public final class LoginPNP{
     private int id;
     private String codigoPolicial;
     private String clave;
     private boolean estado;
+    private Policia policia;
 
     public int getId() {
         return id;
@@ -35,5 +37,14 @@ public class LoginPNP {
 
     public void setEstado(boolean estado) {
         this.estado = estado;
+    }
+
+
+    public Policia getPolicia() {
+        return policia;
+    }
+
+    public void setPolicia(Policia policia) {
+        this.policia = policia;
     }
 }

@@ -1,6 +1,7 @@
 package com.devcix.backend_comisaria_jlo.controller;
 
-import com.devcix.backend_comisaria_jlo.model.Denuncias;
+import com.devcix.backend_comisaria_jlo.model.Denuncia;
+import com.devcix.backend_comisaria_jlo.utils.DateDeserializer;
 import com.devcix.backend_comisaria_jlo.utils.ExportarPDF;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -27,7 +28,6 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanArrayDataSource;
 import net.sf.jasperreports.engine.util.JRLoader;
-import org.apache.commons.io.IOUtils;
 
 @WebServlet(name = "srvDenuncia", urlPatterns = {"/denuncia"})
 public class srvDenuncia extends HttpServlet {
@@ -76,7 +76,7 @@ public class srvDenuncia extends HttpServlet {
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
                 .registerTypeAdapter(Date.class, (JsonDeserializer<Date>) (json, typeOfT, context) -> new Date(json.getAsJsonPrimitive().getAsLong()))
                 .create();
-        List<Denuncias> denuncias = g.fromJson(strLista, new TypeToken<List<Denuncias>>() {
+        List<Denuncia> denuncias = g.fromJson(strLista, new TypeToken<List<Denuncia>>() {
         }.getType());
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
         String nomFile = dateFormat.format(new Date());
@@ -100,11 +100,11 @@ public class srvDenuncia extends HttpServlet {
             if (reporte != null && strLista != null) {
                 Gson g = new GsonBuilder()
                         .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                        .registerTypeAdapter(Date.class, (JsonDeserializer<Date>) (json, typeOfT, context) -> new Date(json.getAsJsonPrimitive().getAsLong()))
+                        .registerTypeAdapter(Date.class,new DateDeserializer())
                         .create();
-                List<Denuncias> denuncias = new ArrayList();
-                denuncias.add(new Denuncias());
-                denuncias.addAll(g.fromJson(strLista, new TypeToken<List<Denuncias>>() {
+                List<Denuncia> denuncias = new ArrayList();
+                denuncias.add(new Denuncia());
+                denuncias.addAll(g.fromJson(strLista, new TypeToken<List<Denuncia>>() {
                 }.getType()));
                 JasperReport report = (JasperReport) JRLoader.loadObject(reporte);
                 JRBeanArrayDataSource ds = new JRBeanArrayDataSource(denuncias.toArray());
@@ -126,6 +126,7 @@ public class srvDenuncia extends HttpServlet {
         } catch (Exception e) {
             response.setContentType("text/plain");
             out.print("ocurrió un error al intentar generar el reporte:" + e.getMessage());
+            e.printStackTrace();
         }
     }
     

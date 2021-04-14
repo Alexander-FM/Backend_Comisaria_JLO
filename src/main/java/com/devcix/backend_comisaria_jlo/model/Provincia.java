@@ -1,9 +1,13 @@
 package com.devcix.backend_comisaria_jlo.model;
-public class Provincia {
+
+public final class Provincia {
     private int id;
     private String provincia;
     private boolean estado;
     private Departamento departamento;
+
+    /*La parte izquierda hace referencia a la clase actual y la parte derecha a la clase destino quedaría de la siguiente
+    * manera Muchas provincias pertenecen a un departamento.*/
 
     public int getId() {
         return id;
@@ -36,5 +40,6 @@ public class Provincia {
     public void setDepartamento(Departamento departamento) {
         this.departamento = departamento;
     }
-    
+
+
 }
