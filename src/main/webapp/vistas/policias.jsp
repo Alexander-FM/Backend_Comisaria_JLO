@@ -70,11 +70,17 @@
                                             <label>Número Telefónico</label>
                                             <input maxlength="9" id="telefonoPolicia" type="text" placeholder="Ingrese N.º Telefónico" class="form-control">
                                         </div>
-                                        <label>Estado del Policía</label>
-                                        <div class="form-group">                           
-                                            <input id="estadoPol" style="margin-top: 10px" type="checkbox" checked="" class="checkbox"> Vigente
+                                        <div class="form-group">
+                                            <label>Direccion</label>
+                                            <input id="direcciopolicia" type="text" placeholder="Ingrese Dirección" class="form-control">
                                         </div>
-
+                                        <div class="form-group">
+                                            <label>Seleccionar Estado Civil</label>
+                                            <select id="combo_estado_civil" style="width: 100%" class="select2 form-control" data-placeholder="Seleccionar">                                               
+                                                <!-- Cargar desde la base de datos -->
+                                                <option>Cargando . . .</option>
+                                            </select>  
+                                        </div>                                       
                                     </div>
                                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                                         <div class="form-group">
@@ -98,6 +104,14 @@
                                         <div class="form-group">
                                             <label>Número Identificación</label>
                                             <input maxlength="8" id="numIdentificacion" type="text" placeholder="Ingrese N.º Identificación" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Fecha Nacimiento</label>
+                                            <input id="telefonoPolicia" type="date" placeholder="Ingrese Fecha Nacimiento" class="form-control">
+                                        </div>
+                                        <label>Estado del Policía</label>
+                                        <div class="form-group">                           
+                                            <input id="estadoPol" style="margin-top: 10px" type="checkbox" checked="" class="checkbox"> Vigente
                                         </div>
                                     </div>
                                 </div>
