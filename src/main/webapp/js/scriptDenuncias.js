@@ -107,7 +107,8 @@ function registrar() {
             referenciaDireccion: $('#referenciadireccion').val(),
             distrito: {id: parseInt($('#distritoId').val())},
             tipoDenuncia: {id: parseInt($('#tipoDenunciaId').val())},
-            vinculoParteDenunciada: {id: parseInt($('#vPDId').val())}
+            vinculoParteDenunciada: {id: parseInt($('#vPDId').val())},
+            usuario: {id: parseInt($('#userId').val())}
         };
         $.ajax({
             type: (id === 0 ? 'post' : 'put'),
@@ -175,6 +176,7 @@ function presentarDatos(id) {
                     $('#distritoId').val(data.body.distrito.id);
                     $('#tipoDenunciaId').val(data.body.tipoDenuncia.id);
                     $('#vPDId').val(data.body.vinculoParteDenunciada.id);
+                    $('#userId').val(data.body.usuario.id);
                     break;
                 case 0:
                     alertify.warning(data.body + ' ☹');
@@ -206,9 +208,10 @@ function listarDenuncias() {
                 tpl += '<tr>';
                 tpl += '<td>' + d.id + '</td>';
                 tpl += '<td>' + d.tipoDenuncia.tipoDenuncia + '</td>';
-                tpl += '<td nowrap>' + d.cod_denuncia + '</td>';
+                tpl += '<td>' + d.cod_denuncia + '</td>';
                 tpl += '<td nowrap>' + formaterFecha(d.fechaDenuncia) + '</td>';
-                tpl += '<td nowrap>' + formaterFecha(d.fechaHechos) + '</td>';
+                tpl += '<td>' + formaterFecha(d.fechaHechos) + '</td>';
+                tpl += '<td>' + d.usuario.nombres + ' ' + d.usuario.apellidoPaterno + ' ' + d.usuario.apellidoMaterno + '</td>';
                 tpl += '<td>' + d.policia.nombres + ' ' + d.policia.apellidoPaterno + ' ' + d.policia.apellidoMaterno + '</td>';
                 tpl += '<td>' + d.distrito.distrito + '</td>';
                 tpl += '<td>' + d.direccion + '</td>';

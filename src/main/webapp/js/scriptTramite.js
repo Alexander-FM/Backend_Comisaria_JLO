@@ -38,10 +38,11 @@ $(document).ready(function () {
                 tabla += '<td style="text-align:center">' + t.id + '</td>';
                 tabla += '<td style="text-align:center">' + t.codTramite + '</td>';
                 tabla += '<td style="text-align:center">' + formaterFecha(t.fechaDenuncia) + '</td>';
-                tabla += '<td style="text-align:center">' + t.policia.nombres + '</td>';
+                tabla += '<td style="text-align:center">' + t.policia.nombres + ' ' + t.policia.apellidoPaterno + ' ' + t.policia.apellidoMaterno + '</td>';
                 tabla += '<td style="text-align:center">' + t.tipoTramite.tipoTramite + '</td>';
                 tabla += '<td style=\"text-align: center\">' + (t.estadoTramite === true ? '<h5><span class =\"badge badge-success\">Diligenciada</span></h5>' : '<h5><span class =\"badge badge-danger\">Pendiente</span></h5>') + '</td>';
                 tabla += '<td style="text-align:center">' + t.usuario.nombres + '</td>';
+                tabla += '<td style="text-align:center">' + t.correo + '</td>';
                 tabla += '<td nowrap style=\"text-align: center\">'
                         + '<button onclick="presentarDatos(' + t.id + ')" class="btn btn-warning"><i class="fas fa-edit"></i></button></td>';
                 tabla += '</tr>';
@@ -67,7 +68,7 @@ function cargarPoliciasForTramites() {
     var combo = '';
     $.get('http://localhost:9090/api/policia', {}, function (r) {
         r.body.forEach(p => {
-            combo += '<option value="' + p.id + '">' + p.nombres + ' ' + p.apellidos + '</option>';
+            combo += '<option value="' + p.id + '">' + p.nombres + ' ' + p.apellidoPaterno + ' ' + p.apellidoMaterno + '</option>';
         });
         $('#combo_policias_tramites').html(combo);
     });
@@ -82,6 +83,7 @@ function registrar() {
             estadoTramite: ($('#estadotramite').is(':checked')),
             policia: {id: parseInt($('#combo_policias_tramites').val())},
             fechaDenuncia: $('#fechaDenuncia').val(),
+            correo: $('#correoUser').val(),
             tipoTramite: {id: parseInt($('#tipoTramiteId').val())},
             usuario: {id: parseInt($('#usuarioId').val())}
         };
@@ -144,6 +146,7 @@ function presentarDatos(id) {
                         });
                     }
                     $('#fechaDenuncia').val(data.body.fechaDenuncia);
+                    $('#correoUser').val(data.body.correo);
                     $('#usuarioId').val(data.body.usuario.id);
                     $('#tipoTramiteId').val(data.body.tipoTramite.id);
                     break;
