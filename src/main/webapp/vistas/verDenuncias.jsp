@@ -39,7 +39,7 @@
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">
                                     <div class="form-group">
                                         <label>Código Denuncia</label>
-                                        <input maxlength="6" required="" id="codDenuncia" type="text" placeholder="Ingrese Cód. Denuncia" class="form-control">
+                                        <input maxlength="8" required="" id="codDenuncia" type="text" placeholder="Ingrese Cód. Denuncia" class="form-control">
                                         <!--<span>Si la denuncia es de <b>Tipo Sexual</b> se recomienda poner <u>D-"Cód-Denuncia"-S</u>, si es de <b> Tipo Psicológica</b> poner <u>D-"Cód-Denuncia"-P</u>, si es
                                             de <b>Tipo Económica</b> poner <u>D-"Cód-Denuncia"-E</u>, y si es de <b>Tipo Física</b> poner <u>D-"Cód-Denuncia"-F</u>.                                        
                                         </span>-->
@@ -57,6 +57,7 @@
                                     <input type="hidden" id="distritoId">
                                     <input type="hidden" id="tipoDenunciaId">
                                     <input type="hidden" id="vPDId">
+                                    <input type="hidden" id="userId">
                                 </div>
                             </div>
                             <div class="row">
@@ -119,7 +120,7 @@
                                     </div>
                                 </div>
                                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                                    <div class="card-primary card-outline">
+                                    <div class="card-orange card-outline">
                                         <div class="card-header">
                                             <h3 class="card-title">Denunciados</h3>
                                         </div>
@@ -184,14 +185,15 @@
                                     </div>
                                     <!-- /.card-header -->
                                     <div class="card-body">
-                                        <table id="TablaDenuncias" class="table table-bordered table-hover">
+                                        <table id="TablaDenuncias" class="table table-responsive table-bordered table-hover">
                                             <thead>
                                                 <tr>
                                                     <th>Id</th>
-                                                    <th>TipoDenuncia</th>
+                                                    <th>Tipo Den.</th>
                                                     <th>Cód-Denuncia</th>
                                                     <th>FechaDenuncia</th>
-                                                    <th>Fecha Hechos</th>    
+                                                    <th>Fecha Hechos</th>
+                                                    <th>Denunciante</th>  
                                                     <th>Policia</th>
                                                     <th>Distrito</th>
                                                     <th>Dirección</th>
@@ -209,6 +211,7 @@
                                                     <th>Cód-Denuncia</th>
                                                     <th>FechaDenuncia</th>
                                                     <th>Fecha Hechos</th>  
+                                                    <th>Denunciante</th>  
                                                     <th>Policia</th>
                                                     <th>Distrito</th>
                                                     <th>Dirección</th>

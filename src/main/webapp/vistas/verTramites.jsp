@@ -49,6 +49,7 @@
                                     <input type="hidden" id="fechaDenuncia">
                                     <input type="hidden" id="usuarioId">
                                     <input type="hidden" id="tipoTramiteId">
+                                    <input type="hidden" id="correoUser">
                                 </div>
                             </div>
                             <div class="row">
@@ -101,7 +102,7 @@
                                     </div>
                                     <!-- /.card-header -->
                                     <div class="card-body">
-                                        <table id="TablaTramites" class="table table-bordered table-hover">
+                                        <table id="TablaTramites" class="table table-responsive table-bordered table-hover">
                                             <thead>
                                                 <tr>
                                                     <th class="text-center">Id</th>
@@ -111,6 +112,7 @@
                                                     <th class="text-center">Tipo Trámite</th>
                                                     <th class="text-center">Estado</th>
                                                     <th class="text-center">Usuario</th>
+                                                    <th class="text-center">Correo Usuario</th>
                                                     <th class="text-center">Acciones</th>
                                                 </tr>
                                             </thead>
@@ -125,6 +127,7 @@
                                                     <th class="text-center">Tipo Trámite</th>
                                                     <th class="text-center">Estado</th>
                                                     <th class="text-center">Usuario</th>
+                                                    <th class="text-center">Correo Usuario</th>
                                                     <th class="text-center">Acciones</th>
                                                 </tr>
                                             </tfoot>
