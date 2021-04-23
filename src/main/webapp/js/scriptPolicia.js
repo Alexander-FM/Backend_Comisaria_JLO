@@ -27,6 +27,7 @@ function cargarTabla() {
 function cargarDatosRegistro() {
     cargarDistritos();
     cargarGrados();
+    cargarEstadosCiviles();
 }
 function cargarDistritos() {
     $.ajax({
@@ -52,7 +53,7 @@ function cargarDistritos() {
                     alertify.warning(data.body + ' ☹');
                     break;
                 default :
-                    alert('ha ocurrido un error durante el registro ⚙,inténtelo nuevamente en unos mintos ⏲');
+                    alert('ha ocurrido un error durante la carga de datos ⚙,inténtelo nuevamente en unos mintos ⏲');
                     break;
             }
         }, error: function (x, y) {
@@ -88,7 +89,7 @@ function cargarGrados() {
                     alertify.warning(data.body + ' ☹');
                     break;
                 default :
-                    alert('ha ocurrido un error durante el registro ⚙,inténtelo nuevamente en unos mintos ⏲');
+                    alert('ha ocurrido un error durante la carga de datos ⚙,inténtelo nuevamente en unos mintos ⏲');
                     break;
             }
         }, error: function (x, y) {
@@ -100,7 +101,42 @@ function cargarGrados() {
         }
     });
 }
+function cargarEstadosCiviles() {
+    $.ajax({
 
+        type: 'get',
+        url: 'http://localhost:9090/api/estadocivil',
+        data: {},
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        success: function (data) {
+            switch (data.rpta) {
+                case 1:
+                    let comboEC = '';
+                    data.body.forEach(e => {
+                        comboEC += '<option value="' + e.id + '">' + e.estadoCivil + '</option>';
+                    });
+                    $('#combo_ec').html(comboEC);
+                    $('#btnRegistrarPolicia').removeAttr('disabled');
+                    break;
+                case 0:
+                    alertify.warning(data.body + ' ☹');
+                    break;
+                default :
+                    alert('ha ocurrido un error durante la carga de datos ⚙,inténtelo nuevamente en unos mintos ⏲');
+                    break;
+            }
+        }, error: function (x, y) {
+            alertify.set('notifier', 'position', 'top-center');
+            alertify.set('notifier', 'delay', 10);
+            alertify.error('se ha intentado obtener los grados para el formulario de registro pero ocurrió un error,por favor refresque la pagina<br>\n\
+            si el problema persiste cierre la app y espere unos minutos');
+            //console.log(x.responseText);
+        }
+    });
+}
 function registrar() {
     if ($('#nombres').val().trim() !== '') {
         let id = parseInt($('#idP').val());
@@ -165,20 +201,20 @@ function presentarDatos(id) {
         success: function (data) {
             switch (data.rpta) {
                 case 1:
+                    $('#modal-title').html('Formulario de Actualización');
+                    $('#btn-save').html('<i class="fas fa-sync-alt"></i>Actualizar Policia');
                     $('#idP').val(data.body.id);
                     $('#nombres').val(data.body.nombres);
                     $('#apellidoPaterno').val(data.body.apellidoPaterno);
                     $('#apellidoMaterno').val(data.body.apellidoMaterno);
-                    //let item3 = '<option value="' + data.body.sexo + '" selected>'+'</option>'
-                    //$('#combo_genero_policia').append(item3);
                     $('#combo_genero_policia').val(data.body.sexo);
                     $('#telefonoPolicia').val(data.body.telefono);
                     $("#estadoPol").prop('checked', data.body.estado);
-                    let item2 = '<option value="' + data.body.distrito.id + '" selected>' + (data.body.distrito.distrito) + '</option>';
-                    $('#combo_distrito').append(item2);
-                    let item1 = '<option value="' + data.body.gradoPNP.id + '" selected>' + (data.body.gradoPNP.nombreGrado) + '</option>';
-                    $('#combo_grado').append(item1);
+                    $('#combo_distrito').val(data.body.distrito.id);
+                    $('#combo_grado').append(data.body.gradoPNP.id);
                     $('#numIdentificacion').val(data.body.numeroIdentificacion);
+                    $('#direccion').val(data.body.direccion);
+                    $('#fechaNac').val(data.body.fechaNacimiento);
                     break;
                 case 0:
                     alertify.warning(data.body + ' ☹');
@@ -196,3 +232,8 @@ function presentarDatos(id) {
     $('#btn-save').html('<i class="fas fa-sync-alt"></i> Actualizar Policia');
 }
 ;
+function reset() {
+$('#idP').val(0);
+$('#modal-title').html('Formulario de Registro');
+$('#btn-save').html('<i class="fas fa-save"></i>Registrar Policia');
+}
