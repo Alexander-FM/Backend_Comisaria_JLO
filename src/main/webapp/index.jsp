@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <link rel="icon" href="imagenes/pnp_icon.png">
-        <title>Comisaria JLO | Grado PNP</title>
+        <title>Comisaria JLO | Iniciar Sesión</title>
         
         <link href="css/pdfresources.css" rel="stylesheet" type="text/css"/>
         <!-- Font Awesome Icons -->
