@@ -37,7 +37,7 @@ $(document).ready(function () {
                 tabla += '<tr>';
                 tabla += '<td style="text-align:center">' + t.id + '</td>';
                 tabla += '<td style="text-align:center">' + t.codTramite + '</td>';
-                tabla += '<td style="text-align:center">' + formaterFecha(t.fechaDenuncia) + '</td>';
+                tabla += '<td style="text-align:center">' + t.fechaDenuncia + '</td>';
                 tabla += '<td style="text-align:center">' + t.policia.nombres + ' ' + t.policia.apellidoPaterno + ' ' + t.policia.apellidoMaterno + '</td>';
                 tabla += '<td style="text-align:center">' + t.tipoTramite.tipoTramite + '</td>';
                 tabla += '<td style=\"text-align: center\">' + (t.estadoTramite === true ? '<h5><span class =\"badge badge-success\">Diligenciada</span></h5>' : '<h5><span class =\"badge badge-danger\">Pendiente</span></h5>') + '</td>';

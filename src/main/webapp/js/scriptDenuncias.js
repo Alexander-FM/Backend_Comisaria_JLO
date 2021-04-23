@@ -209,7 +209,7 @@ function listarDenuncias() {
                 tpl += '<td>' + d.id + '</td>';
                 tpl += '<td>' + d.tipoDenuncia.tipoDenuncia + '</td>';
                 tpl += '<td>' + d.cod_denuncia + '</td>';
-                tpl += '<td nowrap>' + formaterFecha(d.fechaDenuncia) + '</td>';
+                tpl += '<td nowrap>' + d.fechaDenuncia + '</td>';
                 tpl += '<td>' + formaterFecha(d.fechaHechos) + '</td>';
                 tpl += '<td>' + d.usuario.nombres + ' ' + d.usuario.apellidoPaterno + ' ' + d.usuario.apellidoMaterno + '</td>';
                 tpl += '<td>' + d.policia.nombres + ' ' + d.policia.apellidoPaterno + ' ' + d.policia.apellidoMaterno + '</td>';
