@@ -1,4 +1,9 @@
 $(document).ready(function () {
+    let li_grupo_registros = $('#li_grupo_registros');
+    li_grupo_registros.attr('class', 'nav-item has-treeview menu-close menu-open');
+    let a = $('#li_policias').find('a');
+    a.attr('class', 'nav-link active');
+    a.attr('style', 'background-color: black');
     $('.select2').select2();
     cargarTabla();
     cargarDatosRegistro();
@@ -233,7 +238,7 @@ function presentarDatos(id) {
 }
 ;
 function reset() {
-$('#idP').val(0);
-$('#modal-title').html('Formulario de Registro');
-$('#btn-save').html('<i class="fas fa-save"></i>Registrar Policia');
+    $('#idP').val(0);
+    $('#modal-title').html('Formulario de Registro');
+    $('#btn-save').html('<i class="fas fa-save"></i>Registrar Policia');
 }

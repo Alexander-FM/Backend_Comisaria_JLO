@@ -5,6 +5,12 @@ var tabla = $("table#TablaDenuncias"),
         mdlAd = $("#modal-ac"),
         btnSave = $("#btn-save");
 $(document).ready(function () {
+    let li_grupo_registros = $('#li_grupo_recdenuncias');
+    li_grupo_registros.attr('class', 'nav-item has-treeview menu-close menu-open');
+    let a = $('#li_verdenuncias').find('a');
+    a.attr('class', 'nav-link active');
+    a.attr('style', 'background-color: black');
+    $("input:checkbox").prop('checked', false);
     tabla.on("click", ".btn-info", function () {
         var id = $(this).parents("tr").children()[0].textContent;
         leerDenuncia(id);

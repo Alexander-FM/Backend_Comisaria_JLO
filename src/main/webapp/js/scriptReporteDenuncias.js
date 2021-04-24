@@ -1,4 +1,10 @@
 $(document).ready(function () {
+    let li_grupo_registros = $('#li_grupo_reportes');
+    li_grupo_registros.attr('class', 'nav-item has-treeview menu-close menu-open');
+    let a = $('#li_rdenuncias').find('a');
+    a.attr('class', 'nav-link active');
+    a.attr('style', 'background-color: black');
+    $("input:checkbox").prop('checked', false);
     $('.select2').select2();
     cargarTabla();
 });
@@ -19,15 +25,15 @@ function cargarCriterios() {
         case 3:
             $.get('http://localhost:9090/api/policia/todos', {}, function (r) {
                 r.body.forEach(p => {
-                    combo += '<option value="' + p.id + '">' + p.nombres + ' ' + p.apellidos + '</option>';
+                    combo += '<option value="' + p.id + '">' + p.nombres + ' ' + p.apellidoPaterno + ' ' + p.apellidoMaterno + '</option>';
                     $('#cboFiltro').html(combo);
 
                 });
             });
             break;
         case 4:
-            combo += '<option value="1">Pendiente</option>';
-            combo += '<option value="2">Diligenciada</option>';
+            combo += '<option value="0">Pendiente</option>';
+            combo += '<option value="1">Diligenciada</option>';
             break;
     }
     $('#cboFiltro').html(combo);

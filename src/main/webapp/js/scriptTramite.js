@@ -1,11 +1,12 @@
 $(document).ready(function () {
+     let li_grupo_registros = $('#li_grupo_rectramites');
+    li_grupo_registros.attr('class', 'nav-item has-treeview menu-close menu-open');
+    let a = $('#li_vertramites').find('a');
+    a.attr('class', 'nav-link active');
+    a.attr('style', 'background-color: black');
+    $("input:checkbox").prop('checked', false);
     var tablaTramite = $("table#TablaTramites"),
             modalAt = $("#modal-at");
-    /*tablaTramite.on("click", ".btn-warning", function () {
-     var idTramite = $(this).parents("tr").children()[0].textContent;
-     //Crear function para actualizar los datos del trámite.
-     modalAt.modal({backdrop: 'static', keyboard: false});
-     });*/
 
     function formaterFecha(timestamp) {
         var datetime = new Date(timestamp);

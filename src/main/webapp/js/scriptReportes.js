@@ -1,4 +1,7 @@
 $(document).ready(function () {
+    let a = $('#li_inicio').find('a');
+    a.attr('class', 'nav-link active');
+    a.attr('style', 'background-color: black');
     cargarReporte();
 
 });

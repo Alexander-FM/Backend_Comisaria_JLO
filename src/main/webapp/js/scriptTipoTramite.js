@@ -1,4 +1,10 @@
 $(document).ready(function () {
+    let li_grupo_registros = $('#li_grupo_registros');
+    li_grupo_registros.attr('class', 'nav-item has-treeview menu-close menu-open');
+    let a = $('#li_tipotramite').find('a');
+    a.attr('class', 'nav-link active');
+    a.attr('style', 'background-color: black');
+    $("input:checkbox").prop('checked', false);
     $("input:checkbox").prop('checked', false);
     cargarTabla();
 });
@@ -40,7 +46,7 @@ function registrar() {
             success: function (data) {
                 switch (data.rpta) {
                     case 1:
-                        alertify.success('tipo trámite ' + (id === 0 ? 'registrado': 'actualizado') + ' 😀');
+                        alertify.success('tipo trámite ' + (id === 0 ? 'registrado' : 'actualizado') + ' 😀');
                         setTimeout(function () {
                             location.reload();
                         }, 1500)
@@ -62,33 +68,34 @@ function registrar() {
     } else {
         alert('por favor llene todos los campos');
     }
-};
+}
+;
 
-function presentarDatos(id){
+function presentarDatos(id) {
     $.ajax({
-       type: 'get',
-       url: 'http://localhost:9090/api/tipoTramite/' + id,
-       data: {},
-       headers: {
-           'Accept': 'application/json',
-           'Content-Type': 'application/json'
-       },
-       success: function (data){
-           switch(data.rpta){
-               case 1:
-                   $('#idTT').val(data.body.id);
-                   $('#nombreTramite').val(data.body.tipoTramite);
-                   $('#estadoTramite').prop('checked', data.body.estado);
-                   break;
+        type: 'get',
+        url: 'http://localhost:9090/api/tipoTramite/' + id,
+        data: {},
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        success: function (data) {
+            switch (data.rpta) {
+                case 1:
+                    $('#idTT').val(data.body.id);
+                    $('#nombreTramite').val(data.body.tipoTramite);
+                    $('#estadoTramite').prop('checked', data.body.estado);
+                    break;
                 case 0:
                     alertify.warning(data.body + ' ☹');
                     break;
                 default :
                     alert('ha ocurrido un error durante la búsqueda ⚙,inténtelo nuevamente en unos mintos ⏲');
                     break;
-           }
-           
-       }, error: function (x, y) {
+            }
+
+        }, error: function (x, y) {
             alertify.error('el servicio no esta disponible,vuelva a intentarlo más tarde');
             //console.log(x.responseText);
         }

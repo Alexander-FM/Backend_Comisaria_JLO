@@ -1,4 +1,10 @@
 $(document).ready(function () {
+     let li_grupo_registros = $('#li_grupo_reportes');
+    li_grupo_registros.attr('class', 'nav-item has-treeview menu-close menu-open');
+    let a = $('#li_rtramites').find('a');
+    a.attr('class', 'nav-link active');
+    a.attr('style', 'background-color: black');
+    $("input:checkbox").prop('checked', false);
     $('.select2').select2();
     cargarTabla();
 });
@@ -15,14 +21,14 @@ function cargarCriteriosT() {
         case 2:
             $.get('http://localhost:9090/api/policia', {}, function (r) {
                 r.body.forEach(p => {
-                    combo += '<option value="' + p.id + '">' + p.nombres + ' ' + p.apellidos + '</option>';
+                    combo += '<option value="' + p.id + '">' + p.nombres + ' ' + p.apellidoPaterno + ' ' + p.apellidoMaterno + '</option>';
                     $('#combo_criterios_t').html(combo);
                 });
             });
             break;
         case 3:
-            combo += '<option value="1">Pendiente</option>';
-            combo += '<option value="2">Diligenciada</option>';
+            combo += '<option value="0">Pendiente</option>';
+            combo += '<option value="1">Diligenciada</option>';
             break;
     }
     $('#combo_criterios_t').html(combo);
@@ -48,8 +54,8 @@ function cargarTabla() {
         r.body.forEach(t => {
             tabla += '<tr>';
             tabla += '<td style=\"text-align: center\">' + t.id + '</td>';
-            tabla += '<td style=\"text-align: center\" nowrap>' + formaterFecha(t.fechaDenuncia) + '</td>';
-            tabla += '<td style=\"text-align: center\" nowrap>' + t.policia.nombres + ' ' + t.policia.apellidos + '</td>';
+            tabla += '<td style=\"text-align: center\" nowrap>' + t.fechaDenuncia + '</td>';
+            tabla += '<td style=\"text-align: center\" nowrap>' + t.policia.nombres + ' ' + t.policia.apellidoPaterno + ' ' + t.policia.apellidoMaterno + '</td>';
             tabla += '<td style=\"text-align: center\">' + t.tipoTramite.tipoTramite + '</td>';
             tabla += '<td style=\"text-align: center\">' + (t.estadoTramite === true ? '<h5><span class =\"badge badge-success\">Diligenciada</span></h5>' : '<h5><span class =\"badge badge-danger\">Pendiente</span></h5>') + '</td>';
             tabla += '<td style=\"text-align: center\">' + t.usuario.nombres + ' ' + t.usuario.apellidoPaterno + ' ' + t.usuario.apellidoMaterno + '</td>';

@@ -1,5 +1,10 @@
 var table = $('table#TablaGrado');
 $(document).ready(function () {
+    let li_grupo_registros = $('#li_grupo_registros');
+    li_grupo_registros.attr('class', 'nav-item has-treeview menu-close menu-open');
+    let a = $('#li_gradopnp').find('a');
+    a.attr('class', 'nav-link active');
+    a.attr('style', 'background-color: black');
     $("input:checkbox").prop('checked', false);
     cargarTabla();
 });

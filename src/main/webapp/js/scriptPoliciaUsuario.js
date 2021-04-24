@@ -1,4 +1,10 @@
 $(document).ready(function (){
+     let li_grupo_registros = $('#li_grupo_usuarios');
+    li_grupo_registros.attr('class', 'nav-item has-treeview menu-close menu-open');
+    let a = $('#li_loginpnp').find('a');
+    a.attr('class', 'nav-link active');
+    a.attr('style', 'background-color: black');
+    $("input:checkbox").prop('checked', false);
 $('.select2').select2();
         cargarUsuarios();
         cargarPoliciasXDe();
