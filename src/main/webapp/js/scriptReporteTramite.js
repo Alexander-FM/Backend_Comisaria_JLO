@@ -15,9 +15,12 @@ function cargarCriteriosT() {
     var combo = '';
     switch (opcion) {
         case 1:
-            combo += '<option value="1">Copia Certificada</option>';
-            combo += '<option value="2">Solicitud</option>';
-            combo += '<option value="3">Otro</option>';
+            $.get('http://localhost:9090/api/tipoTramite/todos', {}, function (r) {
+                r.body.forEach(t => {
+                    combo += '<option value="' + t.id + '"> ' + t.tipoTramite + ' </option>';
+                    $('#combo_criterios_t').html(combo);
+                });
+            });
             break;
         case 2:
             $.get('http://localhost:9090/api/policia', {}, function (r) {

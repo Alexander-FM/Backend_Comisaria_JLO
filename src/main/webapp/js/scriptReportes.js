@@ -18,7 +18,7 @@ function cargarReporte(){
                 datasets: [
                     {
                         data: r.body.vinculo.contadores,
-                        backgroundColor: ['#f56954', '#00a65a', '#3c8dbc']
+                        backgroundColor: ['#f56954', '#00a65a', '#3c8dbc', '#07575B']
                     }
                 ]
             };
@@ -38,7 +38,7 @@ function cargarReporte(){
                     datasets: [
                         {
                             data: r.body.tipo.contadores,
-                            backgroundColor: ['#f56954', '#00a65a', '#3c8dbc']
+                            backgroundColor: ['#f56954', '#00a65a', '#3c8dbc', '#004445']
                         }
                     ]
                 };

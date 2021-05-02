@@ -84,8 +84,7 @@
                                         <div class="form-group">
                                             <form target="_blank" action="../tramite" id="frmReporte" method="post">
                                                 <input type="hidden" name="accion" id="accion">
-                                                <button type="button" class="btn btn-sm btn-outline-primary" onclick="reporte('ExportarPDF')"><i class="fas fa-file-pdf"></i> Exportar PDF</button>
-                                                <button onclick="reporte('ReporteJasperPDF')" type="button"class="btn btn-sm btn-outline-info"><i class="fas fa-file-pdf"></i> Exportar con JasperReports</button>
+                                                <button onclick="reporte('ReporteJasperPDF')" type="button"class="btn btn-sm btn-outline-primary"><i class="fas fa-file-pdf"></i> Exportar PDF</button>
                                                 <input type="hidden" name="lista" id="lista">
                                             </form>
                                         </div>
