@@ -76,7 +76,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Seleccionar Estado Civil</label>
-                                            <select id="combo_ec" style="width: 100%" class="select2 form-control" data-placeholder="Seleccionar">                                               
+                                            <select id="combo_estadoCivil" style="width: 100%" class="select2 form-control" data-placeholder="Seleccionar">                                               
                                                 <!-- Cargar desde la base de datos -->
                                                 <option>Cargando . . .</option>
                                             </select>  
@@ -213,6 +213,7 @@
         <script src="../plugins/select2/js/select2.full.min.js" type="text/javascript"></script>
         <!-- AdminLTE App -->
         <script src="../dist/js/adminlte.min.js"></script>
+        <script src="https://momentjs.com/downloads/moment.js" type="text/javascript"></script>
         <script type="text/javascript" src="../js/scriptPolicia.js"></script>
     </body>
 </html>

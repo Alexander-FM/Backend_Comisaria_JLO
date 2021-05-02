@@ -123,7 +123,7 @@ function cargarEstadosCiviles() {
                     data.body.forEach(e => {
                         comboEC += '<option value="' + e.id + '">' + e.estadoCivil + '</option>';
                     });
-                    $('#combo_ec').html(comboEC);
+                    $('#combo_estadoCivil').html(comboEC);
                     $('#btnRegistrarPolicia').removeAttr('disabled');
                     break;
                 case 0:
@@ -150,9 +150,12 @@ function registrar() {
             nombres: $('#nombres').val(),
             apellidoPaterno: $('#apellidoPaterno').val(),
             apellidoMaterno: $('#apellidoMaterno').val(),
+            direccion: $('#direccion').val(),
+            fechaNacimiento: moment($('#fechaNac').val(), 'YYYY-MM-DD').format('DD-MM-YYYY'),
             sexo: $('#combo_genero_policia').val(),
             telefono: $('#telefonoPolicia').val(),
             estado: ($('#estadoPol').is(':checked')),
+            estadoCivil: {id: $('#combo_estadoCivil').val()},
             distrito: {id: parseInt($('#combo_distrito').val())},
             gradoPNP: {id: parseInt($('#combo_grado').val())},
             tipoIdentificacion: {id: 1},
@@ -212,14 +215,16 @@ function presentarDatos(id) {
                     $('#nombres').val(data.body.nombres);
                     $('#apellidoPaterno').val(data.body.apellidoPaterno);
                     $('#apellidoMaterno').val(data.body.apellidoMaterno);
-                    $('#combo_genero_policia').val(data.body.sexo);
+                    $('#combo_genero_policia').val(data.body.sexo).trigger('change');
+                    $('#combo_estadoCivil').val(data.body.estadoCivil.id).trigger('change');
                     $('#telefonoPolicia').val(data.body.telefono);
                     $("#estadoPol").prop('checked', data.body.estado);
-                    $('#combo_distrito').val(data.body.distrito.id);
-                    $('#combo_grado').append(data.body.gradoPNP.id);
+                    $('#combo_distrito').val(data.body.distrito.id).trigger('change');
+                    $('#combo_grado').val(data.body.gradoPNP.id).trigger('change');
                     $('#numIdentificacion').val(data.body.numeroIdentificacion);
                     $('#direccion').val(data.body.direccion);
-                    $('#fechaNac').val(data.body.fechaNacimiento);
+                    var date = moment(data.body.fechaNacimiento, 'DD-MM-YYYY').format("YYYY-MM-DD");
+                    $('#fechaNac').val(date);
                     break;
                 case 0:
                     alertify.warning(data.body + ' ☹');
