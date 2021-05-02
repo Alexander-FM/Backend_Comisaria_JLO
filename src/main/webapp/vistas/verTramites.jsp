@@ -46,7 +46,8 @@
                                     <div class="form-group">                           
                                         <input id="estadotramite" style="margin-top: 10px" type="checkbox" checked="" class="checkbox"> Diligenciada/Pendiente
                                     </div>
-                                    <input type="hidden" id="fechaDenuncia">
+                                    <input type="hidden" id="fechaTramite">
+                                    <input type="hidden" id="horaTramite">
                                     <input type="hidden" id="usuarioId">
                                     <input type="hidden" id="tipoTramiteId">
                                     <input type="hidden" id="correoUser">
@@ -107,7 +108,8 @@
                                                 <tr>
                                                     <th class="text-center">Id</th>
                                                     <th class="text-center">Cod-Trámite</th>
-                                                    <th class="text-center">FechaDenuncia</th>
+                                                    <th class="text-center">Fecha Trámite</th>
+                                                    <th class="text-center">Hora Trámite</th>
                                                     <th class="text-center">Policia</th>
                                                     <th class="text-center">Tipo Trámite</th>
                                                     <th class="text-center">Estado</th>
@@ -122,7 +124,8 @@
                                                 <tr>
                                                     <th class="text-center">Id</th>
                                                     <th class="text-center">Cod-Trámite</th>
-                                                    <th class="text-center">FechaDenuncia</th>
+                                                    <th class="text-center">Fecha Trámite</th>
+                                                    <th class="text-center">Hora Tramite</th>
                                                     <th class="text-center">Policia</th>
                                                     <th class="text-center">Tipo Trámite</th>
                                                     <th class="text-center">Estado</th>

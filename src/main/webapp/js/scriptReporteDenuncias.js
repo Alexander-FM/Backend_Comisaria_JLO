@@ -7,20 +7,29 @@ $(document).ready(function () {
     $("input:checkbox").prop('checked', false);
     $('.select2').select2();
     cargarTabla();
+    cargarCriterios();
 });
 function cargarCriterios() {
     let opcion = parseInt($('#cboTipoFiltro').val());
     var combo = '';
     switch (opcion) {
         case 1:
-            combo += '<option value="1">Física</option>';
-            combo += '<option value="2">Psicológica</option>';
-            combo += '<option value="3">Sexual</option>';
+            $.get('http://localhost:9090/api/tipoDenuncia/todos', {}, function (r) {
+                r.body.forEach(t => {
+                    combo += '<option value="' + t.id + '">' +t.tipoDenuncia + '</option>';
+                    $('#cboFiltro').html(combo);
+
+                });
+            });
             break;
         case 2:
-            combo += '<option value="1">Laboral</option>';
-            combo += '<option value="2">Familiar</option>';
-            combo += '<option value="3">Otro</option>';
+           $.get('http://localhost:9090/api/vinculoParteDenunciada', {}, function (r) {
+                r.body.forEach(v => {
+                    combo += '<option value="' + v.id + '">' +v.nombre + '</option>';
+                    $('#cboFiltro').html(combo);
+
+                });
+            });
             break;
         case 3:
             $.get('http://localhost:9090/api/policia/todos', {}, function (r) {
@@ -62,7 +71,7 @@ function cargarTabla() {
             tabla += '<td>' + d.cod_denuncia + '</td>';
             tabla += '<td>' + d.distrito.distrito + '</td>';
             tabla += '<td>' + d.vinculoParteDenunciada.nombre + '</td>';
-            tabla += '<td>' + formaterFecha(d.fechaDenuncia) + '</td>';
+            tabla += '<td>' + d.fechaDenuncia + '</td>';
             tabla += '<td>' + d.policia.nombres + ' ' + d.policia.apellidoPaterno + ' ' + d.policia.apellidoMaterno + '</td>';
             tabla += '<td style=\"text-align: center\">' + (d.estadoDenuncia === true ? '<h5><span class =\"badge badge-success\">Diligenciada</span></h5>' : '<h5><span class =\"badge badge-danger\">Pendiente</span></h5>') + '</td>';
             tabla += '</tr>';

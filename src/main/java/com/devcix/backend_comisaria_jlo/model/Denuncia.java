@@ -1,41 +1,24 @@
 package com.devcix.backend_comisaria_jlo.model;
 
-import javax.persistence.*;
-import java.util.Date;
+import java.sql.Time;
+import java.sql.Date;
+
 public final class Denuncia {
+
     private int id;
-    /*----------------------------------------------------*/
-    @Column(nullable = false)
     private Date fechaDenuncia;
-    /*---------------------------------------------------*/
-    @Column(length = 8)/*POR EJEMPLO: D-3423-P
-    S-> Sexual, P-> Psicológica, E-> Económica, F-> Familiar*/
+    private Time horaDenuncia;
     private String cod_denuncia;
-    /*-------------------------------------------------------*/
-    @Column(length = 500, nullable = false)
     private String direccion;
-    /*-------------------------------------------------------*/
-    @Column(length = 500, nullable = false)
     private String referenciaDireccion;
-    /*--------------------------------------------------------*/
-    @Column
     private Date fechaHechos;
-    /*-----------------------------------------------------*/
-    @Column
+    private Time horaHechos;
     private boolean estadoDenuncia;
-    /*----------------------------------------------------*/
-    @OneToOne
     private TipoDenuncia tipoDenuncia;
-    /*------------------------------------------------------*/
-    @OneToOne
     private Distrito distrito;
-    /*------------------------------------------------------*/
-    @OneToOne
-    private VinculoParteDenunciada vinculoParteDenunciada;/*Por ejemplo: si es laboral, familiar, otro.
-    lo considero como una tabla a parte para mas a futuro no hacer la base de datos más pesada.*/
-    /*--------------------------------------------------*/
-    @ManyToOne
+    private VinculoParteDenunciada vinculoParteDenunciada;
     private Policia policia;
+    private Usuario usuario;
 
     public int getId() {
         return id;
@@ -43,14 +26,6 @@ public final class Denuncia {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public Policia getPolicia() {
-        return policia;
-    }
-
-    public void setPolicia(Policia policia) {
-        this.policia = policia;
     }
 
     public Date getFechaDenuncia() {
@@ -61,29 +36,20 @@ public final class Denuncia {
         this.fechaDenuncia = fechaDenuncia;
     }
 
-
-    public boolean isEstadoDenuncia() {
-        return estadoDenuncia;
+    public Time getHoraDenuncia() {
+        return horaDenuncia;
     }
 
-    public void setEstadoDenuncia(boolean estadoDenuncia) {
-        this.estadoDenuncia = estadoDenuncia;
+    public void setHoraDenuncia(Time horaDenuncia) {
+        this.horaDenuncia = horaDenuncia;
     }
 
-    public TipoDenuncia getTipoDenuncia() {
-        return tipoDenuncia;
+    public String getCod_denuncia() {
+        return cod_denuncia;
     }
 
-    public void setTipoDenuncia(TipoDenuncia tipoDenuncia) {
-        this.tipoDenuncia = tipoDenuncia;
-    }
-
-    public Distrito getDistrito() {
-        return distrito;
-    }
-
-    public void setDistrito(Distrito distrito) {
-        this.distrito = distrito;
+    public void setCod_denuncia(String cod_denuncia) {
+        this.cod_denuncia = cod_denuncia;
     }
 
     public String getDireccion() {
@@ -110,6 +76,38 @@ public final class Denuncia {
         this.fechaHechos = fechaHechos;
     }
 
+    public Time getHoraHechos() {
+        return horaHechos;
+    }
+
+    public void setHoraHechos(Time horaHechos) {
+        this.horaHechos = horaHechos;
+    }
+
+    public boolean isEstadoDenuncia() {
+        return estadoDenuncia;
+    }
+
+    public void setEstadoDenuncia(boolean estadoDenuncia) {
+        this.estadoDenuncia = estadoDenuncia;
+    }
+
+    public TipoDenuncia getTipoDenuncia() {
+        return tipoDenuncia;
+    }
+
+    public void setTipoDenuncia(TipoDenuncia tipoDenuncia) {
+        this.tipoDenuncia = tipoDenuncia;
+    }
+
+    public Distrito getDistrito() {
+        return distrito;
+    }
+
+    public void setDistrito(Distrito distrito) {
+        this.distrito = distrito;
+    }
+
     public VinculoParteDenunciada getVinculoParteDenunciada() {
         return vinculoParteDenunciada;
     }
@@ -118,25 +116,35 @@ public final class Denuncia {
         this.vinculoParteDenunciada = vinculoParteDenunciada;
     }
 
-    public String getCod_denuncia() {
-        return cod_denuncia;
+    public Policia getPolicia() {
+        return policia;
     }
 
-    public void setCod_denuncia(String cod_denuncia) {
-        this.cod_denuncia = cod_denuncia;
+    public void setPolicia(Policia policia) {
+        this.policia = policia;
     }
 
-    public String getNombreCompletoPolicia() {
-        return this.policia != null ? this.policia.getNombreCompleto() : " - - - ";
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public String getNombreTipoDenuncia() {
+        return this.tipoDenuncia != null ? this.tipoDenuncia.getTipoDenuncia() : "- - - ";
     }
 
     public String getNombreDistrito() {
-        return this.distrito!=null?this.distrito.getDistrito():"- - - ";
+        return this.distrito != null ? this.distrito.getDistrito() : "- - -";
     }
-    public String getNombreTipoDenuncia(){
-        return this.tipoDenuncia!=null?this.tipoDenuncia.getTipoDenuncia():"- - - ";
+
+    public String getNombreVPD() {
+        return this.vinculoParteDenunciada != null ? this.vinculoParteDenunciada.getNombre() : "- - - ";
     }
-    public String getNombreVPD(){
-        return this.vinculoParteDenunciada!=null?this.vinculoParteDenunciada.getNombre():"- - - ";
+
+    public String getNombreCompletoPolicia() {
+        return this.policia != null ? this.policia.getNombreCompleto() + " " + this.policia.getApellidoPaterno() + " " + this.policia.getApellidoMaterno() : "- - -";
     }
 }

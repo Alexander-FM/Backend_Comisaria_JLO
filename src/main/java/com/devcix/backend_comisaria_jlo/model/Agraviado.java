@@ -1,7 +1,5 @@
 package com.devcix.backend_comisaria_jlo.model;
-
-import javax.persistence.*;
-import java.util.Date;
+import java.sql.Date;
 public final class Agraviado extends Persona{
     private boolean medidaProteccion;
     private String detalleProteccion;

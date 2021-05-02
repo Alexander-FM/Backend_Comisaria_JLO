@@ -12,7 +12,7 @@ import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 import java.awt.Color;
 import java.util.Calendar;
-import java.util.Date;
+import java.sql.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
@@ -41,15 +41,15 @@ public class ExportarPDFTramites {
         pdfTable.addCell(cell);
         cell.setPhrase(new Phrase("Tipo Trámite", font));
         pdfTable.addCell(cell);
-        cell.setPhrase(new Phrase("Fecha Denuncia", font));
+        cell.setPhrase(new Phrase("Fecha Trámite", font));
         pdfTable.addCell(cell);
         cell.setPhrase(new Phrase("Policia", font));
         pdfTable.addCell(cell);
         cell.setPhrase(new Phrase("Usuario", font));
         pdfTable.addCell(cell);
     }
-    
-    private String formatearFecha(Date d){
+
+    private String formatearFecha(Date d) {
         Calendar calendar = new GregorianCalendar();
         calendar.setTime(d);
         return calendar.get(Calendar.DAY_OF_MONTH) + "-" + calendar.get(Calendar.MONTH + 1) + "-" + calendar.get(Calendar.YEAR);
@@ -60,7 +60,7 @@ public class ExportarPDFTramites {
             pdfPTable.addCell(String.valueOf(tramites.getId()));
             pdfPTable.addCell(String.valueOf(tramites.getCodTramite()));
             pdfPTable.addCell(String.valueOf(tramites.getTipoTramite()));
-            pdfPTable.addCell(this.formatearFecha(tramites.getFechaDenuncia()));
+            pdfPTable.addCell(this.formatearFecha(tramites.getFechaTramite()));
             pdfPTable.addCell(String.valueOf(tramites.getPolicia().getNombreCompleto()));
             pdfPTable.addCell(String.valueOf(tramites.getUsuario().getNombreCompleto()));
 

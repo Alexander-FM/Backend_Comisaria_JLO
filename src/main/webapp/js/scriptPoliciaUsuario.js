@@ -18,7 +18,7 @@ $('.select2').select2();
                         tabla += '<td>' + p.id + "</td>";
                         tabla += '<td>' + p.codigoPolicial + "</td>";
                         tabla += '<td>' + p.clave + "</td>";
-                        tabla += '<td nowrap>' + (p.policia.nombres + ' ' + p.policia.apellidos) + "</td>";
+                        tabla += '<td nowrap>' + (p.policia.nombres + ' ' + p.policia.apellidoPaterno + ' ' +p.policia.apellidoMaterno) + "</td>";
                         tabla += '<td style="text-align: center">' + (p.estado ? '<h5><span class =\"badge badge-success\">Activo</span></h5>' : '<h5><span class =\"badge badge-danger\">Inactivo</span></h5>') + '</td>';
                         tabla += '<td style="text-align: center">'
                         + '<button onclick="presentarDatos(' + p.id + ')" class="btn btn-warning"><i class="fas fa-edit"></i></button> '
@@ -46,7 +46,7 @@ type: 'get',
         case 1:
                 let combo_policias_usuarios = '';
                 data.body.forEach(d => {
-                combo_policias_usuarios += '<option value="' + d.id + '">' + (d.nombres + ' ' + d.apellidos) + '</option>';
+                combo_policias_usuarios += '<option value="' + d.id + '">' + (d.nombres + ' ' + d.apellidoPaterno + ' '+d.apellidoMaterno) + '</option>';
                 });
                 $('#combo_policias_usuarios').html(combo_policias_usuarios);
                 break;
@@ -124,7 +124,7 @@ alertify.warning('complete todos los campos');
                         $('#idU').val(data.body.id);
                         $('#codUsuario').val(data.body.codigoPolicial);
                         $('#claveUsuario').val(data.body.clave);
-                        let item = '<option value="'+data.body.policia.id +'" selected>' + (data.body.policia.nombres + ' ' + data.body.policia.apellidos) + '</option>';
+                        let item = '<option value="'+data.body.policia.id +'" selected>' + (data.body.policia.nombres + ' ' + data.body.policia.apellidoPaterno + ' ' + data.body.policia.apellidoMaterno) + '</option>';
                         $('#combo_policias_usuarios').append(item);
                         //$('#combo_policias_usuarios').val(data.body.policia.nombres);
                         $("#estadoPol").prop('checked', data.body.estado);

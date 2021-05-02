@@ -1,9 +1,9 @@
 package com.devcix.backend_comisaria_jlo.model;
 
-import java.io.Serializable;
-import java.util.Date;
+import java.sql.Date;
 
-public abstract class Persona implements Serializable{
+public abstract class Persona {
+
     private int id;
     private String numeroIdentificacion;
     private String nombres;
@@ -121,7 +121,8 @@ public abstract class Persona implements Serializable{
     public void setDireccion(String direccion) {
         this.direccion = direccion;
     }
-    public String getNombreCompleto(){
-    return this!=null?this.nombres+" "+this.apellidoPaterno+" "+this.apellidoMaterno:"- - -";
+
+    public String getNombreCompleto() {
+        return this != null ? this.nombres + " " + this.apellidoPaterno + " " + this.apellidoMaterno : "- - -";
     }
 }

@@ -1,18 +1,18 @@
 package com.devcix.backend_comisaria_jlo.model;
 
-import java.util.Date;
-
+import java.sql.Date;
+import java.sql.Time;
 
 public final class Tramite {
+
     private int id;
-    private String codTramite;/*Una vez ingresado el trámite la mayor dará el cod-trámite por correo del usuario*/
-    private Date fechaDenuncia;/*Se rellenará automaticamente*/
-    private TipoTramite tipoTramite;/*El usuario selecciona el tipo de trámite.*/
-    private boolean estadoTramite;/*por defecto se mandará en 0 como pendiente y 1 si es diligenciada, mejor dicho que ya
-    está siendo atendido su trámite.*/
-    private Usuario usuario;/*Representa en este caso el denunciante. Con la sesion del usuario podemos capturar todos
-    sus datos personales.*/
-    private Policia policia; /*Muchos Trámites puede atender un solo policía*/
+    private String codTramite;
+    private Date fechaTramite;
+    private Time horaTramite;
+    private TipoTramite tipoTramite;
+    private boolean estadoTramite;
+    private Usuario usuario;
+    private Policia policia;
 
     public int getId() {
         return id;
@@ -30,12 +30,20 @@ public final class Tramite {
         this.codTramite = codTramite;
     }
 
-    public Date getFechaDenuncia() {
-        return fechaDenuncia;
+    public Date getFechaTramite() {
+        return fechaTramite;
     }
 
-    public void setFechaDenuncia(Date fechaDenuncia) {
-        this.fechaDenuncia = fechaDenuncia;
+    public void setFechaTramite(Date fechaTramite) {
+        this.fechaTramite = fechaTramite;
+    }
+
+    public Time getHoraTramite() {
+        return horaTramite;
+    }
+
+    public void setHoraTramite(Time horaTramite) {
+        this.horaTramite = horaTramite;
     }
 
     public TipoTramite getTipoTramite() {
@@ -68,5 +76,17 @@ public final class Tramite {
 
     public void setPolicia(Policia policia) {
         this.policia = policia;
+    }
+
+    public String getNombreTipoTramite() {
+        return this.tipoTramite != null ? this.tipoTramite.getTipoTramite() : "- - -";
+    }
+
+    public String getNombreCompletoPolicia() {
+        return this.policia != null ? this.policia.getNombreCompleto() : "- - -";
+    }
+
+    public String getNombreCompletoUsuario() {
+        return this.usuario != null ? this.usuario.getNombreCompleto() : "- - -";
     }
 }

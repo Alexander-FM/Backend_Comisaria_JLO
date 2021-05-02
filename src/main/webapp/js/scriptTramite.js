@@ -38,7 +38,8 @@ $(document).ready(function () {
                 tabla += '<tr>';
                 tabla += '<td style="text-align:center">' + t.id + '</td>';
                 tabla += '<td style="text-align:center">' + t.codTramite + '</td>';
-                tabla += '<td style="text-align:center">' + t.fechaDenuncia + '</td>';
+                tabla += '<td style="text-align:center">' + t.fechaTramite + '</td>';
+                tabla += '<td style="text-align:center">' + t.horaTramite + '</td>';
                 tabla += '<td style="text-align:center">' + t.policia.nombres + ' ' + t.policia.apellidoPaterno + ' ' + t.policia.apellidoMaterno + '</td>';
                 tabla += '<td style="text-align:center">' + t.tipoTramite.tipoTramite + '</td>';
                 tabla += '<td style=\"text-align: center\">' + (t.estadoTramite === true ? '<h5><span class =\"badge badge-success\">Diligenciada</span></h5>' : '<h5><span class =\"badge badge-danger\">Pendiente</span></h5>') + '</td>';
@@ -83,7 +84,8 @@ function registrar() {
             codTramite: $('#codTramite').val(),
             estadoTramite: ($('#estadotramite').is(':checked')),
             policia: {id: parseInt($('#combo_policias_tramites').val())},
-            fechaDenuncia: $('#fechaDenuncia').val(),
+            fechaTramite: $('#fechaTramite').val(),
+            horaTramite: $('#horaTramite').val(),
             correo: $('#correoUser').val(),
             tipoTramite: {id: parseInt($('#tipoTramiteId').val())},
             usuario: {id: parseInt($('#usuarioId').val())}
@@ -138,7 +140,7 @@ function presentarDatos(id) {
                     $('#idAC').val(data.body.id);
                     $('#codTramite').val(data.body.codTramite);
                     $("#estadotramite").prop('checked', data.body.estadoTramite);
-                    let item = '<option value="' + data.body.policia.id + '" selected>' + (data.body.policia.nombres + ' ' + data.body.policia.apellidos) + '</option>'
+                    let item = '<option value="' + data.body.policia.id + '" selected>' + (data.body.policia.nombres + ' ' + data.body.policia.apellidoPaterno + ' ' +data.body.policia.apellidoMaterno) + '</option>'
                     $('#combo_policias_tramites').val(data.body.policia.id);
                     if (!data.body.policia.estado) {
                         var alerta = alertify.warning('Alerta: Esta intentando actualizar un trámite cuyo policía está desactivado, si desea asignarle ese mismo policia usted debe activarlo primero desde el módulo de policías', 0)
@@ -146,7 +148,8 @@ function presentarDatos(id) {
                             alerta.dismiss();
                         });
                     }
-                    $('#fechaDenuncia').val(data.body.fechaDenuncia);
+                    $('#fechaTramite').val(data.body.fechaTramite);
+                    $('#horaTramite').val(data.body.horaTramite);
                     $('#correoUser').val(data.body.correo);
                     $('#usuarioId').val(data.body.usuario.id);
                     $('#tipoTramiteId').val(data.body.tipoTramite.id);

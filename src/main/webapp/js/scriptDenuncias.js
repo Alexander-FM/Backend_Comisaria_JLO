@@ -108,7 +108,9 @@ function registrar() {
             estadoDenuncia: ($('#estadoDenuncia').is(':checked')),
             policia: {id: parseInt($('#combo_policias').val())},
             fechaDenuncia: $('#fechaDenuncia').val(),
+            horaDenuncia: $('#horaDenuncia').val(),
             fechaHechos: $('#fechaHechos').val(),
+            horaHechos: $('#horaHechos').val(),
             direccion: $('#direccion').val(),
             referenciaDireccion: $('#referenciadireccion').val(),
             distrito: {id: parseInt($('#distritoId').val())},
@@ -167,16 +169,18 @@ function presentarDatos(id) {
                     $('#idD').val(data.body.id);
                     $('#codDenuncia').val(data.body.cod_denuncia);
                     $("#estadoDenuncia").prop('checked', data.body.estadoDenuncia);
-                    let item = '<option value="' + data.body.policia.id + '" selected>' + (data.body.policia.nombres + ' ' + data.body.policia.apellidos) + '</option>'
+                    let item = '<option value="' + data.body.policia.id + '" selected>' + (data.body.policia.nombres + ' ' + data.body.policia.apellidos) + '</option>';
                     $('#combo_policias').val(data.body.policia.id);
                     if (!data.body.policia.estado) {
-                        var alerta = alertify.warning('Alerta: Esta intentando actualizar una denuncia cuyo policía está desactivado, si desea asignarle ese mismo policia usted debe activarlo primero desde el módulo de policías', 0)
+                        var alerta = alertify.warning('Alerta: Esta intentando actualizar una denuncia cuyo policía está desactivado, si desea asignarle ese mismo policia usted debe activarlo primero desde el módulo de policías', 0);
                         $('body').one('click', function () {
                             alerta.dismiss();
                         });
                     }
                     $('#fechaDenuncia').val(data.body.fechaDenuncia);
+                    $('#horaDenuncia').val(data.body.horaDenuncia);
                     $('#fechaHechos').val(data.body.fechaHechos);
+                    $('#horaHechos').val(data.body.horaHechos);
                     $('#direccion').val(data.body.direccion);
                     $('#referenciadireccion').val(data.body.referenciaDireccion);
                     $('#distritoId').val(data.body.distrito.id);
@@ -216,7 +220,9 @@ function listarDenuncias() {
                 tpl += '<td>' + d.tipoDenuncia.tipoDenuncia + '</td>';
                 tpl += '<td>' + d.cod_denuncia + '</td>';
                 tpl += '<td nowrap>' + d.fechaDenuncia + '</td>';
-                tpl += '<td>' + formaterFecha(d.fechaHechos) + '</td>';
+                tpl += '<td nowrap>' + d.horaDenuncia + '</td>';
+                tpl += '<td nowrap>' + d.fechaHechos + '</td>';
+                tpl += '<td nowrap>' + d.horaHechos + '</td>';
                 tpl += '<td>' + d.usuario.nombres + ' ' + d.usuario.apellidoPaterno + ' ' + d.usuario.apellidoMaterno + '</td>';
                 tpl += '<td>' + d.policia.nombres + ' ' + d.policia.apellidoPaterno + ' ' + d.policia.apellidoMaterno + '</td>';
                 tpl += '<td>' + d.distrito.distrito + '</td>';

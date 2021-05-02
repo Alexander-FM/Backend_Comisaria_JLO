@@ -1,5 +1,5 @@
 $(document).ready(function () {
-     let li_grupo_registros = $('#li_grupo_reportes');
+    let li_grupo_registros = $('#li_grupo_reportes');
     li_grupo_registros.attr('class', 'nav-item has-treeview menu-close menu-open');
     let a = $('#li_rtramites').find('a');
     a.attr('class', 'nav-link active');
@@ -7,6 +7,7 @@ $(document).ready(function () {
     $("input:checkbox").prop('checked', false);
     $('.select2').select2();
     cargarTabla();
+    cargarCriteriosT();
 });
 
 function cargarCriteriosT() {
@@ -54,7 +55,7 @@ function cargarTabla() {
         r.body.forEach(t => {
             tabla += '<tr>';
             tabla += '<td style=\"text-align: center\">' + t.id + '</td>';
-            tabla += '<td style=\"text-align: center\" nowrap>' + t.fechaDenuncia + '</td>';
+            tabla += '<td style=\"text-align: center\" nowrap>' + t.fechaTramite + '</td>';
             tabla += '<td style=\"text-align: center\" nowrap>' + t.policia.nombres + ' ' + t.policia.apellidoPaterno + ' ' + t.policia.apellidoMaterno + '</td>';
             tabla += '<td style=\"text-align: center\">' + t.tipoTramite.tipoTramite + '</td>';
             tabla += '<td style=\"text-align: center\">' + (t.estadoTramite === true ? '<h5><span class =\"badge badge-success\">Diligenciada</span></h5>' : '<h5><span class =\"badge badge-danger\">Pendiente</span></h5>') + '</td>';
@@ -94,7 +95,7 @@ function concatenarCero(numeros) {
 }
 ;
 
-function reporte() {
+function reporte(accion) {
     let select = $('#combo_criterios_t').val();
     let fechaInicial = $('#fecha1').val();
     let fechaFinal = $('#fecha2').val();
@@ -107,6 +108,7 @@ function reporte() {
     $.get('http://localhost:9090/api/tramite/reportefiltro', peticion, function (r) {
         if (r.rpta === 1) {
             $('#lista').val(JSON.stringify(r.body));
+            $('#accion').val(accion);
             $('#frmReporte').submit();
         } else {
             alert('el reporte no se ha generado debido a un error del servicio:' + r.body);

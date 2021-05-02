@@ -82,9 +82,10 @@
                                     <!-- /.card-header -->
                                     <div class="card-body">
                                         <div class="form-group">
-                                            <form action="../tramite" id="frmReporte" method="post">
-                                                <input type="hidden" name="accion" value="ExportarPDF">
-                                                <button type="button" class="btn btn-sm btn-outline-primary" onclick="reporte()"><i class="fas fa-file-pdf"></i> Exportar PDF</button>
+                                            <form target="_blank" action="../tramite" id="frmReporte" method="post">
+                                                <input type="hidden" name="accion" id="accion">
+                                                <button type="button" class="btn btn-sm btn-outline-primary" onclick="reporte('ExportarPDF')"><i class="fas fa-file-pdf"></i> Exportar PDF</button>
+                                                <button onclick="reporte('ReporteJasperPDF')" type="button"class="btn btn-sm btn-outline-info"><i class="fas fa-file-pdf"></i> Exportar con JasperReports</button>
                                                 <input type="hidden" name="lista" id="lista">
                                             </form>
                                         </div>

@@ -51,7 +51,9 @@
                                         <input id="estadoDenuncia" style="margin-top: 10px" type="checkbox" checked="" class="checkbox"> Diligenciada/Pendiente
                                     </div>
                                     <input type="hidden" id="fechaDenuncia">
+                                    <input type="hidden" id="horaDenuncia">
                                     <input type="hidden" id="fechaHechos">
+                                    <input type="hidden" id="horaHechos">
                                     <input type="hidden" id="direccion">
                                     <input type="hidden" id="referenciadireccion">
                                     <input type="hidden" id="distritoId">
@@ -191,8 +193,10 @@
                                                     <th>Id</th>
                                                     <th>Tipo Den.</th>
                                                     <th>Cód-Denuncia</th>
-                                                    <th>FechaDenuncia</th>
+                                                    <th>Fecha Denuncia</th>
+                                                    <th>Hora Denuncia</th>
                                                     <th>Fecha Hechos</th>
+                                                    <th>Hora Hechos</th>
                                                     <th>Denunciante</th>  
                                                     <th>Policia</th>
                                                     <th>Distrito</th>
@@ -210,7 +214,9 @@
                                                     <th>TipoDenuncia</th>
                                                     <th>Cód-Denuncia</th>
                                                     <th>FechaDenuncia</th>
-                                                    <th>Fecha Hechos</th>  
+                                                    <th>Hora Denuncia</th>
+                                                    <th>Fecha Hechos</th> 
+                                                    <th>Hora Hechos</th>
                                                     <th>Denunciante</th>  
                                                     <th>Policia</th>
                                                     <th>Distrito</th>
