@@ -55,7 +55,6 @@ function leerDenuncia(id) {
             data.body.denunciados.forEach(den => {
                 tablaD += '<tr>';
                 tablaD += '<td>' + den.denunciado.nombres + ' ' + den.denunciado.apellidoPaterno + ' ' + den.denunciado.apellidoMaterno + '</td>';
-                tablaD += '<td>' + den.denunciado.telefono + '</td>';
                 tablaD += '<td>' + den.denunciado.numeroIdentificacion + '</td>';
                 tablaD += '<td>' + den.denunciado.tipoIdentificacion.tipoIdentificacion + '</td>';
                 tablaD += '<td>' + den.denunciado.informacionAdicional.nombre + '</td>';

@@ -131,7 +131,6 @@
                                                 <thead>
                                                     <tr>
                                                         <th>Nombre Completo</th>
-                                                        <th>Teléfono</th>
                                                         <th>Documento</th>
                                                         <th>Tipo de identificación</th>
                                                         <th>Información Adicional</th>
