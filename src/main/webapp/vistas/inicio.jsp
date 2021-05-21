@@ -9,6 +9,9 @@
         <%@include file="plus/head.html" %>
     </head>
     <body class="hold-transition sidebar-mini">
+        <audio id="audio_noti" style="display: none">
+            <source src="../songs/noti_nuevadenuncia.mp3" type="audio/mp3">
+        </audio>
         <div class="wrapper">
             <%@include file="plus/menuSuperior.jsp" %>
             <%@include  file="plus/menuLateral.jsp"%>
@@ -225,8 +228,12 @@
         <!-- AdminLTE App -->
         <script src="../dist/js/adminlte.min.js"></script>
         <script src="../dist/js/pages/dashboard3.js" type="text/javascript"></script>
-        <script src="../js/scriptReportes.js"></script>
+        <script src="../js/socket/sockjs.min.js" type="text/javascript"></script>
+        <script src="../js/socket/stomp.min.js" type="text/javascript"></script>
 
+        <script src="../plugins/alertifyjs/alertify.min.js" type="text/javascript"></script>
+        <link href="../plugins/alertifyjs/css/alertify.min.css" rel="stylesheet" type="text/css"/>
+        <script src="../js/scriptReportes.js"></script>
     </body>
 </html>
 <%
