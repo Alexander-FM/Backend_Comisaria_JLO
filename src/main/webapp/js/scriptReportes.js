@@ -10,10 +10,8 @@ function cargarReporte() {
     try {
         $(function () {
             $('.select2').select2();
-
             var reporteDenuncias = $('#grafico1').get(0).getContext('2d');
             $.get('http://localhost:9090/api/denuncia/reporte2', {}, function (r) {
-                debugger;
                 var tipoData = {
                     labels: r.body.vinculo.vinculos,
                     datasets: [
@@ -66,18 +64,24 @@ function initSocket() {
     try {
         var socket = new SockJS('http://localhost:9090/socket-comisariajlo');
         stompClient = Stomp.over(socket);
-        stompClient.connect({}, function (frame) {
-            alertify.success('conexión con el socket establecida correctamnte');
+        stompClient.connect({}, function (frame) {          
+            toastr.success('Conexión con el socket establecida correctamente');
+            document.getElementById('audio_noti1').play();            
+            //$('.toast').toast({delay:1000, animation:false});
+            //alertify.success('Conexión con el socket establecida correctamnte');
             console.log('Connected: ' + frame);
             stompClient.subscribe('/topic/denuncia-noti', function (response) {
                 var de = JSON.parse(response.body);
                 console.log(de);
-                var message = alertify.message('se ha ingresado una nueva denuncia,distrito:' + de.denuncia.distrito.distrito);
-                document.getElementById('audio_noti').play();
-                message.delay(5);
+                var message = $('.toast-body').html('Se ha ingresado una nueva denuncia, en el distrito : ' + de.denuncia.distrito.distrito);
+                $('.toast').toast('show');
+                //var message = toastr.info('Se ha ingresado una nueva denuncia, en el distrito : ' + de.denuncia.distrito.distrito);                   
+                //var message = alertify.warning('Se ha ingresado una nueva denuncia, en el distrito : ' + de.denuncia.distrito.distrito);
+                document.getElementById('audio_noti2').play();
+                message.delay(7);
             });
         });
     } catch (error) {
-        alertify.error('no se ha podido establecer conexión con el socket:' + error);
+        toastr.error('No se ha podido establecer conexión con el socket:' + error);
     }
 }

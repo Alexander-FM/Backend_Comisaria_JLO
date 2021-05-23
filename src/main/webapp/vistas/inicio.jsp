@@ -12,6 +12,12 @@
         <audio id="audio_noti" style="display: none">
             <source src="../songs/noti_nuevadenuncia.mp3" type="audio/mp3">
         </audio>
+        <audio id="audio_noti1" style="display: none">
+            <source src="../songs/intro.mp3" type="audio/mp3">
+        </audio>
+        <audio id="audio_noti2" style="display: none">
+            <source src="../songs/notificacionnueva.mp3" type="audio/mp3">
+        </audio>
         <div class="wrapper">
             <%@include file="plus/menuSuperior.jsp" %>
             <%@include  file="plus/menuLateral.jsp"%>
@@ -37,7 +43,7 @@
 
                 <!-- Main content -->
                 <div class="content">
-                    <div class="container-fluid">
+                    <div class="container-fluid">                        
                         <div class="row">
                             <div class="col-12 col-sm-6 col-md-3">
                                 <div class="info-box">
@@ -221,6 +227,10 @@
         <script src="../plugins/jquery/jquery.min.js"></script>
         <!-- Bootstrap 4 -->
         <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <!-- Toastr -->
+        <script src="../plugins/toastr/toastr.min.js" type="text/javascript"></script>
+        <!-- SweetAlert2 -->
+        <script src="../plugins/sweetalert2/sweetalert2.min.js" type="text/javascript"></script>
         <!-- Select 2 -->
         <script src="../plugins/select2/js/select2.full.min.js" type="text/javascript"></script>
         <!-- Pie Chart -->
