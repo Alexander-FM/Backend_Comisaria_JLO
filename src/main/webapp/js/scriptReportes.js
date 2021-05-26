@@ -79,6 +79,7 @@ function initSocket() {
                 //var message = alertify.warning('Se ha ingresado una nueva denuncia, en el distrito : ' + de.denuncia.distrito.distrito);
                 document.getElementById('audio_noti2').play();
                 message.delay(7);
+                cargarReporte();
             });
         });
     } catch (error) {
