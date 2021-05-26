@@ -237,7 +237,6 @@
         <script src="../plugins/chart.js/Chart.min.js" type="text/javascript"></script>
         <!-- AdminLTE App -->
         <script src="../dist/js/adminlte.min.js"></script>
-        <script src="../dist/js/pages/dashboard3.js" type="text/javascript"></script>
         <script src="../js/socket/sockjs.min.js" type="text/javascript"></script>
         <script src="../js/socket/stomp.min.js" type="text/javascript"></script>
 
