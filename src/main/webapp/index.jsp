@@ -27,7 +27,7 @@
     <body class="hold-transition login-page" style="background-color: #114a39">
         <div class="login-box">
             <div class="login-logo">
-                <a style="color: white" href="#"><b>Comisaría </b>JLO</a>
+                <a style="color: white" href="#"><b>Comisaría de la Familia </b></a>
             </div>
             <!-- /.login-logo -->
             <div class="card">
@@ -54,9 +54,13 @@
                                 </div>
                             </div>
                         </div>
-
+                        <div class="form-group mb-3">
+                            <select id="combo_comisarias" class="form-control">
+                                <option hidden="" selected="">Seleccionar Comisaría</option>
+                            </select>                           
+                        </div>
                         <div class="row">
-                            <div class="col-8">
+                            <div class="col-6">
                                 <div class="icheck-primary">
                                     <input type="checkbox" id="remember">
                                     <label for="remember">
@@ -65,8 +69,8 @@
                                 </div>
                             </div>
                             <!-- /.col -->
-                            <div class="col-4">
-                                <button type="submit" class="btn btn-block" style="background-color: #114a39; color: white"><i class="fas fa-sign-in-alt"></i> Iniciar</button>
+                            <div class="col-6">
+                                <button type="submit" class="btn btn-block" style="background-color: #114a39; color: white">Iniciar Sesión <span class="fas fa-sign-in-alt"></span> </button>
                             </div>
                             <!-- /.col -->
                         </div>

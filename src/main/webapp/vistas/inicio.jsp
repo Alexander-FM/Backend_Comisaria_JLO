@@ -9,14 +9,14 @@
         <%@include file="plus/head.html" %>
     </head>
     <body class="hold-transition sidebar-mini">
-        <audio id="audio_noti" style="display: none">
-            <source src="../songs/noti_nuevadenuncia.mp3" type="audio/mp3">
-        </audio>
         <audio id="audio_noti1" style="display: none">
-            <source src="../songs/intro.mp3" type="audio/mp3">
+            <source src="../songs/inicioSocket.mp3" type="audio/mp3">
         </audio>
         <audio id="audio_noti2" style="display: none">
             <source src="../songs/notificacionnueva.mp3" type="audio/mp3">
+        </audio>
+        <audio id="notificacion_tramite" style="display: none">
+            <source src="../songs/calendar.mp3" type="audio/mp3">
         </audio>
         <div class="wrapper">
             <%@include file="plus/menuSuperior.jsp" %>

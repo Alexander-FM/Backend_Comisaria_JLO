@@ -165,15 +165,15 @@
                 </li>
             </ul>
             <div class="position-relative w-85">
-                <div class="toast ml-auto" role="alert" data-delay="7000">
+                <div class="toast ml-auto" role="alert" data-delay="10000">
                     <div class="toast-header">
                         <strong class="mr-auto text-primary">Notificación</strong>
-                        <small class="text-muted">Hace 2 min</small>
+                        <small class="text-muted"> Justo Ahora</small>
                         <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
                     </div>
-                    <div class="toast-body"> Hey, Aquí! Se ha ingresado una nueva denuncia, en el distrito. </div>
+                    <div class="toast-body"> Se ha ingresado una nueva denuncia, en el distrito. </div>
                 </div>
             </div>
         </nav>

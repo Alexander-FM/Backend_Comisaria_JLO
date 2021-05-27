@@ -228,8 +228,16 @@ function initSocket() {
                 //var message = toastr.info('Se ha ingresado una nueva denuncia, en el distrito : ' + de.denuncia.distrito.distrito);                   
                 //var message = alertify.warning('Se ha ingresado una nueva denuncia, en el distrito : ' + de.denuncia.distrito.distrito);
                 document.getElementById('audio_noti2').play();
-                message.delay(7);
-                cargarReporte();
+                message.delay(10);
+                cargarReporte();           
+            });
+            stompClient.subscribe('/topic/tramite-noti', function (response) {
+                var tra=  JSON.parse(response.body);
+                console.log(tra);
+                var message = $('.toast-body').html('Se ha ingresado un nuevo trámite de tipo : ' + tra.tipoTramite.tipoTramite + ' con el usuario: ' + tra.usuario.nombres + " " + tra.usuario.apellidoPaterno + " " + tra.usuario.apellidoMaterno);
+                $('.toast').toast('show');
+                document.getElementById('notificacion_tramite').play();
+                message.delay(10);
                 cargarReportesGraficosTramites();
             });
         });
