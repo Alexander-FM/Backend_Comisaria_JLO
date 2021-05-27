@@ -39,7 +39,7 @@
                     <br>       
                     <form id="frmLogin">
                         <div class="input-group mb-3">
-                            <input type="text" class="form-control" placeholder="Codigo Policial" id="codPolicia">
+                            <input type="text" class="form-control" required="" placeholder="Codigo Policial" id="codPolicia">
                             <div class="input-group-append">
                                 <div class="input-group-text">
                                     <span class="fas fa-envelope"></span>
@@ -47,7 +47,7 @@
                             </div>
                         </div>
                         <div class="input-group mb-3">
-                            <input type="password" class="form-control" placeholder="Contraseña" id="clave">
+                            <input type="password" class="form-control" required="" placeholder="Contraseña" id="clave">
                             <div class="input-group-append">
                                 <div class="input-group-text">
                                     <span class="fas fa-lock"></span>
@@ -55,7 +55,7 @@
                             </div>
                         </div>
                         <div class="form-group mb-3">
-                            <select id="combo_comisarias" class="form-control">
+                            <select id="combo_comisarias" required="" class="form-control">
                                 <option hidden="" selected="">Seleccionar Comisaría</option>
                             </select>                           
                         </div>

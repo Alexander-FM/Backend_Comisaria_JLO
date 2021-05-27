@@ -3,6 +3,7 @@ $(document).ready(function () {
         frmLogin: $("#frmLogin"),
         txtCodPolicia: $("input#codPolicia"),
         txtClave: $("input#clave"),
+        comboComisaria: $("#combo_comisarias"),
         alert: $("a#contenedor")
     };
     DOM.frmLogin.on("submit", function (e) {
@@ -27,7 +28,7 @@ $(document).ready(function () {
                 //alert(data.rpta);
                 if (data.rpta === 1) {
                     DOM.alert[0].textContent = data.message;
-                    $.post("srvLogin?accion=asignarSesion", {data: JSON.stringify(data.body.policia)});
+                    $.post("srvLogin?accion=asignarSesion", {data: JSON.stringify(data.body.policia), idC: DOM.comboComisaria.val()});
                     setTimeout(function () {
                         window.location.href = "vistas/inicio.jsp";
 

@@ -21,7 +21,7 @@ function cargarReportesGraficosTramites() {
         var intersect = true
 
         var $salesChart = $('#grafico4')
-        $.get('http://localhost:9090/api/denuncia/reporteAnual', {}, function (r) {
+        $.get('http://localhost:9090/api/denuncia/reporteAnual/' + $("#idComisaria").val(), {}, function (r) {
             var salesChart = new Chart($salesChart, {
                 type: 'bar',
                 data: {
@@ -89,7 +89,7 @@ function cargarReportesGraficosTramites() {
 
 //GRÁFICO 3 - REPORTES DE TRÁMITES REALIZADOS EN LA ÚLTIMA SEMANA
         var $visitorsChart = $('#grafico3')
-        $.get('http://localhost:9090/api/tramite/reportesemanal', {}, function (r) {
+        $.get('http://localhost:9090/api/tramite/reportesemanal/' + $("#idComisaria").val(), {}, function (r) {
             var visitorsChart = new Chart($visitorsChart, {
                 data: {
                     labels: ['DOM', 'LUN', 'MAR', 'MIE', 'JUE', 'VIE', 'SAB'],
@@ -155,13 +155,14 @@ function cargarReportesGraficosTramites() {
             });
         });
     });
-};
+}
+;
 function cargarReporte() {
     try {
         $(function () {
             $('.select2').select2();
             var reporteDenuncias = $('#grafico1').get(0).getContext('2d');
-            $.get('http://localhost:9090/api/denuncia/reporte2', {}, function (r) {
+            $.get('http://localhost:9090/api/denuncia/reporte2/' + $("#idComisaria").val(), {}, function (r) {
                 var tipoData = {
                     labels: r.body.vinculo.vinculos,
                     datasets: [
@@ -214,9 +215,9 @@ function initSocket() {
     try {
         var socket = new SockJS('http://localhost:9090/socket-comisariajlo');
         stompClient = Stomp.over(socket);
-        stompClient.connect({}, function (frame) {          
+        stompClient.connect({}, function (frame) {
             toastr.success('Conexión con el socket establecida correctamente');
-            document.getElementById('audio_noti1').play();            
+            document.getElementById('audio_noti1').play();
             //$('.toast').toast({delay:1000, animation:false});
             //alertify.success('Conexión con el socket establecida correctamnte');
             console.log('Connected: ' + frame);
@@ -229,10 +230,10 @@ function initSocket() {
                 //var message = alertify.warning('Se ha ingresado una nueva denuncia, en el distrito : ' + de.denuncia.distrito.distrito);
                 document.getElementById('audio_noti2').play();
                 message.delay(10);
-                cargarReporte();           
+                cargarReporte();
             });
             stompClient.subscribe('/topic/tramite-noti', function (response) {
-                var tra=  JSON.parse(response.body);
+                var tra = JSON.parse(response.body);
                 console.log(tra);
                 var message = $('.toast-body').html('Se ha ingresado un nuevo trámite de tipo : ' + tra.tipoTramite.tipoTramite + ' con el usuario: ' + tra.usuario.nombres + " " + tra.usuario.apellidoPaterno + " " + tra.usuario.apellidoMaterno);
                 $('.toast').toast('show');

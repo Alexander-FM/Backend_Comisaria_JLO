@@ -9,6 +9,7 @@
         <%@include file="plus/head.html" %>
     </head>
     <body class="hold-transition sidebar-mini">
+        <input type="hidden" id="idComisaria" value="${idComisarias}">
         <audio id="audio_noti1" style="display: none">
             <source src="../songs/inicioSocket.mp3" type="audio/mp3">
         </audio>
