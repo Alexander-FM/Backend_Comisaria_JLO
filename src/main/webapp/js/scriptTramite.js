@@ -32,7 +32,7 @@ $(document).ready(function () {
     }
     ;
     function cargarTabla() {
-        $.get('http://localhost:9090/api/tramite', {}, function (r) {
+        $.get('http://localhost:9090/api/tramite/porComisaria/' + $("#idComisaria").val(), {}, function (r) {
             var tabla = '';
             r.body.forEach(t => {
                 tabla += '<tr>';

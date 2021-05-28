@@ -9,6 +9,7 @@
         <%@include file="plus/head.html" %>
     </head>
     <body class="hold-transition sidebar-mini">
+        <input type="hidden" id="idComisaria" value="${idComisarias}">
         <div class="wrapper">
             <%@include file="plus/menuSuperior.jsp" %>
             <%@include  file="plus/menuLateral.jsp"%>
@@ -82,6 +83,36 @@
             </div>
 
             <!-- /. -->
+            <style>
+                #map {
+                    height: 400px;
+                    /* The height is 400 pixels */
+                    width: 100%;
+                    /* The width is the width of the web page */
+                }
+            </style>
+            <div class="modal fade" id="modal-mapa">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Mapa Georefencial</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="false"></span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div id="map">
+
+                            </div>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
 
             <!-- Modal -->
             <div class="modal fade" id="modal-dd">
@@ -276,6 +307,10 @@
         <script src="../js/scriptDenuncias.js" type="text/javascript"></script>
         <!-- AdminLTE App -->
         <script src="../dist/js/adminlte.min.js"></script>
+        <script
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBiqYBElQofWcQGkoH1A2gF9SEuzFyrtNk&callback=initMap&libraries=&v=weekly"
+            async
+        ></script>
     </body>
 </html>
 <%

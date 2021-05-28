@@ -2,6 +2,7 @@ var tabla = $("table#TablaDenuncias"),
         tablaAgraviados = $("table#tabla_agraviados"),
         tablaDenunciados = $("table#tabla_denunciados"),
         mdlDd = $("#modal-dd"),
+        mdlMp = $("#modal-mapa"),
         mdlAd = $("#modal-ac"),
         btnSave = $("#btn-save");
 $(document).ready(function () {
@@ -205,7 +206,7 @@ function presentarDatos(id) {
 function listarDenuncias() {
     $.ajax({
         type: 'get',
-        url: 'http://localhost:9090/api/denuncia',
+        url: 'http://localhost:9090/api/denuncia/porComisaria/' + $("#idComisaria").val(),
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
@@ -229,7 +230,8 @@ function listarDenuncias() {
                 tpl += '<td>' + d.referenciaDireccion + '</td>';
                 tpl += '<td style=\"text-align: center\">' + (d.estadoDenuncia === true ? '<h5><span class =\"badge badge-success\">Diligenciada</span></h5>' : '<h5><span class =\"badge badge-danger\">Pendiente</span></h5>') + '</td>';
                 tpl += '<td nowrap style=\"text-align: center\">'
-                        + '<button class="btn btn-info"><i class="fas fa-plus"></i></button> '
+                        + '<button title="Editar" class="btn btn-info"><i class="fas fa-plus"></i></button> '
+                        + '<button onclick="mostrarMapa(' + d.longitud + ',' + d.latitud + ')" title="Ver Mapa" class="btn btn-secondary"><i class="fas fa-map-marked-alt"></i></button> '
                         + '<button class="btn btn-warning"><i class="fas fa-edit"></i></button></td>';
                 tpl += '</tr>';
             });
@@ -265,4 +267,18 @@ function cargarPolicias() {
     });
 }
 ;
+function mostrarMapa(longitud, latitud){
+    mdlMp.modal({backdrop: 'static', keyboard: false});
+    const uluru = { lat: latitud, lng: longitud };
+        // The map, centered at Uluru
+        const map = new google.maps.Map(document.getElementById("map"), {
+          zoom: 20,
+          center: uluru,
+        });
+        // The marker, positioned at Uluru
+        const marker = new google.maps.Marker({
+          position: uluru,
+          map: map,
+        });
+}
 

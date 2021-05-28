@@ -28,7 +28,8 @@ $(document).ready(function () {
                 //alert(data.rpta);
                 if (data.rpta === 1) {
                     DOM.alert[0].textContent = data.message;
-                    $.post("srvLogin?accion=asignarSesion", {data: JSON.stringify(data.body.policia), idC: DOM.comboComisaria.val()});
+                    $.post("srvLogin?accion=asignarSesion", {data: JSON.stringify(data.body.policia), idC: DOM.comboComisaria.val(), nomComisaria: $('select[name="combo_comisarias"] option:selected').text()});
+                    
                     setTimeout(function () {
                         window.location.href = "vistas/inicio.jsp";
 
@@ -59,7 +60,6 @@ function cargarComisarias() {
                 case 1:
                     let comboComisarias = '';
                     data.body.forEach(e => {
-                        comboComisarias += '<option hidden selected>Seleccione Comisaría</option>';
                         comboComisarias += '<option value="' + e.id + '">' + e.nombreComisaria + '</option>';
                     });
                     $('#combo_comisarias').html(comboComisarias);
@@ -74,7 +74,7 @@ function cargarComisarias() {
         }, error: function (x, y) {
             alertify.set('notifier', 'position', 'top-center');
             alertify.set('notifier', 'delay', 10);
-            alertify.error('se ha intentado obtener los grados para el formulario de registro pero ocurrió un error,por favor refresque la pagina<br>\n\
+            alertify.error('Lo sentimos, se ha intentado obtener el listado de comisarías para el formulario de login, pero ocurrió un error, por favor refresque la pagina<br>\n\
             si el problema persiste cierre la app y espere unos minutos');
             //console.log(x.responseText);
         }

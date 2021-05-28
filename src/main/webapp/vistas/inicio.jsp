@@ -52,7 +52,7 @@
 
                                     <div class="info-box-content">
                                         <span class="info-box-text">Total Denuncias Ingresadas</span>
-                                        <span class="info-box-number">
+                                        <span id="denunciasIngresadas" class="info-box-number">
                                             400
                                         </span>
                                     </div>
@@ -67,7 +67,7 @@
 
                                     <div class="info-box-content">
                                         <span class="info-box-text">Total de Trámites Ingresados</span>
-                                        <span class="info-box-number">450</span>
+                                        <span id="tramitesIngresados" class="info-box-number">450</span>
                                     </div>
                                     <!-- /.info-box-content -->
                                 </div>
@@ -84,7 +84,7 @@
 
                                     <div class="info-box-content">
                                         <span class="info-box-text">Denuncias Por Atender</span>
-                                        <span class="info-box-number">100</span>
+                                        <span id="dInactivo" class="info-box-number">100</span>
                                     </div>
                                     <!-- /.info-box-content -->
                                 </div>
@@ -97,7 +97,7 @@
 
                                     <div class="info-box-content">
                                         <span class="info-box-text">Trámites por Atender</span>
-                                        <span class="info-box-number">50</span>
+                                        <span id="tInactivo" class="info-box-number">50</span>
                                     </div>
                                     <!-- /.info-box-content -->
                                 </div>

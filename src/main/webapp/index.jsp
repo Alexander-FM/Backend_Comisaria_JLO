@@ -55,8 +55,7 @@
                             </div>
                         </div>
                         <div class="form-group mb-3">
-                            <select id="combo_comisarias" required="" class="form-control">
-                                <option hidden="" selected="">Seleccionar Comisaría</option>
+                            <select name="combo_comisarias" id="combo_comisarias" required="" class="form-control">
                             </select>                           
                         </div>
                         <div class="row">

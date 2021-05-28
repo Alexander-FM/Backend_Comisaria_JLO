@@ -3,7 +3,7 @@
     <a href="#" class="brand-link">
         <img src="../imagenes/pnp.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
              style="opacity: .8">
-        <span class="brand-text font-weight-light" style="color: white;">Comisaria JLO</span>
+        <span id="nombreComisaria" class="brand-text font-weight-light" style="color: white;">${nomComi}</span>
     </a>
 
     <!-- Sidebar -->
@@ -127,7 +127,7 @@
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-chart-line"></i>
                         <p style="color: white;">
-                            Reportes
+                            Reportes Generales
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>

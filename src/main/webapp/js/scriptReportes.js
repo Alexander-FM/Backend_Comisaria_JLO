@@ -2,11 +2,40 @@ $(document).ready(function () {
     let a = $('#li_inicio').find('a');
     a.attr('class', 'nav-link active');
     a.attr('style', 'background-color: black');
+    obtenerContadorDenuncias();
+    obtenerContadorTramites();
+    obtenerContadorTramitesPendientes();
+    obtenerContadorDenunciasPendientes();
     cargarReporte();
     cargarReportesGraficosTramites();
     initSocket();
 
 });
+
+function obtenerContadorDenuncias() {
+    $.get('http://localhost:9090/api/denuncia/listarTotalDenunciasPorComisaria/' + $("#idComisaria").val(), {}, function (r) {
+        $('#denunciasIngresadas').html(r.body);
+    });
+}
+function obtenerContadorTramites() {
+    $.get('http://localhost:9090/api/tramite/listarTotalTramitesPorComisaria/' + $("#idComisaria").val(), {}, function (r) {
+        $('#tramitesIngresados').html(r.body);
+    });
+}
+
+function obtenerContadorTramitesPendientes() {
+    $.get('http://localhost:9090/api/tramite/listarCTramitesPendientePorComisaria/' + $("#idComisaria").val(), {}, function (r) {
+        $('#tInactivo').html(r.body);
+    });
+}
+
+function obtenerContadorDenunciasPendientes() {
+    $.get('http://localhost:9090/api/denuncia/listarCDenunciasPendientePorComisaria/' + $("#idComisaria").val(), {}, function (r) {
+        $('#dInactivo').html(r.body);
+    });
+}
+
+
 
 function cargarReportesGraficosTramites() {
     $(function () {
@@ -231,6 +260,9 @@ function initSocket() {
                 document.getElementById('audio_noti2').play();
                 message.delay(10);
                 cargarReporte();
+                cargarReportesGraficosTramites();
+                obtenerContadorDenuncias();
+                obtenerContadorDenunciasPendientes();
             });
             stompClient.subscribe('/topic/tramite-noti', function (response) {
                 var tra = JSON.parse(response.body);
@@ -240,6 +272,8 @@ function initSocket() {
                 document.getElementById('notificacion_tramite').play();
                 message.delay(10);
                 cargarReportesGraficosTramites();
+                obtenerContadorTramites();
+                obtenerContadorTramitesPendientes();
             });
         });
     } catch (error) {

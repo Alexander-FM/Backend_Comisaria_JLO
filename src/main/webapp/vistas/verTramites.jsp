@@ -9,6 +9,7 @@
         <%@include file="plus/head.html" %>
     </head>
     <body class="hold-transition sidebar-mini">
+        <input type="hidden" id="idComisaria" value="${idComisarias}">
         <div class="wrapper">
             <%@include file="plus/menuSuperior.jsp" %>
             <%@include  file="plus/menuLateral.jsp"%>
