@@ -5,10 +5,7 @@
                         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars" style="color: white;"></i></a>
                     </li>
                     <li class="nav-item d-none d-sm-inline-block">
-                        <a href="#" class="nav-link" style="color: white;">Inicio</a>
-                    </li>
-                    <li class="nav-item d-none d-sm-inline-block">
-                        <a href="#" class="nav-link" style="color: white;">Contáctanos</a>
+                        <a href="inicio.jsp" class="nav-link" style="color: white;">Inicio</a>
                     </li>
                 </ul>
 

@@ -52,6 +52,11 @@
                                     <input type="hidden" id="usuarioId">
                                     <input type="hidden" id="tipoTramiteId">
                                     <input type="hidden" id="correoUser">
+                                    <input type="hidden" id="comisariaId">
+                                    <input type="hidden" id="motivoDenuncia">
+                                    <input type="hidden" id="observaciones">
+                                    <input type="hidden" id="solicitante">
+                                    <input type="hidden" id="telefono">
                                 </div>
                             </div>
                             <div class="row">
@@ -106,33 +111,41 @@
                                     <div class="card-body">
                                         <table id="TablaTramites" class="table table-responsive table-bordered table-hover">
                                             <thead>
-                                                <tr>
-                                                    <th class="text-center">Id</th>
-                                                    <th class="text-center">Cod-Trámite</th>
-                                                    <th class="text-center">Fecha Trámite</th>
-                                                    <th class="text-center">Hora Trámite</th>
-                                                    <th class="text-center">Policia</th>
-                                                    <th class="text-center">Tipo Trámite</th>
-                                                    <th class="text-center">Estado</th>
-                                                    <th class="text-center">Usuario</th>
-                                                    <th class="text-center">Correo Usuario</th>
-                                                    <th class="text-center">Acciones</th>
+                                                <tr class="text-center">
+                                                    <th>Id</th>
+                                                    <th>Cod-Trámite</th>
+                                                    <th>Fecha Trámite</th>
+                                                    <th>Hora Trámite</th>
+                                                    <th>Policia</th>
+                                                    <th>Tipo Trámite</th>
+                                                    <th>Estado</th>
+                                                    <th>Solicitante</th>
+                                                    <th>Usuario</th>
+                                                    <th>Telefono</th>
+                                                    <th>Correo Usuario</th>
+                                                    <th>Motivo Denuncia</th>
+                                                    <th>Observaciones</th>                          
+                                                    <th>Acciones</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                             </tbody>
                                             <tfoot>
-                                                <tr>
-                                                    <th class="text-center">Id</th>
-                                                    <th class="text-center">Cod-Trámite</th>
-                                                    <th class="text-center">Fecha Trámite</th>
-                                                    <th class="text-center">Hora Tramite</th>
-                                                    <th class="text-center">Policia</th>
-                                                    <th class="text-center">Tipo Trámite</th>
-                                                    <th class="text-center">Estado</th>
-                                                    <th class="text-center">Usuario</th>
-                                                    <th class="text-center">Correo Usuario</th>
-                                                    <th class="text-center">Acciones</th>
+                                                <tr class="text-center">
+                                                    <th>Id</th>
+                                                    <th>Cod-Trámite</th>
+                                                    <th>Fecha Trámite</th>
+                                                    <th>Hora Tramite</th>
+                                                    <th>Policia</th>
+                                                    <th>Tipo Trámite</th>
+                                                    <th>Estado</th>
+                                                    <th>Solicitante</th>
+                                                    <th>Usuario</th>
+                                                    <th>Telefono</th>
+                                                    <th>Correo Usuario</th>
+                                                    <th>Motivo Denuncia</th>
+                                                    <th>Observaciones</th>                          
+                                                    <th>Acciones</th>
                                                 </tr>
                                             </tfoot>
                                         </table>

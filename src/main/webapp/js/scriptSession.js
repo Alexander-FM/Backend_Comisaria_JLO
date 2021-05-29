@@ -3,7 +3,7 @@ $(document).ready(function () {
         frmLogin: $("#frmLogin"),
         txtCodPolicia: $("input#codPolicia"),
         txtClave: $("input#clave"),
-        comboComisaria: $("#combo_comisarias"),
+        
         alert: $("a#contenedor")
     };
     DOM.frmLogin.on("submit", function (e) {
@@ -28,8 +28,8 @@ $(document).ready(function () {
                 //alert(data.rpta);
                 if (data.rpta === 1) {
                     DOM.alert[0].textContent = data.message;
-                    $.post("srvLogin?accion=asignarSesion", {data: JSON.stringify(data.body.policia), idC: DOM.comboComisaria.val(), nomComisaria: $('select[name="combo_comisarias"] option:selected').text()});
-                    
+                    $.post("srvLogin?accion=asignarSesion", {data: JSON.stringify(data.body.policia), idC: data.body.comisarias.id, nomComisaria: data.body.comisarias.nombreComisaria});
+
                     setTimeout(function () {
                         window.location.href = "vistas/inicio.jsp";
 
@@ -43,41 +43,5 @@ $(document).ready(function () {
             }
         });
     }
-    cargarComisarias();
 });
-
-function cargarComisarias() {
-    $.ajax({
-        type: 'get',
-        url: 'http://localhost:9090/api/comisarias',
-        data: {},
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        success: function (data) {
-            switch (data.rpta) {
-                case 1:
-                    let comboComisarias = '';
-                    data.body.forEach(e => {
-                        comboComisarias += '<option value="' + e.id + '">' + e.nombreComisaria + '</option>';
-                    });
-                    $('#combo_comisarias').html(comboComisarias);
-                    break;
-                case 0:
-                    alertify.warning(data.body + ' ☹');
-                    break;
-                default :
-                    alert('ha ocurrido un error durante la carga de datos ⚙,inténtelo nuevamente en unos mintos ⏲');
-                    break;
-            }
-        }, error: function (x, y) {
-            alertify.set('notifier', 'position', 'top-center');
-            alertify.set('notifier', 'delay', 10);
-            alertify.error('Lo sentimos, se ha intentado obtener el listado de comisarías para el formulario de login, pero ocurrió un error, por favor refresque la pagina<br>\n\
-            si el problema persiste cierre la app y espere unos minutos');
-            //console.log(x.responseText);
-        }
-    });
-}
 

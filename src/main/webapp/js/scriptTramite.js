@@ -35,18 +35,23 @@ $(document).ready(function () {
         $.get('http://localhost:9090/api/tramite/porComisaria/' + $("#idComisaria").val(), {}, function (r) {
             var tabla = '';
             r.body.forEach(t => {
-                tabla += '<tr>';
-                tabla += '<td style="text-align:center">' + t.id + '</td>';
-                tabla += '<td style="text-align:center">' + t.codTramite + '</td>';
-                tabla += '<td style="text-align:center">' + t.fechaTramite + '</td>';
-                tabla += '<td style="text-align:center">' + t.horaTramite + '</td>';
-                tabla += '<td style="text-align:center">' + t.policia.nombres + ' ' + t.policia.apellidoPaterno + ' ' + t.policia.apellidoMaterno + '</td>';
-                tabla += '<td style="text-align:center">' + t.tipoTramite.tipoTramite + '</td>';
-                tabla += '<td style=\"text-align: center\">' + (t.estadoTramite === true ? '<h5><span class =\"badge badge-success\">Diligenciada</span></h5>' : '<h5><span class =\"badge badge-danger\">Pendiente</span></h5>') + '</td>';
-                tabla += '<td style="text-align:center">' + t.usuario.nombres + '</td>';
-                tabla += '<td style="text-align:center">' + t.correo + '</td>';
-                tabla += '<td nowrap style=\"text-align: center\">'
-                        + '<button onclick="presentarDatos(' + t.id + ')" class="btn btn-warning"><i class="fas fa-edit"></i></button></td>';
+                tabla += '<tr style="text-align:center">';
+                tabla += '<td>' + t.id + '</td>';
+                tabla += '<td>' + t.codTramite + '</td>';
+                tabla += '<td>' + t.fechaTramite + '</td>';
+                tabla += '<td>' + t.horaTramite + '</td>';
+                tabla += '<td>' + t.policia.nombres + ' ' + t.policia.apellidoPaterno + ' ' + t.policia.apellidoMaterno + '</td>';
+                tabla += '<td>' + t.tipoTramite.tipoTramite + '</td>';
+                tabla += '<td>' + (t.estadoTramite === true ? '<h5><span class =\"badge badge-success\">Diligenciada</span></h5>' : '<h5><span class =\"badge badge-danger\">Pendiente</span></h5>') + '</td>';
+                tabla += '<td>' + t.solicitante + '</td>';
+                tabla += '<td>' + t.usuario.nombres + '</td>';
+                tabla += '<td>' + t.telefono + '</td>';
+                tabla += '<td>' + t.correo + '</td>';
+                tabla += '<td>' + t.motivo_denuncia_policial + '</td>';
+                tabla += '<td>' + t.observaciones + '</td>';                              
+                tabla += '<td nowrap>'
+                        + '<button title="Editar Trámite" onclick="presentarDatos(' + t.id + ')" class="btn btn-warning"><i class="fas fa-edit"></i></button> '
+                        + '<button title="Exportar Trámite" onclick="exportarTramite(' + t.id + ')" class="btn btn-primary"><i class="fas fa-file-pdf"></i></button></td>';
                 tabla += '</tr>';
             });
             //console.log(tabla);
@@ -88,7 +93,12 @@ function registrar() {
             horaTramite: $('#horaTramite').val(),
             correo: $('#correoUser').val(),
             tipoTramite: {id: parseInt($('#tipoTramiteId').val())},
-            usuario: {id: parseInt($('#usuarioId').val())}
+            usuario: {id: parseInt($('#usuarioId').val())},
+            comisarias: {id: parseInt($('#comisariaId').val())},
+            motivo_denuncia_policial: $('#motivoDenuncia').val(),
+            observaciones: $('#observaciones').val(),
+            solicitante: $('#solicitante').val(), 
+            telefono: $('#telefono').val()
         };
         $.ajax({
             type: (id === 0 ? 'post' : 'put'),
@@ -153,6 +163,11 @@ function presentarDatos(id) {
                     $('#correoUser').val(data.body.correo);
                     $('#usuarioId').val(data.body.usuario.id);
                     $('#tipoTramiteId').val(data.body.tipoTramite.id);
+                    $('#comisariaId').val(data.body.comisarias.id);
+                    $('#motivoDenuncia').val(data.body.motivo_denuncia_policial);
+                    $('#observaciones').val(data.body.observaciones);
+                    $('#solicitante').val(data.body.solicitante);
+                    $('#telefono').val(data.body.telefono);
                     break;
                 case 0:
                     alertify.warning(data.body + ' ☹');

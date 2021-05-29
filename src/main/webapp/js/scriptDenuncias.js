@@ -113,10 +113,13 @@ function registrar() {
             horaHechos: $('#horaHechos').val(),
             direccion: $('#direccion').val(),
             referenciaDireccion: $('#referenciadireccion').val(),
+            latitud: $('#latitud').val(),
+            longitud: $('#longitud').val(),
             distrito: {id: parseInt($('#distritoId').val())},
             tipoDenuncia: {id: parseInt($('#tipoDenunciaId').val())},
             vinculoParteDenunciada: {id: parseInt($('#vPDId').val())},
-            usuario: {id: parseInt($('#userId').val())}
+            usuario: {id: parseInt($('#userId').val())},
+            comisarias: {id: parseInt($('#comisariaId').val())}
         };
         $.ajax({
             type: (id === 0 ? 'post' : 'put'),
@@ -187,6 +190,9 @@ function presentarDatos(id) {
                     $('#tipoDenunciaId').val(data.body.tipoDenuncia.id);
                     $('#vPDId').val(data.body.vinculoParteDenunciada.id);
                     $('#userId').val(data.body.usuario.id);
+                    $('#comisariaId').val(data.body.comisarias.id);
+                    $('#latitud').val(data.body.latitud);
+                    $('#longitud').val(data.body.longitud);
                     break;
                 case 0:
                     alertify.warning(data.body + ' ☹');

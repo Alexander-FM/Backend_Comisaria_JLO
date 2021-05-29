@@ -62,12 +62,21 @@
                                         <div class="form-group">
                                             <label>Ingrese Clave</label>
                                             <input id="claveUsuario" type="text" placeholder="***********" class="form-control">
-                                        </div>                                       
+                                        </div>
+                                        <div class="form-group">
+                                            <label id="etiqueta_comisaria">Seleccionar Comisaría</label>
+                                            <select id="combo_policias_comisarias" style="width: 100%" class="select2 form-control" data-placeholder="Seleccionar">                                               
+                                                <!-- Cargar desde la base de datos -->
+                                                <option>Cargando.....</option>
+                                            </select>  
+                                        </div>                                      
+                                    </div>
+                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                                         <label>Estado del Policía</label>
                                         <div class="form-group">                           
-                                            <input id="estadoPol" style="margin-top: 10px" type="checkbox" checked="" class="checkbox"> Vigente
+                                            <input id="estadoPol" type="checkbox" checked="" class="checkbox"> Activo / Inactivo
                                         </div>
-                                    </div>
+                                    </div>                    
                                 </div>
                             </div>
                             <div class="modal-footer justify-content-between">
@@ -97,7 +106,7 @@
                             <div class="col-12">
                                 <div class="card">
                                     <div class="card-header">
-                                        <h3 class="card-title">Listado De Policias</h3>
+                                        <h3 class="card-title">Listado De Usuarios</h3>
                                     </div>
                                     <!-- /.card-header -->
                                     <div class="card-body">
@@ -108,6 +117,7 @@
                                                     <th>Código Policía</th>
                                                     <th>Clave</th>
                                                     <th>Policia Asignado</th>
+                                                    <th>Comisaría Actualmente</th>
                                                     <th class="text-center">Estado</th>
                                                     <th class="text-center">Acciones</th>
                                                 </tr>
@@ -120,6 +130,7 @@
                                                     <th>Código Policía</th>
                                                     <th>Clave</th>
                                                     <th>Policia Asignado</th>
+                                                    <th>Comisaría Actualmente</th>
                                                     <th class="text-center">Estado</th>
                                                     <th class="text-center">Acciones</th>
                                                 </tr>

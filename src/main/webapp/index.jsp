@@ -54,10 +54,10 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group mb-3">
+                        <!-- <div class="form-group mb-3">
                             <select name="combo_comisarias" id="combo_comisarias" required="" class="form-control">
-                            </select>                           
-                        </div>
+                            </select>                          
+                        </div>--> 
                         <div class="row">
                             <div class="col-6">
                                 <div class="icheck-primary">

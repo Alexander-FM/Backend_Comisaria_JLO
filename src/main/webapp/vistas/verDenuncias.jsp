@@ -61,6 +61,10 @@
                                     <input type="hidden" id="tipoDenunciaId">
                                     <input type="hidden" id="vPDId">
                                     <input type="hidden" id="userId">
+                                    <input type="hidden" id="comisariaId">
+                                    <input type="hidden" id="latitud">
+                                    <input type="hidden" id="longitud">
+                                    
                                 </div>
                             </div>
                             <div class="row">
@@ -197,7 +201,7 @@
                             </div><!-- /.col -->
                             <div class="col-sm-6">
                                 <ol class="breadcrumb float-sm-right">
-                                    <li class="breadcrumb-item"><a href="inicio.jsp">Inicio</a></li>
+                                    <li class="breadcrumb-item"><a href="#">Recepción Denuncias</a></li>
                                     <li class="breadcrumb-item active">Ver Denuncias</li>
                                 </ol>
                             </div><!-- /.col -->
