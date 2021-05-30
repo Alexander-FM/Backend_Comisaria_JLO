@@ -9,14 +9,9 @@ public abstract class Persona {
     private String nombres;
     private String apellidoPaterno;
     private String apellidoMaterno;
-    private Date fechaNacimiento;
     private String sexo;
     private boolean vigencia;
-    private String telefono;
     private TipoIdentificacion tipoIdentificacion;
-    private EstadoCivil estadoCivil;
-    private Distrito distrito;
-    private String direccion;
 
     public int getId() {
         return id;
@@ -58,14 +53,6 @@ public abstract class Persona {
         this.apellidoMaterno = apellidoMaterno;
     }
 
-    public Date getFechaNacimiento() {
-        return fechaNacimiento;
-    }
-
-    public void setFechaNacimiento(Date fechaNacimiento) {
-        this.fechaNacimiento = fechaNacimiento;
-    }
-
     public String getSexo() {
         return sexo;
     }
@@ -82,44 +69,12 @@ public abstract class Persona {
         this.vigencia = vigencia;
     }
 
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
-
     public TipoIdentificacion getTipoIdentificacion() {
         return tipoIdentificacion;
     }
 
     public void setTipoIdentificacion(TipoIdentificacion tipoIdentificacion) {
         this.tipoIdentificacion = tipoIdentificacion;
-    }
-
-    public EstadoCivil getEstadoCivil() {
-        return estadoCivil;
-    }
-
-    public void setEstadoCivil(EstadoCivil estadoCivil) {
-        this.estadoCivil = estadoCivil;
-    }
-
-    public Distrito getDistrito() {
-        return distrito;
-    }
-
-    public void setDistrito(Distrito distrito) {
-        this.distrito = distrito;
-    }
-
-    public String getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
     }
 
     public String getNombreCompleto() {

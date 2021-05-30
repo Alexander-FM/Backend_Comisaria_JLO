@@ -5,10 +5,6 @@ public final class Provincia {
     private String provincia;
     private boolean estado;
     private Departamento departamento;
-
-    /*La parte izquierda hace referencia a la clase actual y la parte derecha a la clase destino quedaría de la siguiente
-    * manera Muchas provincias pertenecen a un departamento.*/
-
     public int getId() {
         return id;
     }

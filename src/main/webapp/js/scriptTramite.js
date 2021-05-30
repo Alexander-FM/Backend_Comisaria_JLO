@@ -1,5 +1,5 @@
 $(document).ready(function () {
-     let li_grupo_registros = $('#li_grupo_rectramites');
+    let li_grupo_registros = $('#li_grupo_rectramites');
     li_grupo_registros.attr('class', 'nav-item has-treeview menu-close menu-open');
     let a = $('#li_vertramites').find('a');
     a.attr('class', 'nav-link active');
@@ -48,7 +48,7 @@ $(document).ready(function () {
                 tabla += '<td>' + t.telefono + '</td>';
                 tabla += '<td>' + t.correo + '</td>';
                 tabla += '<td>' + t.motivo_denuncia_policial + '</td>';
-                tabla += '<td>' + t.observaciones + '</td>';                              
+                tabla += '<td>' + t.observaciones + '</td>';
                 tabla += '<td nowrap>'
                         + '<button title="Editar Trámite" onclick="presentarDatos(' + t.id + ')" class="btn btn-warning"><i class="fas fa-edit"></i></button> '
                         + '<button title="Exportar Trámite" onclick="exportarTramite(' + t.id + ')" class="btn btn-primary"><i class="fas fa-file-pdf"></i></button></td>';
@@ -97,7 +97,7 @@ function registrar() {
             comisarias: {id: parseInt($('#comisariaId').val())},
             motivo_denuncia_policial: $('#motivoDenuncia').val(),
             observaciones: $('#observaciones').val(),
-            solicitante: $('#solicitante').val(), 
+            solicitante: $('#solicitante').val(),
             telefono: $('#telefono').val()
         };
         $.ajax({
@@ -150,7 +150,7 @@ function presentarDatos(id) {
                     $('#idAC').val(data.body.id);
                     $('#codTramite').val(data.body.codTramite);
                     $("#estadotramite").prop('checked', data.body.estadoTramite);
-                    let item = '<option value="' + data.body.policia.id + '" selected>' + (data.body.policia.nombres + ' ' + data.body.policia.apellidoPaterno + ' ' +data.body.policia.apellidoMaterno) + '</option>'
+                    let item = '<option value="' + data.body.policia.id + '" selected>' + (data.body.policia.nombres + ' ' + data.body.policia.apellidoPaterno + ' ' + data.body.policia.apellidoMaterno) + '</option>'
                     $('#combo_policias_tramites').val(data.body.policia.id);
                     if (!data.body.policia.estado) {
                         var alerta = alertify.warning('Alerta: Esta intentando actualizar un trámite cuyo policía está desactivado, si desea asignarle ese mismo policia usted debe activarlo primero desde el módulo de policías', 0)
@@ -185,4 +185,23 @@ function presentarDatos(id) {
     $('#btn-save').html('<i class="fas fa-sync-alt"></i> Actualizar Trámite');
 }
 ;
+function exportarTramite(id) {
+    $.ajax({
+        type: 'get',
+        url: 'http://localhost:9090/api/tramite/' + id,
+        data: {},
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        success: function (data) {
+            $('#tramite').val(JSON.stringify(data.body));
+            $('#frmPrintTramite').submit();
+            $.post()
+        }, error: function (x, y) {
+            alertify.error('el servicio no esta disponible,vuelva a intentarlo más tarde');
+            //console.log(x.responseText);
+        }
+    });
+}
 

@@ -2,11 +2,11 @@ package com.devcix.backend_comisaria_jlo.model;
 
 import com.devcix.backend_comisaria_jlo.model.Agraviado;
 import com.devcix.backend_comisaria_jlo.model.Denuncia;
-import javax.persistence.*;
+
 public final class DenunciaAgraviado {
+
     public int id;
     public Denuncia denuncia;
-    @OneToOne
     public Agraviado agraviado;
 
     public int getId() {

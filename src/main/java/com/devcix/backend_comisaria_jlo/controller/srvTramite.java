@@ -15,6 +15,7 @@ import java.sql.Time;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +25,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -45,10 +47,13 @@ public class srvTramite extends HttpServlet {
         if (accion != null) {
             switch (accion) {
                 case "ExportarPDF":
-                    exportarPDF(request, response);
+                    this.exportarPDF(request, response);
                     break;
                 case "ReporteJasperPDF":
                     this.reporteJasperPDF(request, response);
+                    break;
+                case "ImprimirTramite":
+                    this.imprimirTramite(request, response);
                     break;
             }
         } else {
@@ -123,6 +128,46 @@ public class srvTramite extends HttpServlet {
         } catch (Exception e) {
             response.setContentType("text/plain");
             out.print("ocurrió un error al intentar generar el reporte:" + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    private void imprimirTramite(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        ServletOutputStream out = response.getOutputStream();
+        try {
+            InputStream formato = this.getServletConfig().getServletContext().getResourceAsStream("/reportes/FormatoTramite.jasper"),
+                    img1 = this.getServletConfig().getServletContext().getResourceAsStream("/reportes/img/escudo.png"),
+                    img2 = this.getServletConfig().getServletContext().getResourceAsStream("/reportes/img/pnp.png");
+            Tramite t = g.fromJson(request.getParameter("tramite"), Tramite.class);
+            JasperReport report = (JasperReport) JRLoader.loadObject(formato);
+            Map<String, Object> parameters = new HashMap();
+            parameters.put("img1", img1);
+            parameters.put("img2", img2);
+            parameters.put("NombreSolicitante", t.getUsuario().getNombreCompleto() + " (" + t.getSolicitante() + ")");
+            parameters.put("Documento", t.getUsuario().getNumeroIdentificacion());
+            parameters.put("Domicilio", t.getUsuario().getDireccion());
+            parameters.put("Distrito", t.getUsuario().getDistrito().getDistrito());
+            parameters.put("Provincia", t.getUsuario().getDistrito().getProvincia().getProvincia());
+            parameters.put("Departamento", t.getUsuario().getDistrito().getProvincia().getDepartamento().getDepartamento());
+            parameters.put("Telefono", t.getTelefono());
+            parameters.put("Correo", t.getCorreo());
+            parameters.put("MotivoDenunciaPolicial", t.getMotivo_denuncia_policial());
+            parameters.put("DependenciaPolicial", t.getComisarias().getNombreComisaria());
+            parameters.put("Observaciones", t.getObservaciones());
+            Calendar calendarFecha = Calendar.getInstance(), calendarHora = Calendar.getInstance();
+            calendarFecha.setTime(t.getFechaTramite());
+            calendarHora.setTime(t.getHoraTramite());
+            String fechaHoraRecepcion = "" + calendarFecha.get(Calendar.DAY_OF_MONTH) + "/" + (calendarFecha.get(Calendar.MONTH) + 1) + "/" + calendarFecha.get(Calendar.YEAR) + " " + calendarHora.get(Calendar.HOUR_OF_DAY) + ":" + calendarHora.get(Calendar.MINUTE);
+            parameters.put("FechaHoraRecepcion", fechaHoraRecepcion);
+            JasperPrint jasperPrint = JasperFillManager.fillReport(report, parameters, new JREmptyDataSource());
+            JasperExportManager.exportReportToPdfStream(jasperPrint, out);
+            response.setContentType("application/pdf; name=\"CopiaTramite.pdf\"");
+            response.addHeader("Content-disposition", "inline; filename=CopiaTramite.pdf");
+            out.flush();
+            out.close();
+        } catch (Exception e) {
+            response.setContentType("text/plain");
+            out.print("ocurrió un error al intentar imprimir el tramite:" + e.getMessage());
             e.printStackTrace();
         }
     }

@@ -16,9 +16,12 @@ public final class Denuncia {
     private boolean estadoDenuncia;
     private TipoDenuncia tipoDenuncia;
     private Distrito distrito;
+    private Comisarias comisarias;
     private VinculoParteDenunciada vinculoParteDenunciada;
     private Policia policia;
     private Usuario usuario;
+    private String latitud;
+    private String longitud;
 
     public int getId() {
         return id;
@@ -58,6 +61,14 @@ public final class Denuncia {
 
     public void setDireccion(String direccion) {
         this.direccion = direccion;
+    }
+
+    public Comisarias getComisarias() {
+        return comisarias;
+    }
+
+    public void setComisarias(Comisarias comisarias) {
+        this.comisarias = comisarias;
     }
 
     public String getReferenciaDireccion() {
@@ -147,4 +158,21 @@ public final class Denuncia {
     public String getNombreCompletoPolicia() {
         return this.policia != null ? this.policia.getNombreCompleto() + " " + this.policia.getApellidoPaterno() + " " + this.policia.getApellidoMaterno() : "- - -";
     }
+
+    public String getLatitud() {
+        return latitud;
+    }
+
+    public void setLatitud(String latitud) {
+        this.latitud = latitud;
+    }
+
+    public String getLongitud() {
+        return longitud;
+    }
+
+    public void setLongitud(String longitud) {
+        this.longitud = longitud;
+    }
+
 }

@@ -13,7 +13,12 @@ public final class Tramite {
     private boolean estadoTramite;
     private Usuario usuario;
     private Policia policia;
-
+    private Comisarias comisarias;
+    private String correo;
+    private String telefono;
+    private String motivo_denuncia_policial;
+    private String observaciones;
+    private String solicitante;
     public int getId() {
         return id;
     }
@@ -89,4 +94,53 @@ public final class Tramite {
     public String getNombreCompletoUsuario() {
         return this.usuario != null ? this.usuario.getNombreCompleto() : "- - -";
     }
+
+    public Comisarias getComisarias() {
+        return comisarias;
+    }
+
+    public void setComisarias(Comisarias comisarias) {
+        this.comisarias = comisarias;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getMotivo_denuncia_policial() {
+        return motivo_denuncia_policial;
+    }
+
+    public void setMotivo_denuncia_policial(String motivo_denuncia_policial) {
+        this.motivo_denuncia_policial = motivo_denuncia_policial;
+    }
+
+    public String getObservaciones() {
+        return observaciones;
+    }
+
+    public void setObservaciones(String observaciones) {
+        this.observaciones = observaciones;
+    }
+
+    public String getSolicitante() {
+        return solicitante;
+    }
+
+    public void setSolicitante(String solicitante) {
+        this.solicitante = solicitante;
+    }
+    
 }

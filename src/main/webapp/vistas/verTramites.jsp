@@ -4,6 +4,7 @@
 <%
     if (request.getSession().getAttribute("usuario") != null) {
 %>
+<!DOCTYPE html>
 <html lang="es">
     <head>
         <%@include file="plus/head.html" %>
@@ -163,7 +164,9 @@
                 <!-- /.content -->
             </div>
             <!-- /.content-wrapper -->
-
+            <form id="frmPrintTramite" action="../tramite?accion=ImprimirTramite" method="post" target="_blank">
+                <input type="hidden" name="tramite" id="tramite">
+            </form>
             <!-- Main Footer -->
             <footer class="main-footer">
                 <!-- To the right -->
