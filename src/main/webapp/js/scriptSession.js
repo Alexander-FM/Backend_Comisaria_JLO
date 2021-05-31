@@ -1,14 +1,30 @@
 $(document).ready(function () {
     var DOM = {
         frmLogin: $("#frmLogin"),
+        frmSolicitarCambio: $("#frmSolicitarCambioClave"),
+        frmChangePassword: $("#frmChangePassword"),
         txtCodPolicia: $("input#codPolicia"),
+        txtCodPolicial: $("input#codigoPolicial"),
         txtClave: $("input#clave"),
-        
+        modalSolicitud: $("#modal-lg"),
+        clave1: $("#pass1"),
+        clave2: $("#pass2"),
+        modalChangePass: $("#modal-changePass"),
         alert: $("a#contenedor")
     };
     DOM.frmLogin.on("submit", function (e) {
         e.preventDefault();
         ingresarSistema();
+    });
+
+    DOM.frmSolicitarCambio.on("submit", function (e) {
+        e.preventDefault();
+        buscarPoliciaByCP();
+    });
+
+    DOM.frmChangePassword.on("submit", function (e) {
+        e.preventDefault();
+        changePassword();
     });
 
     function ingresarSistema() {
@@ -42,6 +58,65 @@ $(document).ready(function () {
                 //console.log(x.responseText);
             }
         });
+    }
+
+    function buscarPoliciaByCP() {
+        var obj = {
+            codigoPolicial: DOM.txtCodPolicial.val()};
+        console.log(JSON.stringify(obj));
+        $.ajax({
+            type: 'post',
+            url: 'http://localhost:9090/api/LoginPnp/eByCp',
+            data: (obj),
+            success: function (data) {
+                if (data.body) {
+                    DOM.modalSolicitud.modal('hide');
+                    DOM.modalChangePass.modal('show');
+                    $("#cp").val(obj.codigoPolicial);
+                    DOM.txtCodPolicial.val("");
+                    alertify.success('Excelente!, Se encontro un usuario con ese codigo policial');
+                } else {
+                    DOM.modalChangePass.modal('hide');
+                    alertify.error('Ooops!!, No se encontro un usuario con ese código policial');
+                }
+            }, error: function (x, y) {
+                alertify.error('No se puedo conectar con el servidor');
+            }
+        });
+    }
+
+    function changePassword() {
+        var obj = {
+            cp: $('#cp').val(),
+            clave: $('#pass1').val()};
+        if (DOM.clave1.val() === DOM.clave2.val()) {
+            $.ajax({
+                type: 'post',
+                url: 'http://localhost:9090/api/LoginPnp/changePasswordLoginPnp',
+                data: (obj),
+                success: function (data) {
+                    if (data.rpta === 1) {
+                        DOM.modalChangePass.modal('hide');
+                        alertify.success(data.message);
+                        $('#pass1').val("");
+                        $('#pass2').val("");
+                    } else {
+                        DOM.modalChangePass.modal('show');
+                        alertify.error('Ooops...! No se pudo cambiar la contraseña');
+                    }
+                }, error: function (x, y) {
+                    alertify.error('No se puedo conectar con el servidor');
+                }
+            });
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Las contraseñas nos coinciden, intente otra vez!'
+            });
+            $('#pass1').val("");
+            $('#pass2').val("");
+        }
     }
 });
 

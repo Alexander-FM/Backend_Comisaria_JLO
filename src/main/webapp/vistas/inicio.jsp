@@ -11,7 +11,7 @@
     <body class="hold-transition sidebar-mini">
         <input type="hidden" id="idComisaria" value="${idComisarias}">
         <audio id="audio_noti1" style="display: none">
-            <source src="../songs/inicioSocket.mp3" type="audio/mp3">
+            <source src="../songs/starSystem.mp3" type="audio/mp3">
         </audio>
         <audio id="audio_noti2" style="display: none">
             <source src="../songs/notificacionnueva.mp3" type="audio/mp3">

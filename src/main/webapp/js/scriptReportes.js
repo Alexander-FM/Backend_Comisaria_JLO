@@ -245,7 +245,7 @@ function initSocket() {
         var socket = new SockJS('http://localhost:9090/socket-comisariajlo');
         stompClient = Stomp.over(socket);
         stompClient.connect({}, function (frame) {
-            toastr.success('Conexión con el socket establecida correctamente');
+            toastr.success('Las notificaciones están activadas');
             document.getElementById('audio_noti1').play();
             //$('.toast').toast({delay:1000, animation:false});
             //alertify.success('Conexión con el socket establecida correctamnte');
