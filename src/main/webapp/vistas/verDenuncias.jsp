@@ -13,8 +13,13 @@
         <div class="wrapper">
             <%@include file="plus/menuSuperior.jsp" %>
             <%@include  file="plus/menuLateral.jsp"%>
-            <!-- Modal Actualizar Denuncia -->
 
+            <form target="_blank" action="../denuncia" id="frmExportarDenuncia" method="post">
+                <input type="hidden" name="accion" value="ExportarDenuncia" id="accion">
+                <input type="hidden" name="denuncia" id="denuncia">
+                <!-- Modal Actualizar Denuncia -->
+            </form>
+            
             <div class="modal fade" id="modal-ac">
                 <input type="hidden" id="idD" value="0">
                 <div class="modal-dialog modal-lg">
@@ -64,7 +69,7 @@
                                     <input type="hidden" id="comisariaId">
                                     <input type="hidden" id="latitud">
                                     <input type="hidden" id="longitud">
-                                    
+
                                 </div>
                             </div>
                             <div class="row">

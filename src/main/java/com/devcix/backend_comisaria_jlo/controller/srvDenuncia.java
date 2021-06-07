@@ -1,6 +1,7 @@
 package com.devcix.backend_comisaria_jlo.controller;
 
 import com.devcix.backend_comisaria_jlo.model.Denuncia;
+import com.devcix.backend_comisaria_jlo.model.DenunciaConDetallesDTO;
 import com.devcix.backend_comisaria_jlo.utils.DateSerializer;
 import com.devcix.backend_comisaria_jlo.utils.ExportarPDF;
 import com.devcix.backend_comisaria_jlo.utils.TimeSerializer;
@@ -49,6 +50,9 @@ public class srvDenuncia extends HttpServlet {
                     break;
                 case "ReporteJasperPDF":
                     reporteJasperPDF(request, response);
+                    break;
+                case "ExportarDenuncia":
+                    exportarDenuncia(request, response);
                     break;
             }
         } else {
@@ -111,6 +115,48 @@ public class srvDenuncia extends HttpServlet {
                 JasperExportManager.exportReportToPdfStream(jasperPrint, out);
                 response.setContentType("application/pdf");
                 response.addHeader("Content-disposition", "inline; filename=RDenuncia.pdf");
+                out.flush();
+                out.close();
+            } else {
+                response.setContentType("text/plain");
+                out.println("no se pudo generar el reporte");
+                out.println("esto puede debrse a que la lista de datos no fue recibida o el archivo plantilla del reporte no se ha encontrado");
+                out.println("contacte a soporte");
+            }
+
+        } catch (Exception e) {
+            response.setContentType("text/plain");
+            out.print("ocurrió un error al intentar generar el reporte:" + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    private void exportarDenuncia(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        ServletOutputStream out = response.getOutputStream();
+        try {
+            InputStream plantilla = this.getServletConfig().getServletContext().getResourceAsStream("/reportes/exportarDenuncia.jasper");
+            String strDenuncia = request.getParameter("denuncia");
+            if (plantilla != null && strDenuncia != null) {
+                DenunciaConDetallesDTO dto = g.fromJson(strDenuncia, DenunciaConDetallesDTO.class);
+                JasperReport report = (JasperReport) JRLoader.loadObject(plantilla);
+                Map<String, Object> parameters = new HashMap();
+                parameters.put("NombreComisaria", dto.getDenuncia().getComisarias().getNombreComisaria());
+                parameters.put("NombrePoliciaYGrado", dto.getDenuncia().getPolicia().getNombreCompleto() + " - " + dto.getDenuncia().getPolicia().getGradoPNP().getNombreGrado());
+                parameters.put("VPD", dto.getDenuncia().getVinculoParteDenunciada().getNombre());
+                parameters.put("TipoDenuncia", dto.getDenuncia().getTipoDenuncia().getTipoDenuncia());
+                parameters.put("FechaHoraRegistros", dto.getDenuncia().getFechaDenuncia() + " - " + dto.getDenuncia().getHoraDenuncia());
+                parameters.put("FechaHoraHechos", dto.getDenuncia().getFechaHechos() + " - " + dto.getDenuncia().getHoraHechos());
+                parameters.put("LugarHechos", dto.getDenuncia().getDireccion() + dto.getDenuncia().getReferenciaDireccion());
+                parameters.put("DatosDenunciante", dto.getDenuncia().getUsuario().getNombreCompleto() + " Identificado con DNI Nro. " + dto.getDenuncia().getUsuario().getNumeroIdentificacion());
+                parameters.put("DatosDenunciado", dto.getDenunciados().get(0).getNombreCompleto());
+                parameters.put("ResumenDenuncia", dto.getAgraviados().get(0).getRHD());
+                parameters.put("CodigoPolicial", "?");
+                parameters.put("DNIDenunciante", dto.getDenuncia().getUsuario().getNumeroIdentificacion());
+                parameters.put("NombreDenunciante", dto.getDenuncia().getUsuario().getNombreCompleto());
+                JasperPrint jasperPrint = JasperFillManager.fillReport(report, parameters);
+                response.setContentType("application/pdf");
+                response.addHeader("Content-disposition", "inline; filename=RDenuncia.pdf");
+                JasperExportManager.exportReportToPdfStream(jasperPrint, out);
                 out.flush();
                 out.close();
             } else {
