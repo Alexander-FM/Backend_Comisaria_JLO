@@ -18,7 +18,6 @@ function cargarCriterios() {
                 r.body.forEach(t => {
                     combo += '<option value="' + t.id + '">' +t.tipoDenuncia + '</option>';
                     $('#cboFiltro').html(combo);
-
                 });
             });
             break;

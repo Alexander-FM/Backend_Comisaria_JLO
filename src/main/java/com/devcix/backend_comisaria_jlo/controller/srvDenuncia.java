@@ -15,6 +15,7 @@ import java.sql.Time;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +25,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -144,16 +146,31 @@ public class srvDenuncia extends HttpServlet {
                 parameters.put("NombrePoliciaYGrado", dto.getDenuncia().getPolicia().getNombreCompleto() + " - " + dto.getDenuncia().getPolicia().getGradoPNP().getNombreGrado());
                 parameters.put("VPD", dto.getDenuncia().getVinculoParteDenunciada().getNombre());
                 parameters.put("TipoDenuncia", dto.getDenuncia().getTipoDenuncia().getTipoDenuncia());
-                parameters.put("FechaHoraRegistros", dto.getDenuncia().getFechaDenuncia() + " - " + dto.getDenuncia().getHoraDenuncia());
-                parameters.put("FechaHoraHechos", dto.getDenuncia().getFechaHechos() + " - " + dto.getDenuncia().getHoraHechos());
-                parameters.put("LugarHechos", dto.getDenuncia().getDireccion() + dto.getDenuncia().getReferenciaDireccion());
-                parameters.put("DatosDenunciante", dto.getDenuncia().getUsuario().getNombreCompleto() + " Identificado con DNI Nro. " + dto.getDenuncia().getUsuario().getNumeroIdentificacion());
+                Calendar calendarFecha = Calendar.getInstance(), calendarHora = Calendar.getInstance();
+                calendarFecha.setTime(dto.getDenuncia().getFechaDenuncia());
+                calendarHora.setTime(dto.getDenuncia().getHoraDenuncia());
+                String fechaHoraRegistro = "" + calendarFecha.get(Calendar.DAY_OF_MONTH) + "/" + (calendarFecha.get(Calendar.MONTH) + 1) + "/" + calendarFecha.get(Calendar.YEAR) + " " + calendarHora.get(Calendar.HOUR_OF_DAY) + ":" + calendarHora.get(Calendar.MINUTE);
+                parameters.put("FechaHoraRegistro", fechaHoraRegistro);
+                //****************************************************
+                Calendar calendarF = Calendar.getInstance(), calendarH = Calendar.getInstance();
+                calendarF.setTime(dto.getDenuncia().getFechaHechos());
+                calendarH.setTime(dto.getDenuncia().getHoraHechos());
+                String fechaHoraHecho = "" + calendarF.get(Calendar.DAY_OF_MONTH) + "/" + (calendarF.get(Calendar.MONTH) + 1) + "/" + calendarF.get(Calendar.YEAR) + " " + calendarH.get(Calendar.HOUR_OF_DAY) + ":" + calendarH.get(Calendar.MINUTE);
+                parameters.put("FechaHoraHechos", fechaHoraHecho);
+                //**************************************************
+                parameters.put("LugarHechos", dto.getDenuncia().getDireccion() + " - " + dto.getDenuncia().getReferenciaDireccion());
+                parameters.put("DatosDenunciante", dto.getDenuncia().getUsuario().getNombreCompleto() 
+                        + " Identificado con DNI Nro. " + dto.getDenuncia().getUsuario().getNumeroIdentificacion()
+                        + " Fecha de Nacimiento: " + dto.getDenuncia().getUsuario().getFechaNacimiento()
+                + " Estado Civil: " + dto.getDenuncia().getUsuario().getEstadoCivil().getEstadoCivil()
+                + " Direccion: " + dto.getDenuncia().getUsuario().getDireccion()
+                + " Telefono: " + dto.getDenuncia().getUsuario().getTelefono());
                 parameters.put("DatosDenunciado", dto.getDenunciados().get(0).getNombreCompleto());
                 parameters.put("ResumenDenuncia", dto.getAgraviados().get(0).getRHD());
                 parameters.put("CodigoPolicial", "?");
                 parameters.put("DNIDenunciante", dto.getDenuncia().getUsuario().getNumeroIdentificacion());
                 parameters.put("NombreDenunciante", dto.getDenuncia().getUsuario().getNombreCompleto());
-                JasperPrint jasperPrint = JasperFillManager.fillReport(report, parameters);
+                JasperPrint jasperPrint = JasperFillManager.fillReport(report, parameters, new JREmptyDataSource());
                 response.setContentType("application/pdf");
                 response.addHeader("Content-disposition", "inline; filename=RDenuncia.pdf");
                 JasperExportManager.exportReportToPdfStream(jasperPrint, out);

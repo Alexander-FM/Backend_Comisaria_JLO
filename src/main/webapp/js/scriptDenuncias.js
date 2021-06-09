@@ -266,7 +266,7 @@ function reporte() {
 
 function ExportarDenuncia(id) {
     $.get('http://localhost:9090/api/denuncia/devolverDenuncia/' + id, {}, function (r) {
-        $('#denuncia').val(r.body);
+        $('#denuncia').val(JSON.stringify(r.body));
         $('#frmExportarDenuncia').submit();
     });
 }
