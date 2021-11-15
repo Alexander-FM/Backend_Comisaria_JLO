@@ -3,6 +3,7 @@ var tabla = $("table#TablaDenuncias"),
         tablaDenunciados = $("table#tabla_denunciados"),
         mdlDd = $("#modal-dd"),
         mdlMp = $("#modal-mapa"),
+        mdlEmail = $("#modal-correo"),
         mdlAd = $("#modal-ac"),
         btnSave = $("#btn-save");
 $(document).ready(function () {
@@ -26,6 +27,46 @@ $(document).ready(function () {
     });
 
 });
+function obtenerCorreo(email) {
+    mdlEmail.modal({backdrop: 'static', keyboard: false});
+    $('#destinatario').val(email);
+}
+//Enviar Correo de Denuncia Atendida
+function answerRequest() {
+    if ($('#destinatario').val().trim() !== ''
+            && $('#titulo').val().trim() !== ''
+            && $('#mensaje').val().trim() !== '') {
+        let obj = {
+            destinatario: $('#destinatario').val(),
+            titulo: $('#titulo').val(),
+            mensaje: $('#mensaje').val()
+        };
+        $.ajax({
+            type: 'post',
+            url: 'http://localhost:9090/api/denuncia/answerRequest',
+            data: obj, //Cuando es parentesis es porque quieres convertirlo a json Strinfy
+            success: function (data) {
+                switch (data.rpta) {
+                    case 1:
+                        alertify.success(data.message);
+                        mdlEmail.modal('hide');
+
+                        break;
+                    case 0:
+                        alertify.warning(data.body + ' ☹');
+                        break;
+                    default :
+                        alertify.error('ha ocurrido un error durante el envio ⚙, inténtelo nuevamente en unos mintos ⏲');
+                        break;
+                }
+            }, error: function (x, y) {
+                console.log(x.responseText);
+            }
+        });
+    } else {
+        alertify.error('Ooops...! Para enviar el mensaje debe completar todo los campos del formulario');
+    }
+}
 function leerDenuncia(id) {
     $.ajax({
         type: 'get',
@@ -237,6 +278,7 @@ function listarDenuncias() {
                 tpl += '<td style=\"text-align: center\">' + (d.estadoDenuncia === true ? '<h5><span class =\"badge badge-success\">Diligenciada</span></h5>' : '<h5><span class =\"badge badge-danger\">Pendiente</span></h5>') + '</td>';
                 tpl += '<td nowrap style=\"text-align: center\">'
                         + '<button title="Editar" class="btn btn-info"><i class="fas fa-plus"></i></button> '
+                        + '<button title="Enviar Correo" onclick="obtenerCorreo(\'' + d.usuario.correo + '\')" class="btn btn-dark"><i class="fas fa-envelope-square"></i></button> '
                         + '<button onclick="ExportarDenuncia(' + d.id + ')" title="Exportar Denuncia" class="btn btn-primary"><i class="fas fa-scroll"></i></button> '
                         + '<button onclick="mostrarMapa(' + d.longitud + ',' + d.latitud + ')" title="Ver Mapa" class="btn btn-secondary"><i class="fas fa-map-marked-alt"></i></button> '
                         + '<button class="btn btn-warning"><i class="fas fa-edit"></i></button></td>';
