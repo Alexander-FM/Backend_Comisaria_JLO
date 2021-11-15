@@ -19,7 +19,7 @@
                 <input type="hidden" name="denuncia" id="denuncia">
                 <!-- Modal Actualizar Denuncia -->
             </form>
-            
+
             <div class="modal fade" id="modal-ac">
                 <input type="hidden" id="idD" value="0">
                 <div class="modal-dialog modal-lg">
@@ -112,6 +112,49 @@
                         <div class="modal-body">
                             <div id="map">
 
+                            </div>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            <!-- Modal para el envio de correo electronicos -->
+            <div class="modal fade" id="modal-correo">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Redactar Correo</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="card card-primary card-outline">
+                                <div class="card-header">
+                                    <h3 class="card-title">Enviar Correo Electrónico</h3>
+                                </div>
+                                <!-- /.card-header -->
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <input class="form-control" id="destinatario" readonly="" placeholder="Para:">
+                                    </div>
+                                    <div class="form-group">
+                                        <input class="form-control" id="titulo" placeholder="Asunto">
+                                    </div>
+                                    <div class="form-group">
+                                        <textarea id="mensaje" class="form-control" style="height: 150px">
+                                            
+                                        </textarea>
+                                    </div>
+                                </div>
+                                <!-- /.card-body -->
+                                <div class="card-footer">
+                                    <div class="float-right">
+                                        <button type="button" onclick="answerRequest();" class="btn btn-primary"><i class="far fa-envelope"></i> Enviar Ahora</button>
+                                    </div>
+                                </div>
+                                <!-- /.card-footer -->
                             </div>
                         </div>
                         <div class="modal-footer justify-content-between">
