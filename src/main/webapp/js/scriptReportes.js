@@ -239,7 +239,6 @@ function cargarReporte() {
         alert('no se pudo cargar el reporte:' + e);
     }
 }
-;
 function initSocket() {
     try {
         var socket = new SockJS('http://localhost:9090/socket-comisariajlo');

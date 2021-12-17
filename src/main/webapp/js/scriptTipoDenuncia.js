@@ -1,5 +1,5 @@
 $(document).ready(function () {
-     let li_grupo_registros = $('#li_grupo_registros');
+    let li_grupo_registros = $('#li_grupo_registros');
     li_grupo_registros.attr('class', 'nav-item has-treeview menu-close menu-open');
     let a = $('#li_tipodenuncia').find('a');
     a.attr('class', 'nav-link active');
@@ -8,6 +8,7 @@ $(document).ready(function () {
     $("input:checkbox").prop('checked', false);
     cargarTabla();
 });
+
 function cargarTabla() {
     $.get('http://localhost:9090/api/tipoDenuncia/todos', {}, function (r) {
         if (r.rpta === 1) {
@@ -27,6 +28,7 @@ function cargarTabla() {
         }
     });
 }
+
 function registrar() {
     if ($('#nomTipDen').val().trim() !== '') {
         let id = parseInt($('#idTD').val());
@@ -46,13 +48,13 @@ function registrar() {
             success: function (data) {
                 switch (data.rpta) {
                     case 1:
-                        alertify.success('tipo de denuncia ' + (id === 0 ? 'registrado': 'actualizado') + ' 😀');
+                        alertify.success(data.message + ' 😀');
                         setTimeout(function () {
                             location.reload();
                         }, 1500)
                         break;
                     case 0:
-                        alertify.warning(data.body + ' ☹');
+                        alertify.warning(data.message + ' ☹');
                         break;
                     default :
                         alert('ha ocurrido un error durante el registro ⚙,inténtelo nuevamente en unos mintos ⏲');
@@ -70,31 +72,31 @@ function registrar() {
     }
 };
 
-function presentarDatos(id){
+function presentarDatos(id) {
     $.ajax({
-       type: 'get',
-       url: 'http://localhost:9090/api/tipoDenuncia/' + id,
-       data: {},
-       headers: {
-           'Accept': 'application/json',
-           'Content-Type': 'application/json'
-       },
-       success: function (data){
-           switch(data.rpta){
-               case 1:
-                   $('#idTD').val(data.body.id);
-                   $('#nomTipDen').val(data.body.tipoDenuncia);
-                   $('#estadoTipDen').prop('checked', data.body.estado);
-                   break;
+        type: 'get',
+        url: 'http://localhost:9090/api/tipoDenuncia/' + id,
+        data: {},
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        success: function (data) {
+            switch (data.rpta) {
+                case 1:
+                    $('#idTD').val(data.body.id);
+                    $('#nomTipDen').val(data.body.tipoDenuncia);
+                    $('#estadoTipDen').prop('checked', data.body.estado);
+                    break;
                 case 0:
-                    alertify.warning(data.body + ' ☹');
+                    alertify.warning(data.message + ' ☹');
                     break;
                 default :
                     alert('ha ocurrido un error durante la búsqueda ⚙,inténtelo nuevamente en unos mintos ⏲');
                     break;
-           }
-           
-       }, error: function (x, y) {
+            }
+
+        }, error: function (x, y) {
             alertify.error('el servicio no esta disponible,vuelva a intentarlo más tarde');
             //console.log(x.responseText);
         }

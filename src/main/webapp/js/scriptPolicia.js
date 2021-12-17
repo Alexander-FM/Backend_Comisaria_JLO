@@ -8,6 +8,7 @@ $(document).ready(function () {
     cargarTabla();
     cargarDatosRegistro();
 });
+
 function cargarTabla() {
     $.get('http://localhost:9090/api/policia/todos', {}, function (r) {
         if (r.rpta === 1) {
@@ -29,11 +30,13 @@ function cargarTabla() {
         }
     });
 }
+
 function cargarDatosRegistro() {
     cargarDistritos();
     cargarGrados();
     cargarEstadosCiviles();
 }
+
 function cargarDistritos() {
     $.ajax({
 
@@ -55,7 +58,7 @@ function cargarDistritos() {
                     $('#btnRegistrarPolicia').removeAttr('disabled');
                     break;
                 case 0:
-                    alertify.warning(data.body + ' ☹');
+                    alertify.warning(data.message + ' ☹');
                     break;
                 default :
                     alert('ha ocurrido un error durante la carga de datos ⚙,inténtelo nuevamente en unos mintos ⏲');
@@ -70,6 +73,7 @@ function cargarDistritos() {
         }
     });
 }
+
 function cargarGrados() {
     $.ajax({
 
@@ -91,7 +95,7 @@ function cargarGrados() {
                     $('#btnRegistrarPolicia').removeAttr('disabled');
                     break;
                 case 0:
-                    alertify.warning(data.body + ' ☹');
+                    alertify.warning(data.messgae + ' ☹');
                     break;
                 default :
                     alert('ha ocurrido un error durante la carga de datos ⚙,inténtelo nuevamente en unos mintos ⏲');
@@ -106,6 +110,7 @@ function cargarGrados() {
         }
     });
 }
+
 function cargarEstadosCiviles() {
     $.ajax({
 
@@ -127,7 +132,7 @@ function cargarEstadosCiviles() {
                     $('#btnRegistrarPolicia').removeAttr('disabled');
                     break;
                 case 0:
-                    alertify.warning(data.body + ' ☹');
+                    alertify.warning(data.message + ' ☹');
                     break;
                 default :
                     alert('ha ocurrido un error durante la carga de datos ⚙,inténtelo nuevamente en unos mintos ⏲');
@@ -142,6 +147,7 @@ function cargarEstadosCiviles() {
         }
     });
 }
+
 function registrar() {
     if ($('#nombres').val().trim() !== '') {
         let id = parseInt($('#idP').val());
@@ -172,13 +178,13 @@ function registrar() {
             success: function (data) {
                 switch (data.rpta) {
                     case 1:
-                        alertify.success('Policía ' + (id === 0 ? 'registrado' : 'actualizado') + ' 😀');
+                        alertify.success(data.message + ' 😀');
                         setTimeout(function () {
                             location.reload();
                         }, 1500)
                         break;
                     case 0:
-                        alertify.warning(data.body + ' ☹');
+                        alertify.warning(data.message + ' ☹');
                         break;
                     default :
                         alertify.error('ha ocurrido un error durante el registro ⚙,inténtelo nuevamente en unos mintos ⏲');
@@ -195,8 +201,6 @@ function registrar() {
         alert('por favor llene todos los campos');
     }
 }
-;
-
 function presentarDatos(id) {
     $.ajax({
         type: 'get',
@@ -227,7 +231,7 @@ function presentarDatos(id) {
                     $('#fechaNac').val(date);
                     break;
                 case 0:
-                    alertify.warning(data.body + ' ☹');
+                    alertify.warning(data.message + ' ☹');
                     break;
                 default :
                     alert('ha ocurrido un error durante la búsqueda ⚙,inténtelo nuevamente en unos mintos ⏲');
@@ -242,6 +246,7 @@ function presentarDatos(id) {
     $('#btn-save').html('<i class="fas fa-sync-alt"></i> Actualizar Policia');
 }
 ;
+
 function reset() {
     $('#idP').val(0);
     $('#modal-title').html('Formulario de Registro');

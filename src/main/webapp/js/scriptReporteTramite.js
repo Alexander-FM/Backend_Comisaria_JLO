@@ -114,7 +114,7 @@ function reporte(accion) {
             $('#accion').val(accion);
             $('#frmReporte').submit();
         } else {
-            alert('el reporte no se ha generado debido a un error del servicio:' + r.body);
+            alert(r.message);
         }
     });
 }

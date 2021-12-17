@@ -6,7 +6,7 @@ $(document).ready(function () {
     a.attr('style', 'background-color: black');
     $("input:checkbox").prop('checked', false);
     var tablaTramite = $("table#TablaTramites"),
-            modalAt = $("#modal-at");
+        modalAt = $("#modal-at");
 
     function formaterFecha(timestamp) {
         var datetime = new Date(timestamp);
@@ -23,6 +23,7 @@ $(document).ready(function () {
         return fecha_string + ' ' + hora_string;
     }
     ;
+
     function concatenarCero(numeros) {
         for (var i = 0; i < numeros.length; i++) {
             if (numeros[i] < 10)
@@ -30,7 +31,7 @@ $(document).ready(function () {
         }
         return numeros;
     }
-    ;
+
     function cargarTabla() {
         $.get('http://localhost:9090/api/tramite/porComisaria/' + $("#idComisaria").val(), {}, function (r) {
             var tabla = '';
@@ -50,8 +51,8 @@ $(document).ready(function () {
                 tabla += '<td>' + t.motivo_denuncia_policial + '</td>';
                 tabla += '<td>' + t.observaciones + '</td>';
                 tabla += '<td nowrap>'
-                        + '<button title="Editar Trámite" onclick="presentarDatos(' + t.id + ')" class="btn btn-warning"><i class="fas fa-edit"></i></button> '
-                        + '<button title="Exportar Trámite" onclick="exportarTramite(' + t.id + ')" class="btn btn-primary"><i class="fas fa-file-pdf"></i></button></td>';
+                    + '<button title="Editar Trámite" onclick="presentarDatos(' + t.id + ')" class="btn btn-warning"><i class="fas fa-edit"></i></button> '
+                    + '<button title="Exportar Trámite" onclick="exportarTramite(' + t.id + ')" class="btn btn-primary"><i class="fas fa-file-pdf"></i></button></td>';
                 tabla += '</tr>';
             });
             //console.log(tabla);
@@ -59,10 +60,11 @@ $(document).ready(function () {
             tablaTramite.DataTable();
         });
     }
-    ;
+
     cargarTabla();
     cargarPoliciasForTramites();
 });
+
 function editarTramite() {
     tablaTramite.on("click", ".btn-warning", function () {
         var idTramite = $(this).parents("tr").children()[0].textContent;
@@ -81,6 +83,7 @@ function cargarPoliciasForTramites() {
     });
 }
 ;
+
 function registrar() {
     if ($('#codTramite').val().trim() !== '') {
         let id = parseInt($('#idAC').val());
@@ -99,7 +102,7 @@ function registrar() {
             observaciones: $('#observaciones').val(),
             solicitante: $('#solicitante').val(),
             telefono: $('#telefono').val()
-        };
+        }
         $.ajax({
             type: (id === 0 ? 'post' : 'put'),
             url: url,
@@ -111,13 +114,13 @@ function registrar() {
             success: function (data) {
                 switch (data.rpta) {
                     case 1:
-                        alertify.success('Trámite ' + (id === 0 ? 'registrado' : 'actualizado') + ' 😀');
+                        alertify.success(data.message + ' 😀');
                         setTimeout(function () {
                             location.reload();
                         }, 1500)
                         break;
                     case 0:
-                        alertify.warning(data.body + ' ☹');
+                        alertify.warning(data.message + ' ☹');
                         break;
                     default :
                         alertify.error('ha ocurrido un error durante el registro ⚙,inténtelo nuevamente en unos mintos ⏲');
@@ -134,7 +137,7 @@ function registrar() {
         alert('por favor llene todos los campos');
     }
 }
-;
+
 function presentarDatos(id) {
     $.ajax({
         type: 'get',
@@ -170,7 +173,7 @@ function presentarDatos(id) {
                     $('#telefono').val(data.body.telefono);
                     break;
                 case 0:
-                    alertify.warning(data.body + ' ☹');
+                    alertify.warning(data.message + ' ☹');
                     break;
                 default :
                     alert('ha ocurrido un error durante la búsqueda ⚙,inténtelo nuevamente en unos mintos ⏲');
@@ -185,6 +188,7 @@ function presentarDatos(id) {
     $('#btn-save').html('<i class="fas fa-sync-alt"></i> Actualizar Trámite');
 }
 ;
+
 function exportarTramite(id) {
     $.ajax({
         type: 'get',
