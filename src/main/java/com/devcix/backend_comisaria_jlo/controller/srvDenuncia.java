@@ -2,6 +2,7 @@ package com.devcix.backend_comisaria_jlo.controller;
 
 import com.devcix.backend_comisaria_jlo.model.Denuncia;
 import com.devcix.backend_comisaria_jlo.model.DenunciaConDetallesDTO;
+import com.devcix.backend_comisaria_jlo.model.LoginPNP;
 import com.devcix.backend_comisaria_jlo.utils.DateSerializer;
 import com.devcix.backend_comisaria_jlo.utils.ExportarPDF;
 import com.devcix.backend_comisaria_jlo.utils.TimeSerializer;
@@ -166,8 +167,8 @@ public class srvDenuncia extends HttpServlet {
                 + " Direccion: " + dto.getDenuncia().getUsuario().getDireccion()
                 + " Telefono: " + dto.getDenuncia().getUsuario().getTelefono());
                 parameters.put("DatosDenunciado", dto.getDenunciados().get(0).getNombreCompleto());
-                parameters.put("ResumenDenuncia", dto.getAgraviados().get(0).getRHD());
-                parameters.put("CodigoPolicial", "?");
+                parameters.put("ResumenDenuncia", dto.getDenuncia().getRhd());
+                parameters.put("CodigoPolicial", (String) request.getSession().getAttribute("codPolicial"));
                 parameters.put("DNIDenunciante", dto.getDenuncia().getUsuario().getNumeroIdentificacion());
                 parameters.put("NombreDenunciante", dto.getDenuncia().getUsuario().getNombreCompleto());
                 JasperPrint jasperPrint = JasperFillManager.fillReport(report, parameters, new JREmptyDataSource());

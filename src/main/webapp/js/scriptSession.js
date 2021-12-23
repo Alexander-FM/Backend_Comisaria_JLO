@@ -44,7 +44,8 @@ $(document).ready(function () {
                 //alert(data.rpta);
                 if (data.rpta === 1) {
                     DOM.alert[0].textContent = data.message;
-                    $.post("srvLogin?accion=asignarSesion", {data: JSON.stringify(data.body.policia), idC: data.body.comisarias.id, nomComisaria: data.body.comisarias.nombreComisaria});
+                    $.post("srvLogin?accion=asignarSesion", {data: JSON.stringify(data.body.policia), idC: data.body.comisarias.id, 
+                        nomComisaria: data.body.comisarias.nombreComisaria, codPolicial: data.body.codigoPolicial});
 
                     setTimeout(function () {
                         window.location.href = "vistas/inicio.jsp";

@@ -22,6 +22,7 @@ public final class Denuncia {
     private Usuario usuario;
     private String latitud;
     private String longitud;
+    private String rhd;
 
     public int getId() {
         return id;
@@ -175,4 +176,13 @@ public final class Denuncia {
         this.longitud = longitud;
     }
 
+    public String getRhd() {
+        return rhd;
+    }
+
+    public void setRhd(String rhd) {
+        this.rhd = rhd;
+    }
+
+    
 }
