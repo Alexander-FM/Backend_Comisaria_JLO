@@ -75,10 +75,10 @@ $(document).ready(function () {
                     DOM.modalChangePass.modal('show');
                     $("#cp").val(obj.codigoPolicial);
                     DOM.txtCodPolicial.val("");
-                    alertify.success('Excelente!, Se encontro un usuario con ese codigo policial');
+                    alertify.success(data.message);
                 } else {
                     DOM.modalChangePass.modal('hide');
-                    alertify.error('Ooops!!, No se encontro un usuario con ese código policial');
+                    alertify.error(data.message);
                 }
             }, error: function (x, y) {
                 alertify.error('No se puedo conectar con el servidor');
@@ -103,7 +103,7 @@ $(document).ready(function () {
                         $('#pass2').val("");
                     } else {
                         DOM.modalChangePass.modal('show');
-                        alertify.error('Ooops...! No se pudo cambiar la contraseña');
+                        alertify.error(data.message);
                     }
                 }, error: function (x, y) {
                     alertify.error('No se puedo conectar con el servidor');

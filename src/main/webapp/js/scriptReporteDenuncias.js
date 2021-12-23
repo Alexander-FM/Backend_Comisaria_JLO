@@ -47,7 +47,6 @@ function cargarCriterios() {
     $('#cboFiltro').html(combo);
     //alert(opcion);
 }
-;
 function cargarTabla() {
     let select = $('#cboFiltro').val();
     let fechaInicial = $('#fechaRangoInicial').val();
@@ -97,8 +96,6 @@ function formaterFecha(timestamp) {
 
     return fecha_string + ' ' + hora_string;
 }
-;
-
 function concatenarCero(numeros) {
     for (var i = 0; i < numeros.length; i++) {
         if (numeros[i] < 10)
@@ -106,7 +103,6 @@ function concatenarCero(numeros) {
     }
     return numeros;
 }
-;
 function reporte(accion) {
     let select = $('#cboFiltro').val();
     let fechaInicial = $('#fechaRangoInicial').val();
@@ -123,7 +119,7 @@ function reporte(accion) {
             $('#lista').val(JSON.stringify(r.body));
             $('#frmReporte').submit();
         } else {
-            alert('el reporte no se ha generado debido a un error del servicio:' + r.body);
+            alert(r.message);
         }
     });
 }

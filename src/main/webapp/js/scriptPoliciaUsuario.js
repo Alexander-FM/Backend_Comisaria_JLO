@@ -10,6 +10,7 @@ $(document).ready(function () {
     cargarPoliciasXDe();
     cargarComisarias();
 });
+
 function cargarUsuarios() {
     $.get('http://localhost:9090/api/LoginPnp/usuarios', {}, function (r) {
         if (r.rpta === 1) {
@@ -23,8 +24,8 @@ function cargarUsuarios() {
                 tabla += '<td>' + p.comisarias.nombreComisaria + "</td>";
                 tabla += '<td style="text-align: center">' + (p.estado ? '<h5><span class =\"badge badge-success\">Activo</span></h5>' : '<h5><span class =\"badge badge-danger\">Inactivo</span></h5>') + '</td>';
                 tabla += '<td style="text-align: center">'
-                        + '<button onclick="presentarDatos(' + p.id + ')" class="btn btn-warning"><i class="fas fa-edit"></i></button> '
-                        + '<button onclick="activar_desactivar(' + p.id + ')" class="btn btn-' + (p.estado ? 'danger' : 'success') + '"><i class="fas fa-power-off"></i></button></td>';
+                    + '<button onclick="presentarDatos(' + p.id + ')" class="btn btn-warning"><i class="fas fa-edit"></i></button> '
+                    + '<button onclick="activar_desactivar(' + p.id + ')" class="btn btn-' + (p.estado ? 'danger' : 'success') + '"><i class="fas fa-power-off"></i></button></td>';
                 tabla += '</tr>';
             });
             $('#TablaPoliciasUsuario').find('tbody').html(tabla);
@@ -34,6 +35,7 @@ function cargarUsuarios() {
         }
     });
 }
+
 function cargarPoliciasXDe() {
     $.ajax({
         type: 'get',
@@ -53,7 +55,7 @@ function cargarPoliciasXDe() {
                     $('#combo_policias_usuarios').html(combo_policias_usuarios);
                     break;
                 case 0:
-                    alertify.warning(data.body + ' ☹');
+                    alertify.warning(data.message + ' ☹');
                     break;
                 default :
                     alert('ha ocurrido un error durante el registro ⚙,inténtelo nuevamente en unos mintos ⏲');
@@ -88,7 +90,7 @@ function cargarComisarias() {
                     $('#combo_policias_comisarias').html(comboComisarias);
                     break;
                 case 0:
-                    alertify.warning(data.body + ' ☹');
+                    alertify.warning(data.message + ' ☹');
                     break;
                 default :
                     alert('ha ocurrido un error durante la carga de datos ⚙,inténtelo nuevamente en unos mintos ⏲');
@@ -103,6 +105,7 @@ function cargarComisarias() {
         }
     });
 }
+
 function registrar() {
     if ($('#codUsuario').val().trim() !== '' || $('#claveUsuario').val().trim() !== '') {
         let id = parseInt($('#idU').val());
@@ -125,13 +128,13 @@ function registrar() {
             success: function (data) {
                 switch (data.rpta) {
                     case 1:
-                        alertify.success('Usuario ' + (id === 0 ? 'registrado' : 'actualizado') + '😀');
+                        alertify.success(data.message + '😀');
                         setTimeout(function () {
                             location.reload();
                         }, 1000);
                         break;
                     case 0:
-                        alertify.warning(data.body + ' ☹');
+                        alertify.warning(data.message + ' ☹');
                         break;
                     default :
                         alert('ha ocurrido un error durante el registro ⚙,inténtelo nuevamente en unos mintos ⏲');
@@ -147,6 +150,7 @@ function registrar() {
     }
 }
 ;
+
 function presentarDatos(id) {
     $.ajax({
         type: 'get',
@@ -172,7 +176,7 @@ function presentarDatos(id) {
                     $('#etiqueta').html('Usted está actualizando el usuario del policía:')
                     break;
                 case 0:
-                    alertify.warning(data.body + ' ☹');
+                    alertify.warning(data.message + ' ☹');
                     break;
                 default :
                     alert('ha ocurrido un error durante la búsqueda ⚙,inténtelo nuevamente en unos mintos ⏲');
@@ -186,6 +190,7 @@ function presentarDatos(id) {
     $('#modal-lg').modal();
     $('#btn').html('<i class="fas fa-sync-alt"></i> Actualizar Usuario');
 }
+
 function activar_desactivar(id) {
     alertify.confirm('Cambio de Estado', '¿Está seguro que desea activar/desactivar este usuario?', function () {
         $.ajax({
@@ -206,7 +211,7 @@ function activar_desactivar(id) {
 
                         break;
                     case 0:
-                        alertify.warning(data.body + ' ☹');
+                        alertify.warning(data.message + ' ☹');
                         break;
                     default :
                         alert('ha ocurrido un error durante la elimninación ⚙,inténtelo nuevamente en unos mintos ⏲');

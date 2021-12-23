@@ -43,13 +43,13 @@ function registrar() {
             success: function (data) {
                 switch (data.rpta) {
                     case 1:
-                        alertify.success('vínculo ' + (id === 0 ? 'registrado' : 'actualizado') + '😀');
+                        alertify.success(data.message + '😀');
                         setTimeout(function () {
                             location.reload();
                         }, 2000);
                         break;
                     case 0:
-                        alert(data.body + ' ☹');
+                        alert(data.message + ' ☹');
                         break;
                     default :
                         alert('ha ocurrido un error durante el registro ⚙,inténtelo nuevamente en unos mintos ⏲');
@@ -82,7 +82,7 @@ function presentarDatos(id) {
                     $('#vinculoPartDenunciada').val(data.body.nombre);
                     break;
                 case 0:
-                    alertify.warning(data.body + ' ☹');
+                    alertify.warning(data.message + ' ☹');
                     break;
                 default :
                     alert('ha ocurrido un error durante la búsqueda ⚙,inténtelo nuevamente en unos mintos ⏲');
