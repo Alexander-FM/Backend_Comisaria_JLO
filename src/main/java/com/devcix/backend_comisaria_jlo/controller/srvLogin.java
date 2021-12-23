@@ -65,6 +65,7 @@ public class srvLogin extends HttpServlet {
             final Policia p = g.fromJson(data, Policia.class);
             request.getSession().setAttribute("usuario", p);
             request.getSession().setAttribute("idComisarias", Integer.parseInt(request.getParameter("idC")));
+            request.getSession().setAttribute("codPolicial", request.getParameter("codPolicial"));
             request.getSession().setAttribute("nomComi", request.getParameter("nomComisaria"));
         } catch (Exception e) {
             e.printStackTrace();

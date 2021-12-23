@@ -190,7 +190,6 @@
                                                         <th>Nombre Completo</th>
                                                         <th>Teléfono</th>
                                                         <th>Información Adicional</th>
-                                                        <th>Relato de la Denuncia</th>
                                                         <th>¿tiene protección?</th>
                                                         <th>Juzgado</th>
                                                         <th>Fecha de emisión</th>

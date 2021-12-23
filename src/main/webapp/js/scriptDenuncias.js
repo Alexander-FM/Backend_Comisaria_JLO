@@ -81,6 +81,7 @@ function leerDenuncia(id) {
         },
         data: {}, //idD es la variable del servicio
         success: function (data) {
+<<<<<<< HEAD
             if(data.rpta==1){
                 var tablaA = '', tablaD = '';
                 data.body.agraviados.forEach(ag => {
@@ -109,6 +110,34 @@ function leerDenuncia(id) {
                     tablaDenunciados.DataTable();
                 });
             }
+=======
+            console.log(data.body);
+            var tablaA = '', tablaD = '';
+            data.body.agraviados.forEach(ag => {
+                tablaA += '<tr>';
+                tablaA += '<td>' + ag.agraviado.nombres + ' ' + ag.agraviado.apellidoPaterno + ' ' + ag.agraviado.apellidoMaterno + '</td>';
+                tablaA += '<td>' + ag.agraviado.telefono;
+                tablaA += '<td>' + ag.agraviado.informacionAdicional.nombre + '</td>';
+                tablaA += '<td>' + (ag.agraviado.medidaProteccion ? 'si' : 'no') + '</td>';
+                tablaA += '<td>' + (ag.agraviado.medidaProteccion ? ag.agraviado.juzgado : 'no data ') + '</td>';
+                tablaA += '<td>' + (ag.agraviado.medidaProteccion ? formaterFecha(ag.agraviado.fechaEmision) : 'no data ') + '</td>';
+                tablaA += '<td>' + (ag.agraviado.medidaProteccion ? ag.agraviado.detalleProteccion : 'no data ') + '</td>';
+                tablaA += '</tr>';
+                debugger;
+                tablaAgraviados.find("tbody").html(tablaA);
+                tablaAgraviados.DataTable();
+            });
+            data.body.denunciados.forEach(den => {
+                tablaD += '<tr>';
+                tablaD += '<td>' + den.denunciado.nombres + ' ' + den.denunciado.apellidoPaterno + ' ' + den.denunciado.apellidoMaterno + '</td>';
+                tablaD += '<td>' + den.denunciado.numeroIdentificacion + '</td>';
+                tablaD += '<td>' + den.denunciado.tipoIdentificacion.tipoIdentificacion + '</td>';
+                tablaD += '<td>' + den.denunciado.informacionAdicional.nombre + '</td>';
+                tablaD += '</tr>';
+                tablaDenunciados.find("tbody").html(tablaD);
+                tablaDenunciados.DataTable();
+            });
+>>>>>>> master
 
         }, error: function (x, y) {
             console.log(x.responseText);
@@ -281,7 +310,7 @@ function listarDenuncias() {
                     tpl += '<td nowrap style=\"text-align: center\">'
                         + '<button title="Editar" class="btn btn-info"><i class="fas fa-plus"></i></button> '
                         + '<button title="Enviar Correo" onclick="obtenerCorreo(\'' + d.usuario.correo + '\')" class="btn btn-dark"><i class="fas fa-envelope-square"></i></button> '
-                        + '<button onclick="ExportarDenuncia(' + d.id + ')" title="Exportar Denuncia" class="btn btn-primary"><i class="fas fa-scroll"></i></button> '
+                        + '<a href="http://localhost:9090/api/denuncia/export?codDenuncia=' + d.cod_denuncia + '&idUsu=' + d.usuario.id + '" download="true"  title="Exportar Denuncia" class="btn btn-primary"><i class="fas fa-scroll"></i></a> '
                         + '<button onclick="mostrarMapa(' + d.longitud + ',' + d.latitud + ')" title="Ver Mapa" class="btn btn-secondary"><i class="fas fa-map-marked-alt"></i></button> '
                         + '<button class="btn btn-warning"><i class="fas fa-edit"></i></button></td>';
                     tpl += '</tr>';
