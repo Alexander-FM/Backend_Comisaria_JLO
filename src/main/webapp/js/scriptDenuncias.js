@@ -15,7 +15,8 @@ $(document).ready(function () {
     $("input:checkbox").prop('checked', false);
     tabla.on("click", ".btn-info", function () {
         var id = $(this).parents("tr").children()[0].textContent;
-        leerDenuncia(id);
+        var rhd = $(this).data('rhd');
+        leerDenuncia(id, rhd);        
         mdlDd.modal({backdrop: 'static', keyboard: false});
     });
 
@@ -71,7 +72,7 @@ function answerRequest() {
     }
 }
 
-function leerDenuncia(id) {
+function leerDenuncia(id, rhd) {
     $.ajax({
         type: 'get',
         url: 'http://localhost:9090/api/denuncia/detalle/' + id,
@@ -81,21 +82,19 @@ function leerDenuncia(id) {
         },
         data: {}, //idD es la variable del servicio
         success: function (data) {
-<<<<<<< HEAD
             if(data.rpta==1){
                 var tablaA = '', tablaD = '';
+                $("#rhd").html(rhd);
                 data.body.agraviados.forEach(ag => {
                     tablaA += '<tr>';
                     tablaA += '<td>' + ag.agraviado.nombres + ' ' + ag.agraviado.apellidoPaterno + ' ' + ag.agraviado.apellidoMaterno + '</td>';
                     tablaA += '<td>' + ag.agraviado.telefono;
                     tablaA += '<td>' + ag.agraviado.informacionAdicional.nombre + '</td>';
-                    tablaA += '<td>' + ag.agraviado.rhd + '</td>';
                     tablaA += '<td>' + (ag.agraviado.medidaProteccion ? 'si' : 'no') + '</td>';
                     tablaA += '<td>' + (ag.agraviado.medidaProteccion ? ag.agraviado.juzgado : 'no data ') + '</td>';
                     tablaA += '<td>' + (ag.agraviado.medidaProteccion ? formaterFecha(ag.agraviado.fechaEmision) : 'no data ') + '</td>';
                     tablaA += '<td>' + (ag.agraviado.medidaProteccion ? ag.agraviado.detalleProteccion : 'no data ') + '</td>';
                     tablaA += '</tr>';
-                    debugger;
                     tablaAgraviados.find("tbody").html(tablaA);
                     tablaAgraviados.DataTable();
                 });
@@ -110,35 +109,6 @@ function leerDenuncia(id) {
                     tablaDenunciados.DataTable();
                 });
             }
-=======
-            console.log(data.body);
-            var tablaA = '', tablaD = '';
-            data.body.agraviados.forEach(ag => {
-                tablaA += '<tr>';
-                tablaA += '<td>' + ag.agraviado.nombres + ' ' + ag.agraviado.apellidoPaterno + ' ' + ag.agraviado.apellidoMaterno + '</td>';
-                tablaA += '<td>' + ag.agraviado.telefono;
-                tablaA += '<td>' + ag.agraviado.informacionAdicional.nombre + '</td>';
-                tablaA += '<td>' + (ag.agraviado.medidaProteccion ? 'si' : 'no') + '</td>';
-                tablaA += '<td>' + (ag.agraviado.medidaProteccion ? ag.agraviado.juzgado : 'no data ') + '</td>';
-                tablaA += '<td>' + (ag.agraviado.medidaProteccion ? formaterFecha(ag.agraviado.fechaEmision) : 'no data ') + '</td>';
-                tablaA += '<td>' + (ag.agraviado.medidaProteccion ? ag.agraviado.detalleProteccion : 'no data ') + '</td>';
-                tablaA += '</tr>';
-                debugger;
-                tablaAgraviados.find("tbody").html(tablaA);
-                tablaAgraviados.DataTable();
-            });
-            data.body.denunciados.forEach(den => {
-                tablaD += '<tr>';
-                tablaD += '<td>' + den.denunciado.nombres + ' ' + den.denunciado.apellidoPaterno + ' ' + den.denunciado.apellidoMaterno + '</td>';
-                tablaD += '<td>' + den.denunciado.numeroIdentificacion + '</td>';
-                tablaD += '<td>' + den.denunciado.tipoIdentificacion.tipoIdentificacion + '</td>';
-                tablaD += '<td>' + den.denunciado.informacionAdicional.nombre + '</td>';
-                tablaD += '</tr>';
-                tablaDenunciados.find("tbody").html(tablaD);
-                tablaDenunciados.DataTable();
-            });
->>>>>>> master
-
         }, error: function (x, y) {
             console.log(x.responseText);
         }
@@ -308,7 +278,7 @@ function listarDenuncias() {
                     tpl += '<td>' + d.referenciaDireccion + '</td>';
                     tpl += '<td style=\"text-align: center\">' + (d.estadoDenuncia === true ? '<h5><span class =\"badge badge-success\">Diligenciada</span></h5>' : '<h5><span class =\"badge badge-danger\">Pendiente</span></h5>') + '</td>';
                     tpl += '<td nowrap style=\"text-align: center\">'
-                        + '<button title="Editar" class="btn btn-info"><i class="fas fa-plus"></i></button> '
+                        + '<button title="Ver Detalle" data-rhd="' + d.rhd + '" class="btn btn-info"><i class="fas fa-plus"></i></button> '
                         + '<button title="Enviar Correo" onclick="obtenerCorreo(\'' + d.usuario.correo + '\')" class="btn btn-dark"><i class="fas fa-envelope-square"></i></button> '
                         + '<a href="http://localhost:9090/api/denuncia/export?codDenuncia=' + d.cod_denuncia + '&idUsu=' + d.usuario.id + '" download="true"  title="Exportar Denuncia" class="btn btn-primary"><i class="fas fa-scroll"></i></a> '
                         + '<button onclick="mostrarMapa(' + d.longitud + ',' + d.latitud + ')" title="Ver Mapa" class="btn btn-secondary"><i class="fas fa-map-marked-alt"></i></button> '

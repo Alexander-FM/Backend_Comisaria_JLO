@@ -179,7 +179,17 @@
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                                    <div class="card-gray card-outline">
+                                    <div class="card card-info">
+                                        <div class="card-header">
+                                            <h3 class="card-title">Relato de la denuncia</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <p id="rhd">Aquí el texto</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                                    <div class="card card-warning">
                                         <div class="card-header">
                                             <h3 class="card-title">Agraviados</h3>
                                         </div>
@@ -204,7 +214,7 @@
                                     </div>
                                 </div>
                                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                                    <div class="card-orange card-outline">
+                                    <div class="card card-danger">
                                         <div class="card-header">
                                             <h3 class="card-title">Denunciados</h3>
                                         </div>
