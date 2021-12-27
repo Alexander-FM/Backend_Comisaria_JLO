@@ -66,9 +66,7 @@
                                         <button style="color: white" type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                                         <h5><i class="icon fas fa-info"></i> Alerta!</h5>
                                         <p> Si el tipo de trámite es <b>Copia Certificada</b>, 
-                                            por favor, asignar C-"Cód-Trámite", y si es <b>Solicitud</b> 
-                                            asignar S-"Cód-Trámite" , ya que con esto se acelera 
-                                            el proceso de busqueda en la base de datos.</p>
+                                            por favor, asignar C-"Cód-Trámite"</p>
                                     </div>
                                 </div>
                             </div>
@@ -79,6 +77,51 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <!-- Modal para enviar correo de trámite atendido -->
+            <!-- Modal para el envio de correo electronicos -->
+            <div class="modal fade" id="modal-correo-tramite">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Redactar Correo</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="card card-primary card-outline">
+                                <div class="card-header">
+                                    <h3 class="card-title">Enviar Correo Electrónico</h3>
+                                </div>
+                                <!-- /.card-header -->
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <input class="form-control" id="destinatario" readonly="" placeholder="Para:">
+                                    </div>
+                                    <div class="form-group">
+                                        <input class="form-control" id="titulo" placeholder="Asunto">
+                                    </div>
+                                    <div class="form-group">
+                                        <textarea id="mensaje" rows="5" class="form-control">Hola, Mi nombre es: ${usuario.nombres} ${usuario.apellidoPaterno} ${usuario.apellidoMaterno}, y estoy aquí para atender a tu solicitud de trámite de copia certificada. 
+Este es tu Cód-Tramite: [Aquí el código], puedes hacerle seguimiento mediante el Aplicativo Móvil.
+Saludos.  
+                                        </textarea>                                                                           
+                                    </div>
+                                </div>
+                                <!-- /.card-body -->
+                                <div class="card-footer">
+                                    <div class="float-right">
+                                        <button type="button" onclick="sendEmail();" class="btn btn-primary"><i class="far fa-envelope"></i> Enviar Ahora</button>
+                                    </div>
+                                </div>
+                                <!-- /.card-footer -->
+                            </div>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
             </div>
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
@@ -123,7 +166,6 @@
                                                     <th>Solicitante</th>
                                                     <th>Usuario</th>
                                                     <th>Telefono</th>
-                                                    <th>Correo Usuario</th>
                                                     <th>Motivo Denuncia</th>
                                                     <th>Observaciones</th>                          
                                                     <th>Acciones</th>
@@ -143,7 +185,6 @@
                                                     <th>Solicitante</th>
                                                     <th>Usuario</th>
                                                     <th>Telefono</th>
-                                                    <th>Correo Usuario</th>
                                                     <th>Motivo Denuncia</th>
                                                     <th>Observaciones</th>                          
                                                     <th>Acciones</th>
@@ -186,6 +227,7 @@
         <!-- AdminLTE App -->
         <script src="../dist/js/adminlte.min.js"></script>
         <script type="text/javascript" src="../js/scriptTramite.js"></script>
+        <script src="../plugins/sweetalert2/sweetalert2.js" type="text/javascript"></script>
     </body>
 </html>
 <%

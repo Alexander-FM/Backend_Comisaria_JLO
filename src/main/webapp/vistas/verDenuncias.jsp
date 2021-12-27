@@ -143,9 +143,10 @@
                                         <input class="form-control" id="titulo" placeholder="Asunto">
                                     </div>
                                     <div class="form-group">
-                                        <textarea id="mensaje" class="form-control" style="height: 150px">
-                                            
-                                        </textarea>
+                                        <textarea id="mensaje" rows="5" class="form-control">Hola, Mi nombre es: ${usuario.nombres} ${usuario.apellidoPaterno} ${usuario.apellidoMaterno}, y estoy aquí para atender a tu registro de denuncia. 
+Este es tu Cód-Denuncia [Aquí el código], puedes hacerle seguimiento mediante el Aplicativo Móvil.
+Saludos.  
+                                        </textarea> 
                                     </div>
                                 </div>
                                 <!-- /.card-body -->
@@ -372,6 +373,7 @@
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBiqYBElQofWcQGkoH1A2gF9SEuzFyrtNk&callback=initMap&libraries=&v=weekly"
             async
         ></script>
+        <script src="../plugins/sweetalert2/sweetalert2.js" type="text/javascript"></script>
     </body>
 </html>
 <%

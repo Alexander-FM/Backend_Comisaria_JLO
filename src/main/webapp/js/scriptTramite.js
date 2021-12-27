@@ -6,7 +6,7 @@ $(document).ready(function () {
     a.attr('style', 'background-color: black');
     $("input:checkbox").prop('checked', false);
     var tablaTramite = $("table#TablaTramites"),
-        modalAt = $("#modal-at");
+            modalAt = $("#modal-at");
 
     function formaterFecha(timestamp) {
         var datetime = new Date(timestamp);
@@ -39,7 +39,7 @@ $(document).ready(function () {
                 tabla += '<tr style="text-align:center">';
                 tabla += '<td>' + t.id + '</td>';
                 tabla += '<td>' + t.codTramite + '</td>';
-                tabla += '<td>' + t.fechaTramite + '</td>';
+                tabla += '<td nowrap>' + t.fechaTramite + '</td>';
                 tabla += '<td>' + t.horaTramite + '</td>';
                 tabla += '<td>' + t.policia.nombres + ' ' + t.policia.apellidoPaterno + ' ' + t.policia.apellidoMaterno + '</td>';
                 tabla += '<td>' + t.tipoTramite.tipoTramite + '</td>';
@@ -47,12 +47,12 @@ $(document).ready(function () {
                 tabla += '<td>' + t.solicitante + '</td>';
                 tabla += '<td>' + t.usuario.nombres + '</td>';
                 tabla += '<td>' + t.telefono + '</td>';
-                tabla += '<td>' + t.correo + '</td>';
                 tabla += '<td>' + t.motivo_denuncia_policial + '</td>';
                 tabla += '<td>' + t.observaciones + '</td>';
                 tabla += '<td nowrap>'
-                    + '<button title="Editar Trámite" onclick="presentarDatos(' + t.id + ')" class="btn btn-warning"><i class="fas fa-edit"></i></button> '
-                    + '<button title="Exportar Trámite" onclick="exportarTramite(' + t.id + ')" class="btn btn-primary"><i class="fas fa-file-pdf"></i></button></td>';
+                        + '<button title="Editar Trámite" onclick="presentarDatos(' + t.id + ')" class="btn btn-warning"><i class="fas fa-edit"></i></button> '
+                        + '<button title="Enviar Correo" onclick="obtenerCorreo(\'' + t.usuario.correo + '\')" class="btn btn-dark"><i class="fas fa-envelope-square"></i></button> '
+                        + '<button title="Exportar Trámite" onclick="exportarTramite(' + t.id + ')" class="btn btn-primary"><i class="fas fa-file-pdf"></i></button></td>';
                 tabla += '</tr>';
             });
             //console.log(tabla);
@@ -64,6 +64,52 @@ $(document).ready(function () {
     cargarTabla();
     cargarPoliciasForTramites();
 });
+//Obtener Correo del Usuario.
+function obtenerCorreo(email) {
+    $('#modal-correo-tramite').modal({backdrop: 'static', keyboard: false});
+    $('#destinatario').val(email);
+}
+//Enviar Correo de Trámite Atendida
+function sendEmail() {
+    if ($('#destinatario').val().trim() !== ''
+            && $('#titulo').val().trim() !== ''
+            && $('#mensaje').val().trim() !== '') {
+        let obj = {
+            destinatario: $('#destinatario').val(),
+            titulo: $('#titulo').val(),
+            mensaje: $('#mensaje').val()
+        };
+        $.ajax({
+            type: 'post',
+            url: 'http://localhost:9090/api/denuncia/answerRequest',
+            data: obj, //Cuando es parentesis es porque quieres convertirlo a json Strinfy
+            success: function (data) {
+                switch (data.rpta) {
+                    case 1:
+                        //alertify.success(data.message);
+                        Swal.fire('Mensaje del Sistema', data.message, 'success');
+                        $('#modal-correo-tramite').modal('hide');
+                        break;
+                    case 0:
+                        //alertify.warning(data.message + ' ☹');
+                        Swal.fire('Mensaje del Sistema', data.message, 'error');
+                        break;
+                    default :
+                        Swal.fire('Mensaje del Sistema', 'ha ocurrido un error durante el envio ⚙, inténtelo nuevamente en unos mintos ⏲', 'error');
+                        break;
+                }
+            }, error: function (x, y) {
+                console.log(x.responseText);
+            }
+        });
+    } else {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Debe completar todos los campos. Asegurese e intente nuevamente.'
+        });
+    }
+}
 
 function editarTramite() {
     tablaTramite.on("click", ".btn-warning", function () {

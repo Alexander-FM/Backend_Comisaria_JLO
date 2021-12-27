@@ -1,11 +1,11 @@
 var tabla = $("table#TablaDenuncias"),
-    tablaAgraviados = $("table#tabla_agraviados"),
-    tablaDenunciados = $("table#tabla_denunciados"),
-    mdlDd = $("#modal-dd"),
-    mdlMp = $("#modal-mapa"),
-    mdlEmail = $("#modal-correo"),
-    mdlAd = $("#modal-ac"),
-    btnSave = $("#btn-save");
+        tablaAgraviados = $("table#tabla_agraviados"),
+        tablaDenunciados = $("table#tabla_denunciados"),
+        mdlDd = $("#modal-dd"),
+        mdlMp = $("#modal-mapa"),
+        mdlEmail = $("#modal-correo"),
+        mdlAd = $("#modal-ac"),
+        btnSave = $("#btn-save");
 $(document).ready(function () {
     let li_grupo_registros = $('#li_grupo_recdenuncias');
     li_grupo_registros.attr('class', 'nav-item has-treeview menu-close menu-open');
@@ -16,7 +16,7 @@ $(document).ready(function () {
     tabla.on("click", ".btn-info", function () {
         var id = $(this).parents("tr").children()[0].textContent;
         var rhd = $(this).data('rhd');
-        leerDenuncia(id, rhd);        
+        leerDenuncia(id, rhd);
         mdlDd.modal({backdrop: 'static', keyboard: false});
     });
 
@@ -38,8 +38,8 @@ function obtenerCorreo(email) {
 //Enviar Correo de Denuncia Atendida
 function answerRequest() {
     if ($('#destinatario').val().trim() !== ''
-        && $('#titulo').val().trim() !== ''
-        && $('#mensaje').val().trim() !== '') {
+            && $('#titulo').val().trim() !== ''
+            && $('#mensaje').val().trim() !== '') {
         let obj = {
             destinatario: $('#destinatario').val(),
             titulo: $('#titulo').val(),
@@ -52,15 +52,14 @@ function answerRequest() {
             success: function (data) {
                 switch (data.rpta) {
                     case 1:
-                        alertify.success(data.message);
+                        Swal.fire('Mensaje del Sistema', data.message, 'success');
                         mdlEmail.modal('hide');
-
                         break;
                     case 0:
-                        alertify.warning(data.message + ' ☹');
+                        Swal.fire('Mensaje del Sistema', data.message, 'error');
                         break;
                     default :
-                        alertify.error('ha ocurrido un error durante el envio ⚙, inténtelo nuevamente en unos mintos ⏲');
+                        Swal.fire('Mensaje del Sistema', 'ha ocurrido un error durante el envio ⚙, inténtelo nuevamente en unos mintos ⏲', 'error');
                         break;
                 }
             }, error: function (x, y) {
@@ -68,7 +67,11 @@ function answerRequest() {
             }
         });
     } else {
-        alertify.error('Ooops...! Para enviar el mensaje debe completar todo los campos del formulario');
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Debe completar todos los campos. Asegurese e intente nuevamente.'
+        });
     }
 }
 
@@ -82,7 +85,7 @@ function leerDenuncia(id, rhd) {
         },
         data: {}, //idD es la variable del servicio
         success: function (data) {
-            if(data.rpta==1){
+            if (data.rpta == 1) {
                 var tablaA = '', tablaD = '';
                 $("#rhd").html(rhd);
                 data.body.agraviados.forEach(ag => {
@@ -278,11 +281,11 @@ function listarDenuncias() {
                     tpl += '<td>' + d.referenciaDireccion + '</td>';
                     tpl += '<td style=\"text-align: center\">' + (d.estadoDenuncia === true ? '<h5><span class =\"badge badge-success\">Diligenciada</span></h5>' : '<h5><span class =\"badge badge-danger\">Pendiente</span></h5>') + '</td>';
                     tpl += '<td nowrap style=\"text-align: center\">'
-                        + '<button title="Ver Detalle" data-rhd="' + d.rhd + '" class="btn btn-info"><i class="fas fa-plus"></i></button> '
-                        + '<button title="Enviar Correo" onclick="obtenerCorreo(\'' + d.usuario.correo + '\')" class="btn btn-dark"><i class="fas fa-envelope-square"></i></button> '
-                        + '<a href="http://localhost:9090/api/denuncia/export?codDenuncia=' + d.cod_denuncia + '&idUsu=' + d.usuario.id + '" download="true"  title="Exportar Denuncia" class="btn btn-primary"><i class="fas fa-scroll"></i></a> '
-                        + '<button onclick="mostrarMapa(' + d.longitud + ',' + d.latitud + ')" title="Ver Mapa" class="btn btn-secondary"><i class="fas fa-map-marked-alt"></i></button> '
-                        + '<button class="btn btn-warning"><i class="fas fa-edit"></i></button></td>';
+                            + '<button title="Ver Detalle" data-rhd="' + d.rhd + '" class="btn btn-info"><i class="fas fa-plus"></i></button> '
+                            + '<button title="Enviar Correo" onclick="obtenerCorreo(\'' + d.usuario.correo + '\')" class="btn btn-dark"><i class="fas fa-envelope-square"></i></button> '
+                            + '<a href="http://localhost:9090/api/denuncia/export?codDenuncia=' + d.cod_denuncia + '&idUsu=' + d.usuario.id + '" download="true"  title="Exportar Denuncia" class="btn btn-primary"><i class="fas fa-scroll"></i></a> '
+                            + '<button onclick="mostrarMapa(' + d.longitud + ',' + d.latitud + ')" title="Ver Mapa" class="btn btn-secondary"><i class="fas fa-map-marked-alt"></i></button> '
+                            + '<button class="btn btn-warning"><i class="fas fa-edit"></i></button></td>';
                     tpl += '</tr>';
                 });
                 tabla.find("tbody").html(tpl);
