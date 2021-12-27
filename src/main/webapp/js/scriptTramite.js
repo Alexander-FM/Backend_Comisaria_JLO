@@ -52,7 +52,7 @@ $(document).ready(function () {
                 tabla += '<td nowrap>'
                         + '<button title="Editar Trámite" onclick="presentarDatos(' + t.id + ')" class="btn btn-warning"><i class="fas fa-edit"></i></button> '
                         + '<button title="Enviar Correo" onclick="obtenerCorreo(\'' + t.usuario.correo + '\')" class="btn btn-dark"><i class="fas fa-envelope-square"></i></button> '
-                        + '<button title="Exportar Trámite" onclick="exportarTramite(' + t.id + ')" class="btn btn-primary"><i class="fas fa-file-pdf"></i></button></td>';
+                        + '<a href="http://localhost:9090/api/tramite/export?codTramite=' + t.codTramite + '&idUsu=' + t.usuario.id + '" download="true" title="Exportar Trámite" class="btn btn-primary"><i class="fas fa-file-pdf"></i></a></td>';
                 tabla += '</tr>';
             });
             //console.log(tabla);

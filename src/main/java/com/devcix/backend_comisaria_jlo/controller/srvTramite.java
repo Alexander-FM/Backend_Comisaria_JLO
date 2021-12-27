@@ -100,7 +100,8 @@ public class srvTramite extends HttpServlet {
         ServletOutputStream out = response.getOutputStream();
         try {
             InputStream reporte = this.getServletConfig().getServletContext().getResourceAsStream("/reportes/PlantillaTramites.jasper"),
-                    logo = this.getServletConfig().getServletContext().getResourceAsStream("/reportes/img/logo_pnp.png");
+                                        logo = this.getServletConfig().getServletContext().getResourceAsStream("/reportes/img/escudo.png"),
+                    escudo = this.getServletConfig().getServletContext().getResourceAsStream("/reportes/img/logo_pnp.png");
             String strLista = request.getParameter("lista");
             if (reporte != null && strLista != null) {
                 List<Tramite> tramites = new ArrayList();
@@ -112,6 +113,7 @@ public class srvTramite extends HttpServlet {
                 Map<String, Object> parameters = new HashMap();
                 parameters.put("ds", ds);
                 parameters.put("logo", logo);
+                parameters.put("escudo", escudo);
                 JasperPrint jasperPrint = JasperFillManager.fillReport(report, parameters, ds);
                 JasperExportManager.exportReportToPdfStream(jasperPrint, out);
                 response.setContentType("application/pdf");

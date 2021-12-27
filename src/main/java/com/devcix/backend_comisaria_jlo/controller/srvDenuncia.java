@@ -102,7 +102,8 @@ public class srvDenuncia extends HttpServlet {
         ServletOutputStream out = response.getOutputStream();
         try {
             InputStream reporte = this.getServletConfig().getServletContext().getResourceAsStream("/reportes/PlantillaDenuncias.jasper"),
-                    logo = this.getServletConfig().getServletContext().getResourceAsStream("/reportes/img/logo_pnp.png");
+                    logo = this.getServletConfig().getServletContext().getResourceAsStream("/reportes/img/escudo.png"),
+                    escudo = this.getServletConfig().getServletContext().getResourceAsStream("/reportes/img/logo_pnp.png");
             String strLista = request.getParameter("lista");
             if (reporte != null && strLista != null) {
                 List<Denuncia> denuncias = new ArrayList();
@@ -114,6 +115,7 @@ public class srvDenuncia extends HttpServlet {
                 Map<String, Object> parameters = new HashMap();
                 parameters.put("ds", ds);
                 parameters.put("logo", logo);
+                parameters.put("escudo", escudo);
                 JasperPrint jasperPrint = JasperFillManager.fillReport(report, parameters, ds);
                 JasperExportManager.exportReportToPdfStream(jasperPrint, out);
                 response.setContentType("application/pdf");
@@ -160,12 +162,12 @@ public class srvDenuncia extends HttpServlet {
                 parameters.put("FechaHoraHechos", fechaHoraHecho);
                 //**************************************************
                 parameters.put("LugarHechos", dto.getDenuncia().getDireccion() + " - " + dto.getDenuncia().getReferenciaDireccion());
-                parameters.put("DatosDenunciante", dto.getDenuncia().getUsuario().getNombreCompleto() 
+                parameters.put("DatosDenunciante", dto.getDenuncia().getUsuario().getNombreCompleto()
                         + " Identificado con DNI Nro. " + dto.getDenuncia().getUsuario().getNumeroIdentificacion()
                         + " Fecha de Nacimiento: " + dto.getDenuncia().getUsuario().getFechaNacimiento()
-                + " Estado Civil: " + dto.getDenuncia().getUsuario().getEstadoCivil().getEstadoCivil()
-                + " Direccion: " + dto.getDenuncia().getUsuario().getDireccion()
-                + " Telefono: " + dto.getDenuncia().getUsuario().getTelefono());
+                        + " Estado Civil: " + dto.getDenuncia().getUsuario().getEstadoCivil().getEstadoCivil()
+                        + " Direccion: " + dto.getDenuncia().getUsuario().getDireccion()
+                        + " Telefono: " + dto.getDenuncia().getUsuario().getTelefono());
                 parameters.put("DatosDenunciado", dto.getDenunciados().get(0).getNombreCompleto());
                 parameters.put("ResumenDenuncia", dto.getDenuncia().getRhd());
                 parameters.put("CodigoPolicial", (String) request.getSession().getAttribute("codPolicial"));
