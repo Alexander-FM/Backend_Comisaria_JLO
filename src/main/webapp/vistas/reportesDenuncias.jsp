@@ -167,6 +167,7 @@
         <!-- AdminLTE App -->
         <script src="../dist/js/adminlte.min.js"></script>
         <script src="../js/scriptReporteDenuncias.js" type="text/javascript"></script>
+        <script src="../js/scriptAcceso.js" type="text/javascript"></script>
     </body>
 </html>
 <%

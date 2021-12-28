@@ -1,4 +1,8 @@
 $(document).ready(function () {
+    var grado = $("#grado_pnp").val();
+    if (grado !== 'Coronel' && grado!== 'Mayor') {
+        location.href = '../vistas/forbidden.jsp';       
+    }
     let li_grupo_registros = $('#li_grupo_registros');
     li_grupo_registros.attr('class', 'nav-item has-treeview menu-close menu-open');
     let a = $('#li_policias').find('a');

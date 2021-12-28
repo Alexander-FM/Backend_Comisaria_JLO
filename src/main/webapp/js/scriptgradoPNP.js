@@ -1,5 +1,9 @@
 var table = $('table#TablaGrado');
 $(document).ready(function () {
+    var grado = $("#grado_pnp").val();
+    if (grado !== 'Coronel' && grado !== 'Mayor') {
+        location.href = '../vistas/forbidden.jsp';
+    }
     let li_grupo_registros = $('#li_grupo_registros');
     li_grupo_registros.attr('class', 'nav-item has-treeview menu-close menu-open');
     let a = $('#li_gradopnp').find('a');
@@ -18,8 +22,8 @@ function cargarTabla() {
             tabla += '<td>' + g.nombreGrado + '</td>';
             tabla += '<td style=\"text-align: center\">' + (g.vigencia === true ? '<h5><span class =\"badge badge-success\">Si</span></h5>' : '<h5><span class =\"badge badge-danger\">No</span></h5>') + '</td>';
             tabla += '<td nowrap style=\"text-align: center\">'
-                + '<button onclick="activar_desactivar(' + g.id + ')" class="btn btn-' + (g.vigencia ? 'danger' : 'success') + '"><i class="fas fa-power-off"></i></button> '
-                + '<button onclick="presentarDatos(' + g.id + ')" class="btn btn-warning"><i class="fas fa-edit"></i></button></td>';
+                    + '<button onclick="activar_desactivar(' + g.id + ')" class="btn btn-' + (g.vigencia ? 'danger' : 'success') + '"><i class="fas fa-power-off"></i></button> '
+                    + '<button onclick="presentarDatos(' + g.id + ')" class="btn btn-warning"><i class="fas fa-edit"></i></button></td>';
             tabla += '</tr>';
         });
         table.find('tbody').html(tabla);

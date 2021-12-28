@@ -142,7 +142,6 @@
         <script src="../plugins/datatables-bs4/js/dataTables.bootstrap4.js" type="text/javascript"></script>
         <!-- AdminLTE App -->
         <script src="../dist/js/adminlte.min.js"></script>
-
         <script type="text/javascript" src="../js/scriptgradoPNP.js"></script>
     </body>
 </html>

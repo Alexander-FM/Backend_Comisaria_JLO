@@ -10,7 +10,6 @@
     </head>
     <body class="hold-transition sidebar-mini">
         <div class="wrapper">
-
             <%@include file="plus/menuSuperior.jsp" %>
             <%@include  file="plus/menuLateral.jsp"%>
             <div class="content-wrapper">

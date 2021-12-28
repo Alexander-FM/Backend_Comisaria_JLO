@@ -1,3 +1,4 @@
+<input type="hidden" id="grado_pnp" value="${usuario.gradoPNP.nombreGrado}">
 <aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color: #114a39;">
     <!-- Brand Logo -->
     <a href="#" class="brand-link">

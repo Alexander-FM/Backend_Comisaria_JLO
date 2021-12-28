@@ -374,6 +374,7 @@ Saludos.
             async
         ></script>
         <script src="../plugins/sweetalert2/sweetalert2.js" type="text/javascript"></script>
+        <script src="../js/scriptAcceso.js" type="text/javascript"></script>
     </body>
 </html>
 <%

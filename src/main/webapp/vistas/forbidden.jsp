@@ -40,18 +40,6 @@
                             Vaya al parecer no tienes todos los privilegios para estar aquí, tú podrías 
                             <a href="../vistas/inicio.jsp">regresar a la página principal</a> o ponerte en contacto con tu superior.
                         </p>
-
-                        <form class="search-form">
-                            <div class="input-group">
-                                <input type="text" name="search" class="form-control" placeholder="Search">
-
-                                <div class="input-group-append">
-                                    <button type="submit" name="submit" class="btn btn-danger"><i class="fas fa-search"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <!-- /.input-group -->
-                        </form>
                     </div>
                 </div>
             </div>
@@ -81,6 +69,12 @@
         <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
         <!-- AdminLTE App -->
         <script src="../dist/js/adminlte.min.js"></script>
+        <script src="../js/scriptAcceso.js" type="text/javascript"></script>
+        <script>
+            setTimeout(function(){
+                location.href = '../vistas/inicio.jsp';
+            }, 3000);
+        </script>
     </body>
 </html>
 <%
@@ -88,6 +82,3 @@
         response.sendRedirect("../index.jsp");
     }
 %>
-
-
-

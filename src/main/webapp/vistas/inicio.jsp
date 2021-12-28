@@ -244,6 +244,7 @@
         <script src="../plugins/alertifyjs/alertify.min.js" type="text/javascript"></script>
         <link href="../plugins/alertifyjs/css/alertify.min.css" rel="stylesheet" type="text/css"/>
         <script src="../js/scriptReportes.js"></script>
+        <script src="../js/scriptAcceso.js" type="text/javascript"></script>
     </body>
 </html>
 <%

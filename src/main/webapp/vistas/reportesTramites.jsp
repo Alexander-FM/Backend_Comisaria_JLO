@@ -153,6 +153,8 @@
         <!-- Admin -->
         <script src="../dist/js/adminlte.min.js"></script>
         <script src="../js/scriptReporteTramite.js"></script>
+        <script src="../js/scriptAcceso.js" type="text/javascript"></script>
+
     </body>
 </html>
 <%

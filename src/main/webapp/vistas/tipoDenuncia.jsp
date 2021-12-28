@@ -143,6 +143,7 @@
         <!-- AdminLTE App -->
         <script src="../dist/js/adminlte.min.js"></script>
         <script type="text/javascript" src="../js/scriptTipoDenuncia.js"></script>
+        <script src="../js/scriptAcceso.js" type="text/javascript"></script>
     </body>
 </html>
 <%

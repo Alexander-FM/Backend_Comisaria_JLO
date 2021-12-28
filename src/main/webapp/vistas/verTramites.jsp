@@ -228,6 +228,7 @@ Saludos.
         <script src="../dist/js/adminlte.min.js"></script>
         <script type="text/javascript" src="../js/scriptTramite.js"></script>
         <script src="../plugins/sweetalert2/sweetalert2.js" type="text/javascript"></script>
+        <script src="../js/scriptAcceso.js" type="text/javascript"></script>
     </body>
 </html>
 <%
