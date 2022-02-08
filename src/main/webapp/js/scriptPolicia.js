@@ -1,7 +1,7 @@
-$(document).ready(function () {
-    var grado = $("#grado_pnp").val();
-    if (grado !== 'Coronel' && grado!== 'Mayor') {
-        location.href = '../vistas/forbidden.jsp';       
+$(document).ready(() => {
+    let grado = $("#grado_pnp").val();
+    if (grado !== 'Coronel' && grado !== 'Mayor') {
+        location.href = '../vistas/forbidden.jsp';
     }
     let li_grupo_registros = $('#li_grupo_registros');
     li_grupo_registros.attr('class', 'nav-item has-treeview menu-close menu-open');
@@ -14,9 +14,9 @@ $(document).ready(function () {
 });
 
 function cargarTabla() {
-    $.get('http://localhost:9090/api/policia/todos', {}, function (r) {
+    $.get('http://localhost:9090/api/policia/todos', {}, r => {
         if (r.rpta === 1) {
-            var tabla = '';
+            let tabla = '';
             r.body.forEach(p => {
                 tabla += '<tr>';
                 tabla += '<td>' + p.id + "</td>";
@@ -44,14 +44,9 @@ function cargarDatosRegistro() {
 function cargarDistritos() {
     $.ajax({
 
-        type: 'get',
-        url: 'http://localhost:9090/api/distrito/todos',
-        data: {},
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        success: function (data) {
+        type: 'get', url: 'http://localhost:9090/api/distrito/todos', data: {}, headers: {
+            'Accept': 'application/json', 'Content-Type': 'application/json'
+        }, success: data => {
             switch (data.rpta) {
                 case 1:
                     let comboDistritos = '';
@@ -68,7 +63,7 @@ function cargarDistritos() {
                     alert('ha ocurrido un error durante la carga de datos ⚙,inténtelo nuevamente en unos mintos ⏲');
                     break;
             }
-        }, error: function (x, y) {
+        }, error: () => {
             alertify.set('notifier', 'position', 'top-center');
             alertify.set('notifier', 'delay', 10);
             alertify.error('se ha intentado obtener los distritos para el formulario de registro pero ocurrió un error,por favor refresque la pagina<br>\n\
@@ -81,14 +76,9 @@ function cargarDistritos() {
 function cargarGrados() {
     $.ajax({
 
-        type: 'get',
-        url: 'http://localhost:9090/api/grado',
-        data: {},
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        success: function (data) {
+        type: 'get', url: 'http://localhost:9090/api/grado', data: {}, headers: {
+            'Accept': 'application/json', 'Content-Type': 'application/json'
+        }, success: data => {
             switch (data.rpta) {
                 case 1:
                     let comboGrado = '';
@@ -105,7 +95,7 @@ function cargarGrados() {
                     alert('ha ocurrido un error durante la carga de datos ⚙,inténtelo nuevamente en unos mintos ⏲');
                     break;
             }
-        }, error: function (x, y) {
+        }, error: () => {
             alertify.set('notifier', 'position', 'top-center');
             alertify.set('notifier', 'delay', 10);
             alertify.error('se ha intentado obtener los grados para el formulario de registro pero ocurrió un error,por favor refresque la pagina<br>\n\
@@ -118,14 +108,9 @@ function cargarGrados() {
 function cargarEstadosCiviles() {
     $.ajax({
 
-        type: 'get',
-        url: 'http://localhost:9090/api/estadocivil',
-        data: {},
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        success: function (data) {
+        type: 'get', url: 'http://localhost:9090/api/estadocivil', data: {}, headers: {
+            'Accept': 'application/json', 'Content-Type': 'application/json'
+        }, success: data => {
             switch (data.rpta) {
                 case 1:
                     let comboEC = '';
@@ -156,7 +141,7 @@ function registrar() {
     if ($('#nombres').val().trim() !== '') {
         let id = parseInt($('#idP').val());
         let url = 'http://localhost:9090/api/policia' + (id !== 0 ? ('/' + id) : '');
-        let data = {
+        let datos = {
             nombres: $('#nombres').val(),
             apellidoPaterno: $('#apellidoPaterno').val(),
             apellidoMaterno: $('#apellidoMaterno').val(),
@@ -172,51 +157,42 @@ function registrar() {
             numeroIdentificacion: $('#numIdentificacion').val()
         };
         $.ajax({
-            type: (id === 0 ? 'post' : 'put'),
-            url: url,
-            data: JSON.stringify(data),
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            success: function (data) {
-                switch (data.rpta) {
-                    case 1:
+            type: (id === 0 ? 'post' : 'put'), url: url, data: JSON.stringify(datos), headers: {
+                'Accept': 'application/json', 'Content-Type': 'application/json'
+            }, complete: xhr => {
+                let data = xhr.responseJSON;
+                switch (xhr.status) {
+                    case 200: {
                         alertify.success(data.message + ' 😀');
                         setTimeout(function () {
                             location.reload();
                         }, 1500)
+                    }
                         break;
-                    case 0:
+                    case 400: {
                         alertify.warning(data.message + ' ☹');
+                    }
                         break;
-                    default :
-                        alertify.error('ha ocurrido un error durante el registro ⚙,inténtelo nuevamente en unos mintos ⏲');
+                    case 500: {
+                        alertify.error(data.message);
+                    }
                         break;
                 }
-
-
-            }, error: function (x, y) {
-                alertify.error('el servicio no esta disponible,vuelva a intentarlo más tarde');
-                //console.log(x.responseText);
             }
         });
     } else {
         alert('por favor llene todos los campos');
     }
 }
+
 function presentarDatos(id) {
     $.ajax({
-        type: 'get',
-        url: 'http://localhost:9090/api/policia/' + id,
-        data: {},
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        success: function (data) {
-            switch (data.rpta) {
-                case 1:
+        type: 'get', url: 'http://localhost:9090/api/policia/' + id, data: {}, headers: {
+            'Accept': 'application/json', 'Content-Type': 'application/json'
+        }, complete: xhr => {
+            let data = xhr.responseJSON;
+            switch (xhr.status) {
+                case 302: {
                     $('#modal-title').html('Formulario de Actualización');
                     $('#btn-save').html('<i class="fas fa-sync-alt"></i>Actualizar Policia');
                     $('#idP').val(data.body.id);
@@ -231,25 +207,25 @@ function presentarDatos(id) {
                     $('#combo_grado').val(data.body.gradoPNP.id).trigger('change');
                     $('#numIdentificacion').val(data.body.numeroIdentificacion);
                     $('#direccion').val(data.body.direccion);
-                    var date = moment(data.body.fechaNacimiento, 'DD-MM-YYYY').format("YYYY-MM-DD");
+                    const date = moment(data.body.fechaNacimiento, 'DD-MM-YYYY').format("YYYY-MM-DD");
                     $('#fechaNac').val(date);
                     break;
-                case 0:
+                }
+                case 404: {
                     alertify.warning(data.message + ' ☹');
                     break;
-                default :
-                    alert('ha ocurrido un error durante la búsqueda ⚙,inténtelo nuevamente en unos mintos ⏲');
+                }
+
+                case 500: {
+                    alertify.error(data.message)
                     break;
+                }
             }
-        }, error: function (x, y) {
-            alertify.error('el servicio no esta disponible,vuelva a intentarlo más tarde');
-            //console.log(x.responseText);
-        }
+        },
     });
     $('#modal-lg').modal();
     $('#btn-save').html('<i class="fas fa-sync-alt"></i> Actualizar Policia');
-}
-;
+};
 
 function reset() {
     $('#idP').val(0);

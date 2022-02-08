@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(document).ready(() => {
     var grado = $("#grado_pnp").val();
     if (grado !== 'Coronel' && grado !== 'Mayor') {
         location.href = '../vistas/forbidden.jsp';
@@ -13,12 +13,12 @@ $(document).ready(function () {
     cargarUsuarios();
     cargarPoliciasXDe();
     cargarComisarias();
-});
+})
 
 function cargarUsuarios() {
-    $.get('http://localhost:9090/api/LoginPnp/usuarios', {}, function (r) {
+    $.get('http://localhost:9090/api/LoginPnp/usuarios', {}, r => {
         if (r.rpta === 1) {
-            var tabla = '';
+            let tabla = '';
             r.body.forEach(p => {
                 tabla += '<tr>';
                 tabla += '<td>' + p.id + "</td>";
@@ -27,9 +27,7 @@ function cargarUsuarios() {
                 tabla += '<td nowrap>' + (p.policia.nombres + ' ' + p.policia.apellidoPaterno + ' ' + p.policia.apellidoMaterno) + "</td>";
                 tabla += '<td>' + p.comisarias.nombreComisaria + "</td>";
                 tabla += '<td style="text-align: center">' + (p.estado ? '<h5><span class =\"badge badge-success\">Activo</span></h5>' : '<h5><span class =\"badge badge-danger\">Inactivo</span></h5>') + '</td>';
-                tabla += '<td style="text-align: center">'
-                        + '<button onclick="presentarDatos(' + p.id + ')" class="btn btn-warning"><i class="fas fa-edit"></i></button> '
-                        + '<button onclick="activar_desactivar(' + p.id + ')" class="btn btn-' + (p.estado ? 'danger' : 'success') + '"><i class="fas fa-power-off"></i></button></td>';
+                tabla += '<td style="text-align: center">' + '<button onclick="presentarDatos(' + p.id + ')" class="btn btn-warning"><i class="fas fa-edit"></i></button> ' + '<button onclick="activar_desactivar(' + p.id + ')" class="btn btn-' + (p.estado ? 'danger' : 'success') + '"><i class="fas fa-power-off"></i></button></td>';
                 tabla += '</tr>';
             });
             $('#TablaPoliciasUsuario').find('tbody').html(tabla);
@@ -42,14 +40,9 @@ function cargarUsuarios() {
 
 function cargarPoliciasXDe() {
     $.ajax({
-        type: 'get',
-        url: 'http://localhost:9090/api/policia/sinLogin',
-        data: {},
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        success: function (data) {
+        type: 'get', url: 'http://localhost:9090/api/policia/sinLogin', data: {}, headers: {
+            'Accept': 'application/json', 'Content-Type': 'application/json'
+        }, success: data => {
             switch (data.rpta) {
                 case 1:
                     let combo_policias_usuarios = '';
@@ -65,7 +58,7 @@ function cargarPoliciasXDe() {
                     alert('ha ocurrido un error durante el registro ⚙,inténtelo nuevamente en unos mintos ⏲');
                     break;
             }
-        }, error: function (x, y) {
+        }, error: () => {
             alertify.set('notifier', 'position', 'top-center');
             alertify.set('notifier', 'delay', 10);
             alertify.error('se ha intentado obtener los distritos para el formulario de registro pero ocurrió un error,por favor refresque la pagina<br>\n\
@@ -77,14 +70,9 @@ function cargarPoliciasXDe() {
 
 function cargarComisarias() {
     $.ajax({
-        type: 'get',
-        url: 'http://localhost:9090/api/comisarias',
-        data: {},
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        success: function (data) {
+        type: 'get', url: 'http://localhost:9090/api/comisarias', data: {}, headers: {
+            'Accept': 'application/json', 'Content-Type': 'application/json'
+        }, success: data => {
             switch (data.rpta) {
                 case 1:
                     let comboComisarias = '';
@@ -114,7 +102,7 @@ function registrar() {
     if ($('#codUsuario').val().trim() !== '' || $('#claveUsuario').val().trim() !== '') {
         let id = parseInt($('#idU').val());
         let url = 'http://localhost:9090/api/LoginPnp/' + (id === 0 ? 'registrar' : id);
-        let data = {
+        let datos = {
             codigoPolicial: $('#codUsuario').val(),
             clave: $('#claveUsuario').val(),
             policia: {id: parseInt($('#combo_policias_usuarios').val())},
@@ -122,51 +110,42 @@ function registrar() {
             comisarias: {id: parseInt($('#combo_policias_comisarias').val())}
         };
         $.ajax({
-            type: (id === 0 ? 'post' : 'put'),
-            url: url,
-            data: JSON.stringify(data),
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            success: function (data) {
-                switch (data.rpta) {
-                    case 1:
+            type: (id === 0 ? 'post' : 'put'), url: url, data: JSON.stringify(datos), headers: {
+                'Accept': 'application/json', 'Content-Type': 'application/json'
+            }, complete: xhr => {
+                let data = xhr.responseJSON;
+                switch (xhr.status) {
+                    case 200: {
                         alertify.success(data.message + '😀');
                         setTimeout(function () {
                             location.reload();
                         }, 1000);
                         break;
-                    case 0:
+                    }
+                    case 400: {
                         alertify.warning(data.message + ' ☹');
                         break;
-                    default :
-                        alert('ha ocurrido un error durante el registro ⚙,inténtelo nuevamente en unos mintos ⏲');
+                    }
+                    case 500: {
+                        alertify.error(data.message)
                         break;
+                    }
                 }
-            }, error: function (x, y) {
-                alertify.error('el servicio no esta disponible,vuelva a intentarlo más tarde');
-                //console.log(x.responseText);
             }
         });
     } else {
         alertify.warning('complete todos los campos');
     }
 }
-;
 
 function presentarDatos(id) {
     $.ajax({
-        type: 'get',
-        url: 'http://localhost:9090/api/LoginPnp/' + id,
-        data: {},
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        success: function (data) {
-            switch (data.rpta) {
-                case 1:
+        type: 'get', url: 'http://localhost:9090/api/LoginPnp/' + id, data: {}, headers: {
+            'Accept': 'application/json', 'Content-Type': 'application/json'
+        }, complete: xhr => {
+            let data = xhr.responseJSON
+            switch (xhr.status) {
+                case 302: {
                     $('#idU').val(data.body.id);
                     $('#codUsuario').val(data.body.codigoPolicial);
                     $('#claveUsuario').val(data.body.clave);
@@ -178,57 +157,49 @@ function presentarDatos(id) {
                     //PLUS
                     $('#combo_policias_usuarios').attr('disabled', '')
                     $('#etiqueta').html('Usted está actualizando el usuario del policía:')
+                    $('#modal-lg').modal();
+                    $('#btn').html('<i class="fas fa-sync-alt"></i> Actualizar Usuario');
                     break;
-                case 0:
+                }
+                case 404: {
                     alertify.warning(data.message + ' ☹');
                     break;
-                default :
-                    alert('ha ocurrido un error durante la búsqueda ⚙,inténtelo nuevamente en unos mintos ⏲');
+                }
+                case 500: {
+                    alertify.error(data.message)
                     break;
+                }
             }
-        }, error: function (x, y) {
-            alertify.error('el servicio no esta disponible,vuelva a intentarlo más tarde');
-            //console.log(x.responseText);
         }
     });
-    $('#modal-lg').modal();
-    $('#btn').html('<i class="fas fa-sync-alt"></i> Actualizar Usuario');
 }
 
 function activar_desactivar(id) {
-    alertify.confirm('Cambio de Estado', '¿Está seguro que desea activar/desactivar este usuario?', function () {
+    alertify.confirm('Cambio de Estado', '¿Está seguro que desea activar/desactivar este usuario?', () => {
         $.ajax({
-            type: 'get',
-            url: 'http://localhost:9090/api/LoginPnp/turn/' + id,
-            data: {},
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            success: function (data) {
-                switch (data.rpta) {
-                    case 1:
+            type: 'get', url: 'http://localhost:9090/api/LoginPnp/turn/' + id, data: {}, headers: {
+                'Accept': 'application/json', 'Content-Type': 'application/json'
+            }, complete: xhr => {
+                switch (xhr.status) {
+                    case 200: {
                         alertify.success('Usuario Desactivado/Activado 😀')
-                        setTimeout(function () {
+                        setTimeout(() => {
                             location.reload();
                         }, 1000)
-
                         break;
-                    case 0:
+                    }
+                    case 404: {
                         alertify.warning(data.message + ' ☹');
                         break;
-                    default :
-                        alert('ha ocurrido un error durante la elimninación ⚙,inténtelo nuevamente en unos mintos ⏲');
+                    }
+                    case 500: {
+                        alertify.error(data.message)
                         break;
+                    }
                 }
-            }, error: function (x, y) {
-                alertify.error('el servicio no esta disponible,vuelva a intentarlo más tarde');
-                //console.log(x.responseText);
             }
         });
-    }, function () {
-        alertify.error('Operación Cancelada');
+    }, () => {
+        alertify.notify('Operación Cancelada');
     }).set('labels', {ok: 'Sí', cancel: 'No'});
 }
-
-

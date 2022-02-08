@@ -1,5 +1,5 @@
-$(document).ready(function () {
-    var grado = $("#grado_pnp").val();
+$(document).ready(() => {
+    let grado = $("#grado_pnp").val();
     if (grado !== 'Coronel' && grado !== 'Mayor') {
         $('#li_policias').remove();
         $('#li_gradopnp').remove();

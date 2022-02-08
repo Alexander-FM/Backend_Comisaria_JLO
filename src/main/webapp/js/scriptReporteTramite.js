@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(document).ready(() => {
     let li_grupo_registros = $('#li_grupo_reportes');
     li_grupo_registros.attr('class', 'nav-item has-treeview menu-close menu-open');
     let a = $('#li_rtramites').find('a');
@@ -11,11 +11,11 @@ $(document).ready(function () {
 });
 
 function cargarCriteriosT() {
-    var opcion = parseInt($('#combo_criterio_t').val());
-    var combo = '';
+    let opcion = parseInt($('#combo_criterio_t').val());
+    let combo = '';
     switch (opcion) {
         case 1:
-            $.get('http://localhost:9090/api/tipoTramite/todos', {}, function (r) {
+            $.get('http://localhost:9090/api/tipoTramite/todos', {}, r => {
                 r.body.forEach(t => {
                     combo += '<option value="' + t.id + '"> ' + t.tipoTramite + ' </option>';
                     $('#combo_criterios_t').html(combo);
@@ -23,7 +23,7 @@ function cargarCriteriosT() {
             });
             break;
         case 2:
-            $.get('http://localhost:9090/api/policia', {}, function (r) {
+            $.get('http://localhost:9090/api/policia', {}, r => {
                 r.body.forEach(p => {
                     combo += '<option value="' + p.id + '">' + p.nombres + ' ' + p.apellidoPaterno + ' ' + p.apellidoMaterno + '</option>';
                     $('#combo_criterios_t').html(combo);
@@ -37,8 +37,7 @@ function cargarCriteriosT() {
     }
     $('#combo_criterios_t').html(combo);
     //alert(opcion);
-}
-;
+};
 
 function cargarTabla() {
     let select = $('#combo_criterios_t').val();
@@ -50,11 +49,9 @@ function cargarTabla() {
         fechaInicial: fechaInicial,
         fechaFinal: fechaFinal
     };
-    debugger;
-    //console.log(peticion);
-    $.get('http://localhost:9090/api/tramite/reportefiltro', peticion, function (r) {
+    $.get('http://localhost:9090/api/tramite/reportefiltro', peticion, r => {
         console.log(r.body);
-        var tabla = '';
+        let tabla = '';
         r.body.forEach(t => {
             tabla += '<tr>';
             tabla += '<td style=\"text-align: center\">' + t.id + '</td>';
@@ -69,6 +66,7 @@ function cargarTabla() {
         $('#TablaReportesTramites').dataTable();
     });
 }
+
 function formaterFecha(timestamp) {
     let datetime = new Date(timestamp);
     let dia = datetime.getDate();
@@ -87,16 +85,13 @@ function formaterFecha(timestamp) {
 
     return fecha_string + ' ' + hora_string;
 }
-;
 
 function concatenarCero(numeros) {
-    for (var i = 0; i < numeros.length; i++) {
-        if (numeros[i] < 10)
-            numeros[i] = "0" + numeros[i];
+    for (let i = 0; i < numeros.length; i++) {
+        if (numeros[i] < 10) numeros[i] = "0" + numeros[i];
     }
     return numeros;
 }
-;
 
 function reporte(accion) {
     let select = $('#combo_criterios_t').val();
@@ -108,7 +103,7 @@ function reporte(accion) {
         fechaInicial: fechaInicial,
         fechaFinal: fechaFinal
     };
-    $.get('http://localhost:9090/api/tramite/reportefiltro', peticion, function (r) {
+    $.get('http://localhost:9090/api/tramite/reportefiltro', peticion, r => {
         if (r.rpta === 1) {
             $('#lista').val(JSON.stringify(r.body));
             $('#accion').val(accion);

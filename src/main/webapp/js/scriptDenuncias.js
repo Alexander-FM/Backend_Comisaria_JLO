@@ -1,12 +1,7 @@
-var tabla = $("table#TablaDenuncias"),
-        tablaAgraviados = $("table#tabla_agraviados"),
-        tablaDenunciados = $("table#tabla_denunciados"),
-        mdlDd = $("#modal-dd"),
-        mdlMp = $("#modal-mapa"),
-        mdlEmail = $("#modal-correo"),
-        mdlAd = $("#modal-ac"),
-        btnSave = $("#btn-save");
-$(document).ready(function () {
+const tabla = $("table#TablaDenuncias"), tablaAgraviados = $("table#tabla_agraviados"),
+    tablaDenunciados = $("table#tabla_denunciados"), mdlDd = $("#modal-dd"), mdlMp = $("#modal-mapa"),
+    mdlEmail = $("#modal-correo"), mdlAd = $("#modal-ac"), btnSave = $("#btn-save");
+$(document).ready(() => {
     let li_grupo_registros = $('#li_grupo_recdenuncias');
     li_grupo_registros.attr('class', 'nav-item has-treeview menu-close menu-open');
     let a = $('#li_verdenuncias').find('a');
@@ -20,8 +15,8 @@ $(document).ready(function () {
         mdlDd.modal({backdrop: 'static', keyboard: false});
     });
 
-    tabla.on("click", ".btn-warning", function () {
-        var idDenuncia = $(this).parents("tr").children()[0].textContent;
+    tabla.on("click", ".btn-warning", function() {
+        let idDenuncia = $(this).parents("tr").children()[0].textContent;
         presentarDatos(idDenuncia);
         mdlAd.modal({backdrop: 'static', keyboard: false});
         btnSave.html('<i class="fas fa-sync-alt"></i> Actualizar Denuncia');
@@ -37,19 +32,13 @@ function obtenerCorreo(email) {
 
 //Enviar Correo de Denuncia Atendida
 function answerRequest() {
-    if ($('#destinatario').val().trim() !== ''
-            && $('#titulo').val().trim() !== ''
-            && $('#mensaje').val().trim() !== '') {
+    if ($('#destinatario').val().trim() !== '' && $('#titulo').val().trim() !== '' && $('#mensaje').val().trim() !== '') {
         let obj = {
-            destinatario: $('#destinatario').val(),
-            titulo: $('#titulo').val(),
-            mensaje: $('#mensaje').val()
+            destinatario: $('#destinatario').val(), titulo: $('#titulo').val(), mensaje: $('#mensaje').val()
         };
         $.ajax({
-            type: 'post',
-            url: 'http://localhost:9090/api/denuncia/answerRequest',
-            data: obj, //Cuando es parentesis es porque quieres convertirlo a json Strinfy
-            success: function (data) {
+            type: 'post', url: 'http://localhost:9090/api/denuncia/answerRequest', data: obj, //Cuando es parentesis es porque quieres convertirlo a json Strinfy
+            success: data => {
                 switch (data.rpta) {
                     case 1:
                         Swal.fire('Mensaje del Sistema', data.message, 'success');
@@ -62,31 +51,25 @@ function answerRequest() {
                         Swal.fire('Mensaje del Sistema', 'ha ocurrido un error durante el envio ⚙, inténtelo nuevamente en unos mintos ⏲', 'error');
                         break;
                 }
-            }, error: function (x, y) {
+            }, error: (x) => {
                 console.log(x.responseText);
             }
         });
     } else {
         Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Debe completar todos los campos. Asegurese e intente nuevamente.'
+            icon: 'error', title: 'Oops...', text: 'Debe completar todos los campos. Asegurese e intente nuevamente.'
         });
     }
 }
 
 function leerDenuncia(id, rhd) {
     $.ajax({
-        type: 'get',
-        url: 'http://localhost:9090/api/denuncia/detalle/' + id,
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        data: {}, //idD es la variable del servicio
-        success: function (data) {
-            if (data.rpta == 1) {
-                var tablaA = '', tablaD = '';
+        type: 'get', url: 'http://localhost:9090/api/denuncia/detalle/' + id, headers: {
+            'Accept': 'application/json', 'Content-Type': 'application/json'
+        }, data: {}, //idD es la variable del servicio
+        success: data => {
+            if (data.rpta === 1) {
+                let tablaA = '', tablaD = '';
                 $("#rhd").html(rhd);
                 data.body.agraviados.forEach(ag => {
                     tablaA += '<tr>';
@@ -112,7 +95,7 @@ function leerDenuncia(id, rhd) {
                     tablaDenunciados.DataTable();
                 });
             }
-        }, error: function (x, y) {
+        }, error: (x) => {
             console.log(x.responseText);
         }
     });
@@ -139,8 +122,7 @@ function formaterFecha(timestamp) {
 
 function concatenarCero(numeros) {
     for (var i = 0; i < numeros.length; i++) {
-        if (numeros[i] < 10)
-            numeros[i] = "0" + numeros[i];
+        if (numeros[i] < 10) numeros[i] = "0" + numeros[i];
     }
     return numeros;
 }
@@ -149,7 +131,7 @@ function registrar() {
     if ($('#codDenuncia').val().trim() !== '') {
         let id = parseInt($('#idD').val());
         let url = 'http://localhost:9090/api/denuncia/' + (id === 0 ? 'registrar' : id);
-        let data = {
+        let datos = {
             cod_denuncia: $('#codDenuncia').val(),
             estadoDenuncia: ($('#estadoDenuncia').is(':checked')),
             policia: {id: parseInt($('#combo_policias').val())},
@@ -168,33 +150,24 @@ function registrar() {
             comisarias: {id: parseInt($('#comisariaId').val())}
         };
         $.ajax({
-            type: (id === 0 ? 'post' : 'put'),
-            url: url,
-            data: JSON.stringify(data),
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            success: function (data) {
-                switch (data.rpta) {
-                    case 1:
+            type: (id === 0 ? 'post' : 'put'), url: url, data: JSON.stringify(datos), headers: {
+                'Accept': 'application/json', 'Content-Type': 'application/json'
+            }, complete: xhr => {
+                let data = xhr.responseJSON
+                switch (xhr.status) {
+                    case 200: {
                         alertify.success(data.message + ' 😀');
-                        setTimeout(function () {
-                            location.reload();
-                        }, 1500)
                         break;
-                    case 0:
+                    }
+                    case 404: {
                         alertify.warning(data.message + ' ☹');
                         break;
-                    default :
-                        alertify.error('ha ocurrido un error durante el registro ⚙,inténtelo nuevamente en unos mintos ⏲');
+                    }
+                    case 500: {
+                        alertify.error(data.message);
                         break;
+                    }
                 }
-
-
-            }, error: function (x, y) {
-                alertify.error('el servicio no esta disponible,vuelva a intentarlo más tarde');
-                //console.log(x.responseText);
             }
         });
     } else {
@@ -204,16 +177,12 @@ function registrar() {
 
 function presentarDatos(id) {
     $.ajax({
-        type: 'get',
-        url: 'http://localhost:9090/api/denuncia/' + id,
-        data: {},
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        success: function (data) {
-            switch (data.rpta) {
-                case 1:
+        type: 'get', url: 'http://localhost:9090/api/denuncia/' + id, data: {}, headers: {
+            'Accept': 'application/json', 'Content-Type': 'application/json'
+        }, complete: xhr => {
+            let data = xhr.responseJSON
+            switch (xhr.status) {
+                case 302: {
                     $('#idD').val(data.body.id);
                     $('#codDenuncia').val(data.body.cod_denuncia);
                     $("#estadoDenuncia").prop('checked', data.body.estadoDenuncia);
@@ -239,32 +208,27 @@ function presentarDatos(id) {
                     $('#latitud').val(data.body.latitud);
                     $('#longitud').val(data.body.longitud);
                     break;
-                case 0:
-                    alertify.warning(data.message + ' ☹');
+                }
+                case 404: {
+                    alertify.warning(data.message)
                     break;
-                default :
-                    alert('ha ocurrido un error durante la búsqueda ⚙,inténtelo nuevamente en unos mintos ⏲');
-                    break;
+                }
+                case 500: {
+                    alertify.error(data.message)
+                }
             }
-        }, error: function (x, y) {
-            alertify.error('el servicio no esta disponible,vuelva a intentarlo más tarde');
-            //console.log(x.responseText);
         }
     });
 }
 
 function listarDenuncias() {
     $.ajax({
-        type: 'get',
-        url: 'http://localhost:9090/api/denuncia/porComisaria/' + $("#idComisaria").val(),
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        success: function (data) {
+        type: 'get', url: 'http://localhost:9090/api/denuncia/porComisaria/' + $("#idComisaria").val(), headers: {
+            'Accept': 'application/json', 'Content-Type': 'application/json'
+        }, success: data => {
             //console.log(data.body);
             if (data.rpta === 1) {
-                var tpl = '';
+                let tpl = '';
                 data.body.forEach(d => {
                     tpl += '<tr>';
                     tpl += '<td>' + d.id + '</td>';
@@ -280,12 +244,7 @@ function listarDenuncias() {
                     tpl += '<td>' + d.direccion + '</td>';
                     tpl += '<td>' + d.referenciaDireccion + '</td>';
                     tpl += '<td style=\"text-align: center\">' + (d.estadoDenuncia === true ? '<h5><span class =\"badge badge-success\">Diligenciada</span></h5>' : '<h5><span class =\"badge badge-danger\">Pendiente</span></h5>') + '</td>';
-                    tpl += '<td nowrap style=\"text-align: center\">'
-                            + '<button title="Ver Detalle" data-rhd="' + d.rhd + '" class="btn btn-info"><i class="fas fa-plus"></i></button> '
-                            + '<button title="Enviar Correo" onclick="obtenerCorreo(\'' + d.usuario.correo + '\')" class="btn btn-dark"><i class="fas fa-envelope-square"></i></button> '
-                            + '<a href="http://localhost:9090/api/denuncia/export?codDenuncia=' + d.cod_denuncia + '&idUsu=' + d.usuario.id + '" download="true"  title="Exportar Denuncia" class="btn btn-primary"><i class="fas fa-scroll"></i></a> '
-                            + '<button onclick="mostrarMapa(' + d.longitud + ',' + d.latitud + ')" title="Ver Mapa" class="btn btn-secondary"><i class="fas fa-map-marked-alt"></i></button> '
-                            + '<button class="btn btn-warning"><i class="fas fa-edit"></i></button></td>';
+                    tpl += '<td nowrap style=\"text-align: center\">' + '<button title="Ver Detalle" data-rhd="' + d.rhd + '" class="btn btn-info"><i class="fas fa-plus"></i></button> ' + '<button title="Enviar Correo" onclick="obtenerCorreo(\'' + d.usuario.correo + '\')" class="btn btn-dark"><i class="fas fa-envelope-square"></i></button> ' + '<a href="http://localhost:9090/api/denuncia/export?codDenuncia=' + d.cod_denuncia + '&idUsu=' + d.usuario.id + '" download="true"  title="Exportar Denuncia" class="btn btn-primary"><i class="fas fa-scroll"></i></a> ' + '<button onclick="mostrarMapa(' + d.longitud + ',' + d.latitud + ')" title="Ver Mapa" class="btn btn-secondary"><i class="fas fa-map-marked-alt"></i></button> ' + '<button class="btn btn-warning"><i class="fas fa-edit"></i></button></td>';
                     tpl += '</tr>';
                 });
                 tabla.find("tbody").html(tpl);
@@ -293,14 +252,14 @@ function listarDenuncias() {
             }
             //$('#CuerpoTablaDenuncias').html(tpl);
             // $("#TablaDenuncias").DataTable();
-        }, error: function (x, y) {
+        }, error: (x) => {
             console.log(x.responseText);
         }
     });
 }
 
 function reporte() {
-    $.get('http://localhost:9090/api/denuncia', {}, function (r) {
+    $.get('http://localhost:9090/api/denuncia', {}, r => {
         $('#lista').val(JSON.stringify(r.body));
         $('#frmReporte').submit();
     });
@@ -308,15 +267,15 @@ function reporte() {
 }
 
 function ExportarDenuncia(id) {
-    $.get('http://localhost:9090/api/denuncia/devolverDenuncia/' + id, {}, function (r) {
+    $.get('http://localhost:9090/api/denuncia/devolverDenuncia/' + id, {}, r => {
         $('#denuncia').val(JSON.stringify(r.body));
         $('#frmExportarDenuncia').submit();
     });
 }
 
 function cargarPolicias() {
-    var combo = '';
-    $.get('http://localhost:9090/api/policia', {}, function (r) {
+    let combo = '';
+    $.get('http://localhost:9090/api/policia', {}, r => {
         r.body.forEach(p => {
             combo += '<option value="' + p.id + '">' + p.nombres + ' ' + p.apellidoPaterno + ' ' + p.apellidoMaterno + '</option>';
             $('#combo_policias').html(combo);
@@ -329,12 +288,10 @@ function mostrarMapa(longitud, latitud) {
     const uluru = {lat: latitud, lng: longitud};
     // The map, centered at Uluru
     const map = new google.maps.Map(document.getElementById("map"), {
-        zoom: 20,
-        center: uluru,
+        zoom: 20, center: uluru,
     });
     // The marker, positioned at Uluru
     const marker = new google.maps.Marker({
-        position: uluru,
-        map: map,
+        position: uluru, map: map,
     });
 }

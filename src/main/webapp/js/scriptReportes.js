@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(document).ready(() => {
     let a = $('#li_inicio').find('a');
     a.attr('class', 'nav-link active');
     a.attr('style', 'background-color: black');
@@ -13,24 +13,24 @@ $(document).ready(function () {
 });
 
 function obtenerContadorDenuncias() {
-    $.get('http://localhost:9090/api/denuncia/listarTotalDenunciasPorComisaria/' + $("#idComisaria").val(), {}, function (r) {
+    $.get('http://localhost:9090/api/denuncia/listarTotalDenunciasPorComisaria/' + $("#idComisaria").val(), {}, r => {
         $('#denunciasIngresadas').html(r.body);
     });
 }
 function obtenerContadorTramites() {
-    $.get('http://localhost:9090/api/tramite/listarTotalTramitesPorComisaria/' + $("#idComisaria").val(), {}, function (r) {
+    $.get('http://localhost:9090/api/tramite/listarTotalTramitesPorComisaria/' + $("#idComisaria").val(), {}, r => {
         $('#tramitesIngresados').html(r.body);
     });
 }
 
 function obtenerContadorTramitesPendientes() {
-    $.get('http://localhost:9090/api/tramite/listarCTramitesPendientePorComisaria/' + $("#idComisaria").val(), {}, function (r) {
+    $.get('http://localhost:9090/api/tramite/listarCTramitesPendientePorComisaria/' + $("#idComisaria").val(), {}, r => {
         $('#tInactivo').html(r.body);
     });
 }
 
 function obtenerContadorDenunciasPendientes() {
-    $.get('http://localhost:9090/api/denuncia/listarCDenunciasPendientePorComisaria/' + $("#idComisaria").val(), {}, function (r) {
+    $.get('http://localhost:9090/api/denuncia/listarCDenunciasPendientePorComisaria/' + $("#idComisaria").val(), {}, r => {
         $('#dInactivo').html(r.body);
     });
 }
@@ -38,20 +38,20 @@ function obtenerContadorDenunciasPendientes() {
 
 
 function cargarReportesGraficosTramites() {
-    $(function () {
+    $(() => {
         'use strict'
 
-        var ticksStyle = {
+        let ticksStyle = {
             fontColor: '#495057',
             fontStyle: 'bold'
-        }
+        };
 
-        var mode = 'index'
-        var intersect = true
+        let mode = 'index';
+        let intersect = true;
 
-        var $salesChart = $('#grafico4')
-        $.get('http://localhost:9090/api/denuncia/reporteAnual/' + $("#idComisaria").val(), {}, function (r) {
-            var salesChart = new Chart($salesChart, {
+        let $salesChart = $('#grafico4');
+        $.get('http://localhost:9090/api/denuncia/reporteAnual/' + $("#idComisaria").val(), {}, r => {
+            new Chart($salesChart, {
                 type: 'bar',
                 data: {
                     labels: ['ENE', 'FEB', 'MAR', 'ABR', 'MAY', 'JUN', 'JUL', 'AGO', 'SEP', 'OCT', 'NOV', 'DIC'],
@@ -83,56 +83,56 @@ function cargarReportesGraficosTramites() {
                     },
                     scales: {
                         yAxes: [{
-                                // display: false,
-                                gridLines: {
-                                    display: true,
-                                    lineWidth: '4px',
-                                    color: 'rgba(0, 0, 0, .2)',
-                                    zeroLineColor: 'transparent'
-                                },
-                                ticks: $.extend({
-                                    suggestedMax: 10,
-                                    beginAtZero: true,
-
-                                    // Include a dollar sign in the ticks
-                                    callback: function (value, index, values) {
-                                        if (value >= 1000) {
-                                            value /= 1000
-                                            value += 'k'//Si los trámites superan los 1000 se pone el valor de 'K' después de 1000 Ejemp: 1000k
-                                        }
-                                        return value
-                                    }
-                                }, ticksStyle)
-                            }],
-                        xAxes: [{
+                            // display: false,
+                            gridLines: {
                                 display: true,
-                                gridLines: {
-                                    display: false
-                                },
-                                ticks: ticksStyle
-                            }]
+                                lineWidth: '4px',
+                                color: 'rgba(0, 0, 0, .2)',
+                                zeroLineColor: 'transparent'
+                            },
+                            ticks: $.extend({
+                                suggestedMax: 10,
+                                beginAtZero: true,
+
+                                // Include a dollar sign in the ticks
+                                callback: (value, index, values) => {
+                                    if (value >= 1000) {
+                                        value /= 1000
+                                        value += 'k'//Si los trámites superan los 1000 se pone el valor de 'K' después de 1000 Ejemp: 1000k
+                                    }
+                                    return value
+                                }
+                            }, ticksStyle)
+                        }],
+                        xAxes: [{
+                            display: true,
+                            gridLines: {
+                                display: false
+                            },
+                            ticks: ticksStyle
+                        }]
                     }
                 }
             });
         });
 
 //GRÁFICO 3 - REPORTES DE TRÁMITES REALIZADOS EN LA ÚLTIMA SEMANA
-        var $visitorsChart = $('#grafico3')
-        $.get('http://localhost:9090/api/tramite/reportesemanal/' + $("#idComisaria").val(), {}, function (r) {
-            var visitorsChart = new Chart($visitorsChart, {
+        let $visitorsChart = $('#grafico3');
+        $.get('http://localhost:9090/api/tramite/reportesemanal/' + $("#idComisaria").val(), {}, r => {
+            new Chart($visitorsChart, {
                 data: {
                     labels: ['DOM', 'LUN', 'MAR', 'MIE', 'JUE', 'VIE', 'SAB'],
                     datasets: [{
-                            type: 'line',
-                            data: r.body.estaSemana,
-                            backgroundColor: 'transparent',
-                            borderColor: '#114a39',
-                            pointBorderColor: '#114a39',
-                            pointBackgroundColor: '#114a39',
-                            fill: false
-                                    // pointHoverBackgroundColor: '#007bff',
-                                    // pointHoverBorderColor    : '#007bff'
-                        },
+                        type: 'line',
+                        data: r.body.estaSemana,
+                        backgroundColor: 'transparent',
+                        borderColor: '#114a39',
+                        pointBorderColor: '#114a39',
+                        pointBackgroundColor: '#114a39',
+                        fill: false
+                        // pointHoverBackgroundColor: '#007bff',
+                        // pointHoverBorderColor    : '#007bff'
+                    },
                         {
                             type: 'line',
                             data: r.body.semanaPasada,
@@ -141,8 +141,8 @@ function cargarReportesGraficosTramites() {
                             pointBorderColor: '#ced4da',
                             pointBackgroundColor: '#ced4da',
                             fill: false
-                                    // pointHoverBackgroundColor: '#ced4da',
-                                    // pointHoverBorderColor    : '#ced4da'
+                            // pointHoverBackgroundColor: '#ced4da',
+                            // pointHoverBorderColor    : '#ced4da'
                         }]
                 },
                 options: {
@@ -160,25 +160,25 @@ function cargarReportesGraficosTramites() {
                     },
                     scales: {
                         yAxes: [{
-                                // display: false,
-                                gridLines: {
-                                    display: true,
-                                    lineWidth: '4px',
-                                    color: 'rgba(0, 0, 0, .2)',
-                                    zeroLineColor: 'transparent'
-                                },
-                                ticks: $.extend({
-                                    beginAtZero: true,
-                                    suggestedMax: 10
-                                }, ticksStyle)
-                            }],
-                        xAxes: [{
+                            // display: false,
+                            gridLines: {
                                 display: true,
-                                gridLines: {
-                                    display: false
-                                },
-                                ticks: ticksStyle
-                            }]
+                                lineWidth: '4px',
+                                color: 'rgba(0, 0, 0, .2)',
+                                zeroLineColor: 'transparent'
+                            },
+                            ticks: $.extend({
+                                beginAtZero: true,
+                                suggestedMax: 10
+                            }, ticksStyle)
+                        }],
+                        xAxes: [{
+                            display: true,
+                            gridLines: {
+                                display: false
+                            },
+                            ticks: ticksStyle
+                        }]
                     }
                 }
             });
@@ -188,11 +188,11 @@ function cargarReportesGraficosTramites() {
 ;
 function cargarReporte() {
     try {
-        $(function () {
+        $(() => {
             $('.select2').select2();
-            var reporteDenuncias = $('#grafico1').get(0).getContext('2d');
-            $.get('http://localhost:9090/api/denuncia/reporte2/' + $("#idComisaria").val(), {}, function (r) {
-                var tipoData = {
+            let reporteDenuncias = $('#grafico1').get(0).getContext('2d');
+            $.get('http://localhost:9090/api/denuncia/reporte2/' + $("#idComisaria").val(), {}, r => {
+                let tipoData = {
                     labels: r.body.vinculo.vinculos,
                     datasets: [
                         {
@@ -201,18 +201,18 @@ function cargarReporte() {
                         }
                     ]
                 };
-                var donutOptions = {
+                let donutOptions = {
                     maintainAspectRatio: false,
                     responsive: true
                 };
-                var donutChart = new Chart(reporteDenuncias, {
+                let donutChart = new Chart(reporteDenuncias, {
                     type: 'pie',
                     data: tipoData,
                     options: donutOptions
                 });
-                $(function () {
-                    var reporteDenuncias = $('#grafico2').get(0).getContext('2d');
-                    var tipoData = {
+                $(() => {
+                    let reporteDenuncias = $('#grafico2').get(0).getContext('2d');
+                    let tipoData = {
                         labels: r.body.tipo.tipos,
                         datasets: [
                             {
@@ -221,13 +221,13 @@ function cargarReporte() {
                             }
                         ]
                     };
-                    var donutOptions = {
+                    let donutOptions = {
                         maintainAspectRatio: false,
                         responsive: true
                     };
                     //Create pie or douhnut chart
                     // You can switch between pie and douhnut using the method below.
-                    var donutChart = new Chart(reporteDenuncias, {
+                    new Chart(reporteDenuncias, {
                         type: 'doughnut',
                         data: tipoData,
                         options: donutOptions
@@ -241,18 +241,18 @@ function cargarReporte() {
 }
 function initSocket() {
     try {
-        var socket = new SockJS('http://localhost:9090/socket-comisariajlo');
+        let socket = new SockJS('http://localhost:9090/socket-comisariajlo');
         stompClient = Stomp.over(socket);
-        stompClient.connect({}, function (frame) {
+        stompClient.connect({}, frame => {
             toastr.success('Las notificaciones están activadas');
             document.getElementById('audio_noti1').play();
             //$('.toast').toast({delay:1000, animation:false});
             //alertify.success('Conexión con el socket establecida correctamnte');
             console.log('Connected: ' + frame);
-            stompClient.subscribe('/topic/denuncia-noti', function (response) {
-                var de = JSON.parse(response.body);
+            stompClient.subscribe('/topic/denuncia-noti', response => {
+                let de = JSON.parse(response.body);
                 console.log(de);
-                var message = $('.toast-body').html('Se ha ingresado una nueva denuncia, en el distrito : ' + de.denuncia.distrito.distrito);
+                const message = $('.toast-body').html('Se ha ingresado una nueva denuncia, en el distrito : ' + de.denuncia.distrito.distrito);
                 $('.toast').toast('show');
                 //var message = toastr.info('Se ha ingresado una nueva denuncia, en el distrito : ' + de.denuncia.distrito.distrito);                   
                 //var message = alertify.warning('Se ha ingresado una nueva denuncia, en el distrito : ' + de.denuncia.distrito.distrito);
@@ -263,10 +263,10 @@ function initSocket() {
                 obtenerContadorDenuncias();
                 obtenerContadorDenunciasPendientes();
             });
-            stompClient.subscribe('/topic/tramite-noti', function (response) {
-                var tra = JSON.parse(response.body);
+            stompClient.subscribe('/topic/tramite-noti', response => {
+                let tra = JSON.parse(response.body);
                 console.log(tra);
-                var message = $('.toast-body').html('Se ha ingresado un nuevo trámite de tipo : ' + tra.tipoTramite.tipoTramite + ' con el usuario: ' + tra.usuario.nombres + " " + tra.usuario.apellidoPaterno + " " + tra.usuario.apellidoMaterno);
+                let message = $('.toast-body').html('Se ha ingresado un nuevo trámite de tipo : ' + tra.tipoTramite.tipoTramite + ' con el usuario: ' + tra.usuario.nombres + " " + tra.usuario.apellidoPaterno + " " + tra.usuario.apellidoMaterno);
                 $('.toast').toast('show');
                 document.getElementById('notificacion_tramite').play();
                 message.delay(10);

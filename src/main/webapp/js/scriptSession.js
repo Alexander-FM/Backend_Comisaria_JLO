@@ -1,5 +1,5 @@
-$(document).ready(function () {
-    var DOM = {
+$(document).ready(() => {
+    const DOM = {
         frmLogin: $("#frmLogin"),
         frmSolicitarCambio: $("#frmSolicitarCambioClave"),
         frmChangePassword: $("#frmChangePassword"),
@@ -12,108 +12,124 @@ $(document).ready(function () {
         modalChangePass: $("#modal-changePass"),
         alert: $("a#contenedor")
     };
-    DOM.frmLogin.on("submit", function (e) {
+    DOM.frmLogin.on("submit", (e) => {
         e.preventDefault();
         ingresarSistema();
     });
 
-    DOM.frmSolicitarCambio.on("submit", function (e) {
+    DOM.frmSolicitarCambio.on("submit", (e) => {
         e.preventDefault();
         buscarPoliciaByCP();
     });
 
-    DOM.frmChangePassword.on("submit", function (e) {
+    DOM.frmChangePassword.on("submit", (e) => {
         e.preventDefault();
         changePassword();
     });
 
     function ingresarSistema() {
-        var obj = {
+        let obj = {
             cp: DOM.txtCodPolicia.val(), //Las propiedades deben coincidir con las de la clase
-            cl: DOM.txtClave.val()};
+            cl: DOM.txtClave.val()
+        };
         console.log(JSON.stringify(obj));
         $.ajax({
-            type: 'post',
-            url: 'http://localhost:9090/api/LoginPnp',
-            data: JSON.stringify(obj),
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            success: function (data) {
-                //alert(data.rpta);
-                if (data.rpta === 1) {
-                    DOM.alert[0].textContent = data.message;
-                    $.post("srvLogin?accion=asignarSesion", {data: JSON.stringify(data.body.policia), idC: data.body.comisarias.id, 
-                        nomComisaria: data.body.comisarias.nombreComisaria, codPolicial: data.body.codigoPolicial});
+            type: 'post', url: 'http://localhost:9090/api/LoginPnp', data: JSON.stringify(obj), headers: {
+                'Accept': 'application/json', 'Content-Type': 'application/json'
+            }, complete: xhr => {
+                let data = xhr.responseJSON
+                switch (xhr.status) {
+                    case 200: {
+                        if (data.rpta === 1) {
+                            DOM.alert[0].textContent = data.message;
+                            $.post("srvLogin?accion=asignarSesion", {
+                                data: JSON.stringify(data.body.policia),
+                                idC: data.body.comisarias.id,
+                                nomComisaria: data.body.comisarias.nombreComisaria,
+                                codPolicial: data.body.codigoPolicial
+                            });
 
-                    setTimeout(function () {
-                        window.location.href = "vistas/inicio.jsp";
+                            setTimeout(() => {
+                                window.location.href = "vistas/inicio.jsp";
 
-                    }, 1500);
-                } else {
-                    DOM.alert[0].textContent = data.message;
+                            }, 1500);
+                        } else {
+                            DOM.alert[0].textContent = data.message;
+                        }
+                        break;
+                    }
+                    case 500: {
+                        alertify.error(data.message);
+                        break;
+                    }
                 }
-            }, error: function (x, y) {
-                alertify.error('el servicio no esta disponible,vuelva a intentarlo más tarde');
-                //console.log(x.responseText);
-            }
+            },
         });
     }
 
     function buscarPoliciaByCP() {
-        var obj = {
-            codigoPolicial: DOM.txtCodPolicial.val()};
-        console.log(JSON.stringify(obj));
+        let obj = {
+            codigoPolicial: DOM.txtCodPolicial.val()
+        };
         $.ajax({
-            type: 'post',
-            url: 'http://localhost:9090/api/LoginPnp/eByCp',
-            data: (obj),
-            success: function (data) {
-                if (data.body) {
-                    DOM.modalSolicitud.modal('hide');
-                    DOM.modalChangePass.modal('show');
-                    $("#cp").val(obj.codigoPolicial);
-                    DOM.txtCodPolicial.val("");
-                    alertify.success(data.message);
-                } else {
-                    DOM.modalChangePass.modal('hide');
-                    alertify.error(data.message);
+            type: 'post', url: 'http://localhost:9090/api/LoginPnp/eByCp', data: obj, complete: xhr => {
+                let data = xhr.responseJSON
+                switch (xhr.status) {
+                    case 302:
+                        DOM.modalSolicitud.modal('hide');
+                        DOM.modalChangePass.modal('show');
+                        $("#cp").val(obj.codigoPolicial);
+                        DOM.txtCodPolicial.val("");
+                        alertify.success(data.message);
+                        break
+                    case 404:
+                        alertify.warning(data.message)
+                        DOM.modalSolicitud.modal('hide');
+                        break
+                    case 500:
+                        alertify.error(data.message)
+                        DOM.modalSolicitud.modal('hide');
+                        break;
+
                 }
-            }, error: function (x, y) {
-                alertify.error('No se puedo conectar con el servidor');
             }
         });
     }
 
     function changePassword() {
-        var obj = {
-            cp: $('#cp').val(),
-            clave: $('#pass1').val()};
+        let obj = {
+            cp: $('#cp').val(), clave: $('#pass1').val()
+        };
         if (DOM.clave1.val() === DOM.clave2.val()) {
             $.ajax({
                 type: 'post',
                 url: 'http://localhost:9090/api/LoginPnp/changePasswordLoginPnp',
                 data: (obj),
-                success: function (data) {
-                    if (data.rpta === 1) {
-                        DOM.modalChangePass.modal('hide');
-                        alertify.success(data.message);
-                        $('#pass1').val("");
-                        $('#pass2').val("");
-                    } else {
-                        DOM.modalChangePass.modal('show');
-                        alertify.error(data.message);
+                complete: xhr => {
+                    let data = xhr.responseJSON
+                    switch (xhr.status) {
+                        case 200: {
+                            DOM.modalChangePass.modal('hide');
+                            alertify.success(data.message);
+                            $('#pass1').val("");
+                            $('#pass2').val("");
+                        }
+                            break
+                        case 404: {
+                            DOM.modalChangePass.modal('show');
+                            alertify.warning(data.message);
+                        }
+                            break
+                        case 500: {
+                            alertify.error(data.message)
+                        }
+                            break
                     }
-                }, error: function (x, y) {
-                    alertify.error('No se puedo conectar con el servidor');
-                }
+                },
             });
         } else {
             Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Las contraseñas nos coinciden, intente otra vez!'
+                icon: 'error', title: 'Oops...', text: 'Las contraseñas nos coinciden, intente otra vez!'
             });
             $('#pass1').val("");
             $('#pass2').val("");

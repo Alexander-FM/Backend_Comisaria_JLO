@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(document).ready(() => {
     let li_grupo_registros = $('#li_grupo_reportes');
     li_grupo_registros.attr('class', 'nav-item has-treeview menu-close menu-open');
     let a = $('#li_rdenuncias').find('a');
@@ -11,10 +11,10 @@ $(document).ready(function () {
 });
 function cargarCriterios() {
     let opcion = parseInt($('#cboTipoFiltro').val());
-    var combo = '';
+    let combo = '';
     switch (opcion) {
         case 1:
-            $.get('http://localhost:9090/api/tipoDenuncia/todos', {}, function (r) {
+            $.get('http://localhost:9090/api/tipoDenuncia/todos', {}, r => {
                 r.body.forEach(t => {
                     combo += '<option value="' + t.id + '">' +t.tipoDenuncia + '</option>';
                     $('#cboFiltro').html(combo);
@@ -22,7 +22,7 @@ function cargarCriterios() {
             });
             break;
         case 2:
-           $.get('http://localhost:9090/api/vinculoParteDenunciada', {}, function (r) {
+           $.get('http://localhost:9090/api/vinculoParteDenunciada', {}, r => {
                 r.body.forEach(v => {
                     combo += '<option value="' + v.id + '">' +v.nombre + '</option>';
                     $('#cboFiltro').html(combo);
@@ -31,7 +31,7 @@ function cargarCriterios() {
             });
             break;
         case 3:
-            $.get('http://localhost:9090/api/policia/todos', {}, function (r) {
+            $.get('http://localhost:9090/api/policia/todos', {}, r => {
                 r.body.forEach(p => {
                     combo += '<option value="' + p.id + '">' + p.nombres + ' ' + p.apellidoPaterno + ' ' + p.apellidoMaterno + '</option>';
                     $('#cboFiltro').html(combo);
@@ -59,9 +59,9 @@ function cargarTabla() {
     };
     debugger;
     //console.log(peticion);
-    $.get('http://localhost:9090/api/denuncia/reportefiltro', peticion, function (r) {
+    $.get('http://localhost:9090/api/denuncia/reportefiltro', peticion, r => {
         console.log(r.body);
-        var tabla = '';
+        let tabla = '';
         r.body.forEach(d => {
             tabla += '<tr>';
             tabla += '<td>' + d.id + '</td>';
@@ -113,7 +113,7 @@ function reporte(accion) {
         fechaInicial: fechaInicial,
         fechaFinal: fechaFinal
     };
-    $.get('http://localhost:9090/api/denuncia/reportefiltro', peticion, function (r) {
+    $.get('http://localhost:9090/api/denuncia/reportefiltro', peticion, r => {
         if (r.rpta === 1) {
             $('#accion').val(accion);
             $('#lista').val(JSON.stringify(r.body));
