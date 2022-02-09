@@ -97,7 +97,7 @@
                                         <h3 class="card-title">Registrar Usuarios</h3>
                                     </div>
                                     <div class="card-body">
-                                        <button id="btnRegistrarUsuario" type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#modal-lg"><i class="fas fa-file-signature"></i> Nuevo Registro</button>
+                                        <button id="btnRegistrarUsuario" type="button" class="btn btn-outline-primary" data-toggle="modal" data-backdrop="static" data-keyboard="false" data-target="#modal-lg"><i class="fas fa-file-signature"></i> Nuevo Registro</button>
                                     </div>
                                 </div>
                             </div>
