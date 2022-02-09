@@ -146,7 +146,7 @@ function registrar() {
             apellidoPaterno: $('#apellidoPaterno').val(),
             apellidoMaterno: $('#apellidoMaterno').val(),
             direccion: $('#direccion').val(),
-            fechaNacimiento: moment($('#fechaNac').val(), 'YYYY-MM-DD').format('DD-MM-YYYY'),
+            fecha_nacimiento: moment($('#fechaNac').val(), 'YYYY-MM-DD').format('DD-MM-YYYY'),
             sexo: $('#combo_genero_policia').val(),
             telefono: $('#telefonoPolicia').val(),
             estado: ($('#estadoPol').is(':checked')),
@@ -207,8 +207,10 @@ function presentarDatos(id) {
                     $('#combo_grado').val(data.body.gradoPNP.id).trigger('change');
                     $('#numIdentificacion').val(data.body.numeroIdentificacion);
                     $('#direccion').val(data.body.direccion);
-                    const date = moment(data.body.fechaNacimiento, 'DD-MM-YYYY').format("YYYY-MM-DD");
+                    const date = moment(data.body.fecha_nacimiento, 'DD-MM-YYYY').format("YYYY-MM-DD");
                     $('#fechaNac').val(date);
+                    $('#modal-lg').modal({backdrop: 'static', keyboard: false});
+                    $('#btn-save').html('<i class="fas fa-sync-alt"></i> Actualizar Policia');
                     break;
                 }
                 case 404: {
@@ -223,12 +225,25 @@ function presentarDatos(id) {
             }
         },
     });
-    $('#modal-lg').modal();
-    $('#btn-save').html('<i class="fas fa-sync-alt"></i> Actualizar Policia');
-};
+}
 
 function reset() {
     $('#idP').val(0);
     $('#modal-title').html('Formulario de Registro');
     $('#btn-save').html('<i class="fas fa-save"></i>Registrar Policia');
+    cleardFields()
+}
+
+function cleardFields() {
+    $('#nombres').val('');
+    $('#apellidoPaterno').val('');
+    $('#apellidoMaterno').val('');
+    $('#combo_genero_policia').val('').trigger('change');
+    $('#combo_estadoCivil').val('').trigger('change');
+    $('#telefonoPolicia').val('');
+    $("#estadoPol").prop('checked',false);
+    $('#combo_distrito').val('').trigger('change');
+    $('#combo_grado').val('').trigger('change');
+    $('#numIdentificacion').val('');
+    $('#direccion').val('');
 }

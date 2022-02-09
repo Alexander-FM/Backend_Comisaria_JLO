@@ -136,7 +136,7 @@
                                         <h3 class="card-title">Registrar Policias</h3>
                                     </div>
                                     <div class="card-body">
-                                        <button disabled id="btnRegistrarPolicia" type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#modal-lg"><i class="fas fa-file-signature"></i> Nuevo Registro</button>
+                                        <button disabled id="btnRegistrarPolicia" type="button" class="btn btn-outline-primary" data-backdrop="static" data-keyboard="false" data-toggle="modal" data-target="#modal-lg"><i class="fas fa-file-signature"></i> Nuevo Registro</button>
                                     </div>
                                 </div>
                             </div>

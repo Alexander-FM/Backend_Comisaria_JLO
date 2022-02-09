@@ -44,14 +44,16 @@ function registrar() {
                         alertify.success(data.message + ' 😀');
                         setTimeout(function () {
                             location.reload();
-                        });
+                        }, 1500);
                         break;
                     }
                     case 400: {
                         alertify.warning(data.message + ' ☹');
+                        break;
                     }
                     case 500: {
                         alertify.error(data.message)
+                        break;
                     }
                 }
             }
@@ -84,6 +86,12 @@ function presentarDatos(id) {
             }
         }
     });
-    $('#modal-default').modal();
+    $('#modal-default').modal({backdrop: 'static', keyboard: false});
     $('button#btnSave').html('<i class="fas fa-save"></i> Actualizar Información Adicional');
+}
+
+function clearFields() {
+    $('#idIA').val('0')
+    $('#nombreInfAdic').val('')
+    $('button#btnSave').html('<i class="fas fa-save"></i> Registrar Información Adicional');
 }
