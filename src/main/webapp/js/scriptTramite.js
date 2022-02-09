@@ -193,12 +193,15 @@ function presentarDatos(id) {
                     $('#observaciones').val(data.body.observaciones);
                     $('#solicitante').val(data.body.solicitante);
                     $('#telefono').val(data.body.telefono);
+                    break;
                 }
                 case 400: {
                     alertify.warning(data.message)
+                    break;
                 }
                 case 500: {
                     alertify.error(data.message)
+                    break;
                 }
             }
         }

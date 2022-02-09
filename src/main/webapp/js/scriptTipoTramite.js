@@ -87,6 +87,12 @@ function presentarDatos(id) {
             }
         }
     });
-    $('#modal-lg').modal();
+    $('#modal-lg').modal({backdrop: 'static', keyboard: false});
     $('button#btnSave').html('<i class="fas fa-save"></i> Actualizar Tipo Trámite');
+}
+function reset() {
+    $('#idTT').val(0);
+    $('#nombreTramite').val('');
+    $("input:checkbox").prop('checked', false);
+    $('#btnSave').html('<i class="fas fa-save"></i> Registrar Tipo Trámite');
 }

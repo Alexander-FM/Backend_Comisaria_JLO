@@ -88,6 +88,12 @@ function presentarDatos(id) {
             }
         }
     });
-    $('#modal-lg').modal();
+    $('#modal-lg').modal({backdrop: 'static', keyboard: false});
     $('#btnSave').html('<i class="fas fa-save"></i> Actualizar Tipo Denuncia');
+}
+function reset() {
+    $('#idTD').val(0);
+    $('#nomTipDen').val('');
+    $("input:checkbox").prop('checked', false);
+    $('#btnSave').html('<i class="fas fa-save"></i> Registrar Tipo Denuncia');
 }

@@ -157,7 +157,7 @@ function presentarDatos(id) {
                     //PLUS
                     $('#combo_policias_usuarios').attr('disabled', '')
                     $('#etiqueta').html('Usted está actualizando el usuario del policía:')
-                    $('#modal-lg').modal();
+                    $('#modal-lg').modal({backdrop: 'static', keyboard: false});
                     $('#btn').html('<i class="fas fa-sync-alt"></i> Actualizar Usuario');
                     break;
                 }
@@ -202,4 +202,16 @@ function activar_desactivar(id) {
     }, () => {
         alertify.notify('Operación Cancelada');
     }).set('labels', {ok: 'Sí', cancel: 'No'});
+}
+
+function reset() {
+    $('#idU').val(0);
+    $('#codUsuario').val('');
+    $('#claveUsuario').val('');
+    $('#combo_policias_usuarios').val('').trigger('change');
+    $('#combo_policias_usuarios').removeAttr('disabled')
+    cargarPoliciasXDe()
+    $('#combo_policias_comisarias').val('').trigger('change');
+    $("input:checkbox").prop('checked', false);
+    $('#btn').html('<i class="fas fa-save"></i> Registrar Usuario');
 }
