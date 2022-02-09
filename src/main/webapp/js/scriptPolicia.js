@@ -137,8 +137,23 @@ function cargarEstadosCiviles() {
     });
 }
 
+function validateFieldsPolice() {
+    if ($('#nombres').val().trim() !== ''
+        && $('#apellidoPaterno').val().trim() !== ''
+        && $('#apellidoMaterno').val().trim() !== ''
+        && $('#direccion').val().trim() !== ''
+        && $('#fechaNac').val().trim() !== ''
+        && $('#telefonoPolicia').val().trim() !== ''
+        && $('#numIdentificacion').val().trim() !== '') {
+        return true
+
+    } else {
+        return false
+    }
+}
+
 function registrar() {
-    if ($('#nombres').val().trim() !== '') {
+    if (validateFieldsPolice()) {
         let id = parseInt($('#idP').val());
         let url = 'http://localhost:9090/api/policia' + (id !== 0 ? ('/' + id) : '');
         let datos = {
@@ -181,7 +196,7 @@ function registrar() {
             }
         });
     } else {
-        alert('por favor llene todos los campos');
+        alertify.warning('Por favor llene todos los campos');
     }
 }
 
@@ -241,7 +256,7 @@ function cleardFields() {
     $('#combo_genero_policia').val('').trigger('change');
     $('#combo_estadoCivil').val('').trigger('change');
     $('#telefonoPolicia').val('');
-    $("#estadoPol").prop('checked',false);
+    $("#estadoPol").prop('checked', false);
     $('#combo_distrito').val('').trigger('change');
     $('#combo_grado').val('').trigger('change');
     $('#numIdentificacion').val('');

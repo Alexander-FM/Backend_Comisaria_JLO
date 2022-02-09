@@ -111,7 +111,7 @@
                                         </div>
                                         <label>Estado del Policía</label>
                                         <div class="form-group">                           
-                                            <input id="estadoPol" style="margin-top: 10px" type="checkbox" checked="" class="checkbox"> Vigente
+                                            <input id="estadoPol" style="margin-top: 10px" type="checkbox" checked disabled class="checkbox"> Vigente
                                         </div>
                                     </div>
                                 </div>
