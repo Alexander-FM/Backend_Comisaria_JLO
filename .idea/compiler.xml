@@ -12,7 +12,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="Backend_Comisaria_JLO" options="-endorseddirs D:\APPCOMISARIA\Backend_Comisaria_JLO\target/endorsed" />
+      <module name="Backend_Comisaria_JLO" options="-endorseddirs C:\Users\alexa\Documents\Tesis\Backend_Comisaria_JLO\target/endorsed" />
     </option>
   </component>
 </project>

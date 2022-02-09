@@ -106,7 +106,7 @@
                         <div class="modal-header">
                             <h4 class="modal-title">Mapa Georefencial</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="false"></span>
+                                <i style="color: red" class="fas fa-times"></i>
                             </button>
                         </div>
                         <div class="modal-body">

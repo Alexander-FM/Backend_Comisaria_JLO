@@ -40,7 +40,7 @@ function registrar() {
             type: (id === 0 ? 'post' : 'put'), url: url, data: JSON.stringify(data), headers: {
                 'Accept': 'application/json', 'Content-Type': 'application/json'
             }, complete: xhr => {
-                let data = xhr.responseJson
+                let data = xhr.responseJSON
                 switch (xhr.status) {
                     case 200: {
                         alertify.success(data.message + ' 😀');
@@ -69,8 +69,8 @@ function presentarDatos(id) {
         type: 'get', url: 'http://localhost:9090/api/tipoTramite/' + id, data: {}, headers: {
             'Accept': 'application/json', 'Content-Type': 'application/json'
         }, complete: xhr => {
-            let data = xhr.responseJson
-            switch (xhr.statusCode) {
+            let data = xhr.responseJSON
+            switch (xhr.status) {
                 case 302: {
                     $('#idTT').val(data.body.id);
                     $('#nombreTramite').val(data.body.tipoTramite);

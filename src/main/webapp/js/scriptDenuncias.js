@@ -157,6 +157,7 @@ function registrar() {
                 switch (xhr.status) {
                     case 200: {
                         alertify.success(data.message + ' 😀');
+                        setTimeout(() => location.reload(), 1500)
                         break;
                     }
                     case 404: {
