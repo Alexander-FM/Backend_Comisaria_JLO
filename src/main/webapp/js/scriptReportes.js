@@ -251,8 +251,9 @@ function initSocket() {
             console.log('Connected: ' + frame);
             stompClient.subscribe('/topic/denuncia-noti', response => {
                 let de = JSON.parse(response.body);
+                debugger;
                 console.log(de);
-                const message = $('.toast-body').html('Se ha ingresado una nueva denuncia, en el distrito : ' + de.denuncia.distrito.distrito);
+                const message = $('.toast-body').html('Se ha ingresado una nueva denuncia');
                 $('.toast').toast('show');
                 //var message = toastr.info('Se ha ingresado una nueva denuncia, en el distrito : ' + de.denuncia.distrito.distrito);                   
                 //var message = alertify.warning('Se ha ingresado una nueva denuncia, en el distrito : ' + de.denuncia.distrito.distrito);
