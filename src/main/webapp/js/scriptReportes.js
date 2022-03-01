@@ -253,7 +253,7 @@ function initSocket() {
                 let de = JSON.parse(response.body);
                 debugger;
                 console.log(de);
-                const message = $('.toast-body').html('Se ha ingresado una nueva denuncia');
+                const message = $('.toast-body').html('Se ha ingresado una nueva denuncia en el distrito de ' + de.denuncia.distrito.distrito + ' en la ' + de.denuncia.comisarias.nombreComisaria);
                 $('.toast').toast('show');
                 //var message = toastr.info('Se ha ingresado una nueva denuncia, en el distrito : ' + de.denuncia.distrito.distrito);                   
                 //var message = alertify.warning('Se ha ingresado una nueva denuncia, en el distrito : ' + de.denuncia.distrito.distrito);
